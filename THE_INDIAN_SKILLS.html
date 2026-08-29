@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Indian Skills</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#f7fbff;--card:#fff;--text:#071d3b;--muted:#63758a;--navy:#071d3b;--blue:#72c8f5;--line:#dce8f1;--soft:#e9f7ff}
+.dark{--bg:#07111e;--card:#0d1c2c;--text:#f5f9ff;--muted:#b5c4d4;--navy:#020a15;--blue:#73cdf8;--line:#263d52;--soft:#102c43}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}button{font-family:inherit;cursor:pointer}.wrap{width:min(1120px,92%);margin:auto}
+header{height:72px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;position:sticky;top:0;z-index:20}.nav{display:flex;align-items:center;justify-content:space-between}.brand{background:var(--blue);color:var(--navy);font-size:22px;font-weight:900;padding:13px 18px;border-radius:4px}.right{display:flex;align-items:center;gap:12px}.theme,.dots{border:0;background:none;color:var(--text)}.theme svg{width:21px;height:21px;fill:currentColor}.dots{width:25px}.dots i,.dashboardMenuBtn i{display:block;width:4px;height:4px;border-radius:50%;background:currentColor;margin:4px}
+.hero{min-height:430px;padding:70px 0;background:linear-gradient(100deg,var(--soft),var(--bg));display:flex;align-items:center}.heroGrid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:45px}.hero h1{font-size:clamp(45px,6vw,70px);line-height:.98;margin:0;font-weight:900;letter-spacing:-2px}.hero p{font-size:18px;color:var(--muted);line-height:1.6;margin:22px 0}.actions{display:flex;gap:14px}.action{width:250px;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:14px;display:flex;align-items:center;gap:14px;text-align:left;color:var(--text);box-shadow:0 8px 25px #071d3b12}.actionIcon{width:48px;height:48px;border-radius:9px;background:#075db9;color:#fff;display:grid;place-items:center}.actionIcon svg{width:25px;fill:currentColor}.action b{display:block;font-size:16px}.action small{color:var(--muted);display:block;margin-top:5px}.arrow{margin-left:auto;font-size:22px}
+section{padding:60px 0}.title{margin-bottom:25px}.title h2{font-size:30px;margin:0 0 7px}.title p{color:var(--muted)}.courses{display:grid;grid-template-columns:repeat(5,1fr);gap:15px}.course{background:var(--card);border:1px solid var(--line);border-radius:11px;overflow:hidden}.poster{height:150px;background:center/cover}.course:nth-child(1) .poster{background-image:url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=90')}.course:nth-child(2) .poster{background-image:url('https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=90')}.course:nth-child(3) .poster{background-image:url('https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=1200&q=90')}.course:nth-child(4) .poster{background-image:url('https://images.unsplash.com/photo-1553484771-371a605b060b?auto=format&fit=crop&w=1200&q=90')}.course:nth-child(5) .poster{background-image:url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=90')}.body{padding:15px}.body h3{margin:0 0 8px}.body p{font-size:13px;color:var(--muted);line-height:1.5}.price{font-size:19px;font-weight:900}.view{width:100%;margin-top:12px;padding:9px;border:1px solid #0871cf;background:transparent;color:#0871cf;border-radius:7px;font-weight:700}
+.why{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.quality{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:25px;text-align:center}.qualityIcon{width:54px;height:54px;border-radius:50%;background:var(--soft);display:grid;place-items:center;margin:auto}.qualityIcon svg{width:28px;fill:var(--navy)}.quality h3{margin:14px 0 7px}.quality p{font-size:14px;color:var(--muted);line-height:1.5}
+.lower{display:grid;grid-template-columns:1fr 1.2fr;gap:30px}.feedback{background:var(--navy);border-radius:14px;padding:25px;color:#fff}.video{height:230px;border-radius:10px;margin-top:18px;background:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=90') center/cover;display:grid;place-items:center}.play{width:58px;height:58px;border-radius:50%;background:var(--blue);display:grid;place-items:center;color:var(--navy)}.play svg{width:24px;fill:currentColor}.faq details{background:var(--card);border:1px solid var(--line);padding:16px;margin:8px 0;border-radius:8px}.faq summary{font-weight:700;cursor:pointer}.faq p{color:var(--muted);line-height:1.6}
+footer{background:var(--navy);color:#fff;padding:38px 0 18px}.foot{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:30px}.foot h3{margin-top:0}.foot p,.foot a{font-size:13px;line-height:1.7;color:#c5d2df;text-decoration:none;display:block}.made{margin-top:25px;padding:14px 20px;border-top:1px solid #ffffff20;text-align:right;color:#c5d2df;font-size:13px}
+.drawer,.featureOverlay{position:fixed;inset:0;background:#0008;z-index:50;display:none}.drawer.open,.featureOverlay.open{display:block}.menu{width:min(340px,88%);height:100%;margin-left:auto;background:var(--card);padding:25px}.menu a{display:block;color:var(--text);text-decoration:none;padding:15px 5px;border-bottom:1px solid var(--line);font-weight:700}.close,.featureClose{float:right;border:0;background:none;color:var(--text);font-size:25px}.page{min-height:75vh;padding:80px 0}.pageBox{max-width:700px;margin:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:35px}.pageBox h1{font-size:40px;margin-top:0}.pageBox p,.pageBox li{color:var(--muted);line-height:1.7}.form input{width:100%;padding:13px;margin:6px 0;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--text)}.form button{width:100%;padding:12px;margin-top:8px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700}.google{background:var(--blue)!important;color:var(--navy)!important}
+#dashboard{display:none;min-height:100vh;background:var(--bg)}.dashTop{padding:35px 0 20px;text-align:center}.profile{width:82px;height:82px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--navy));display:grid;place-items:center;margin:auto;font-size:28px;font-weight:900;color:#fff;border:4px solid var(--card);box-shadow:0 8px 25px #071d3b20}.dashTop h1{margin:12px 0 5px;font-size:25px}.dashTop p{margin:0;color:var(--muted)}.enrolled{display:inline-block;margin-top:12px;padding:8px 16px;background:var(--blue);color:var(--navy);border-radius:7px;font-size:13px;font-weight:800}.earnings{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px auto 30px}.earning{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center;box-shadow:0 6px 20px #071d3b09}.earning span{font-size:12px;color:var(--muted)}.earning strong{display:block;font-size:21px;margin-top:8px}.current{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:25px;box-shadow:0 8px 25px #071d3b09}.current h2{margin:0}.profileEdit{margin:25px 0 50px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;justify-content:space-between;align-items:center}.editBtn{padding:9px 18px;border:1px solid var(--navy);background:transparent;color:var(--text);border-radius:7px;font-weight:700}
+.featureOverlay{z-index:100}.featureMenu{position:absolute;left:0;top:0;height:100%;width:min(350px,88vw);background:var(--card);padding:24px 18px;overflow-y:auto;box-shadow:15px 0 45px #0003}.featureHeader{display:flex;align-items:center;justify-content:space-between;padding:5px 8px 22px;border-bottom:1px solid var(--line)}.featureHeader h2{margin:0;font-size:21px}.featureHeader .featureClose{float:none}.featureList{margin-top:18px}.feature{width:100%;border:0;background:none;color:var(--text);display:flex;align-items:center;gap:14px;padding:13px 12px;margin:3px 0;border-radius:9px;text-align:left;font-size:14px;font-weight:700}.feature:hover,.feature.active{background:var(--soft)}.featureIcon{width:34px;height:34px;flex:none;border-radius:8px;background:var(--soft);display:grid;place-items:center;color:var(--navy)}.featureIcon svg{width:19px;height:19px;fill:currentColor}.featureBottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line)}.logout{width:100%;padding:11px;border:1px solid #d66;background:transparent;color:#c44;border-radius:8px;font-weight:700}.dashboardMenuBtn{position:fixed;left:18px;top:90px;z-index:60;width:44px;height:44px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;box-shadow:0 5px 18px #071d3b12;display:none}.dashboardMenuBtn.show{display:grid;place-items:center}
+.featurePage{display:none}.featurePage.show{display:block}
+.pageContent h3{margin:22px 0 6px}.pageContent h3:first-child{margin-top:0}.pageContent p{margin:0 0 14px}
+.policyNotice{margin:0 0 22px;padding:18px 20px;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:9px;background:var(--soft)}.policyNotice h3{margin:0 0 8px}.policyNotice p{margin:0 0 12px}.policyNotice p:last-child{margin-bottom:0}
+.authActions{display:flex;align-items:center;gap:8px}.authActions button{padding:9px 13px;border-radius:7px;font-weight:700}.authBtn{border:1px solid var(--line);background:transparent;color:var(--text)}.authBtn.primary{border-color:var(--navy);background:var(--navy);color:#fff}.home-btn{border:0;cursor:pointer}.welcome{color:var(--muted);font-size:14px;font-weight:700;max-width:210px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.authModal{position:fixed;inset:0;z-index:400;background:#0008;display:none;place-items:center;padding:20px}.authModal.open{display:grid}.authDialog{width:min(440px,100%);background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:0 20px 60px #0004}.authHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.authHeader h2{margin:0 0 6px}.authHeader p{margin:0;color:var(--muted);font-size:14px}.authClose{border:0;background:none;color:var(--text);font-size:28px;line-height:1}.authSwitch{margin:18px 0 0;color:var(--muted);font-size:13px;text-align:center}.authSwitch button{border:0;background:none;color:#0871cf;font-weight:700}.authError{min-height:18px;color:#c44;font-size:13px;margin:10px 0 0}@media(max-width:600px){.welcome{max-width:125px}.authActions button{padding:8px 9px;font-size:12px}.authDialog{padding:23px}}
+.paymentModal{position:fixed;inset:0;z-index:450;background:#0008;display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto}.paymentModal.open{display:flex}.paymentDialog{display:flex;flex-direction:column;gap:15px;width:min(470px,100%);max-height:calc(100vh - 40px);overflow-y:auto;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:32px}.paymentSummary{display:flex;flex-direction:column;align-items:flex-start;gap:8px;background:var(--soft);border-radius:9px;padding:18px;margin:0}.paymentSummary strong,.paymentSummary del,.paymentSummary span{display:block;margin:0}.paymentSummary strong{font-size:18px}.paymentSummary span{color:var(--muted)}.paymentSummary .referralBadge{display:block!important;align-self:flex-start;margin-top:2px}.referralControls{display:flex;flex-direction:column;gap:12px;margin:0}.referralControls .authField{display:block;width:100%;margin:0}.referralControls input,.paymentMethodDetails input{display:block;width:100%;height:46px;margin:6px 0 0;padding:11px 13px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit}.referralActions{display:flex;gap:10px}.paymentOptions{display:flex;gap:10px;width:100%;margin:0}.paymentOption{flex:1;border:1px solid var(--line);border-radius:8px;padding:12px 8px;background:var(--card);color:var(--text);font-weight:700;cursor:pointer}.paymentOption.selected{border-color:#0871cf;background:var(--soft);box-shadow:0 0 0 2px #0871cf30}.paymentMethodDetails{display:flex;flex-direction:column;gap:15px;width:100%;margin:0}.upiPaymentSection,.qrPaymentSection{display:flex;flex-direction:column;gap:15px;width:100%}.upiReceivingBox{display:flex;align-items:center;gap:10px;width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}.upiReceivingId{flex:1;min-width:0;overflow-wrap:anywhere;font-weight:700}.copyUpiButton{flex:none;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--text);font-weight:700}.qrPaymentView{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;padding:16px;background:var(--soft);border-radius:9px}.qrPaymentView img{display:block;width:100%;max-width:180px;height:auto;margin:0 auto}.qrPaymentView p{margin:0;color:var(--muted);font-size:13px;text-align:center}.transactionField{margin:0!important}.paymentStatus{min-height:20px;margin:0;color:var(--muted);font-size:13px}.paymentActions{display:flex;gap:12px;margin:0}.paymentActions button{flex:1;padding:12px;border-radius:7px;font-weight:700}.paymentCancel{border:1px solid var(--line);background:transparent;color:var(--text)}.paymentPay{border:0;background:var(--navy);color:#fff}@media(max-width:420px){.paymentModal{padding:12px}.paymentDialog{max-height:calc(100vh - 24px);padding:24px}.referralActions,.paymentActions{gap:10px}.paymentOptions{gap:8px}}
+@media(max-width:950px){.courses{grid-template-columns:repeat(2,1fr)}.why{grid-template-columns:repeat(2,1fr)}.foot{grid-template-columns:1fr 1fr}.heroGrid{grid-template-columns:1fr}.lower{grid-template-columns:1fr}.earnings{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.brand{font-size:17px}.hero{padding:55px 0}.actions{flex-direction:column}.action{width:100%}.courses,.why,.foot{grid-template-columns:1fr}.pageBox{padding:23px}.earnings{grid-template-columns:repeat(2,1fr);gap:9px}.earning{padding:14px 8px}.earning strong{font-size:17px}.dashboardMenuBtn{top:82px;left:12px}.current{padding:20px}}
+
+/* ===== UI/UX FIXES ===== */
+button,a,input{ -webkit-tap-highlight-color:transparent; }
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{
+  outline:3px solid color-mix(in srgb,var(--blue) 65%,transparent);
+  outline-offset:2px;
+}
+button:disabled{opacity:.6;cursor:not-allowed}
+.action,.course,.quality,.earning,.current,.profileEdit,.pageBox{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.action:hover,.course:hover,.quality:hover,.earning:hover{transform:translateY(-3px);box-shadow:0 12px 30px #071d3b18}
+.view:hover{background:var(--blue);color:var(--navy)}
+.heroGrid{width:100%}
+.heroGrid>div{min-width:0}
+.poster{background-color:var(--soft)}
+.course .body{min-height:205px;display:flex;flex-direction:column}
+.course .body .view{margin-top:auto}
+.form input:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 3px #72c8f530}
+.google{border:1px solid var(--blue)!important}
+.menu{overflow-y:auto}
+.menu a:hover{background:var(--soft)}
+#pageArea{min-height:75vh}
+.profile{overflow:hidden}
+.featurePage{animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);
+  z-index:500;background:var(--navy);color:#fff;padding:12px 18px;border-radius:9px;
+  box-shadow:0 10px 30px #0003;opacity:0;pointer-events:none;transition:.25s ease;
+  max-width:min(92vw,420px);text-align:center;font-size:14px
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:700px){
+  header{height:64px}
+  .hero h1{font-size:clamp(40px,14vw,60px)}
+  .hero p{font-size:16px}
+  .title h2{font-size:26px}
+  .lower{gap:18px}
+  .feedback{padding:20px}
+  .video{height:190px}
+  .featureMenu{width:min(340px,92vw)}
+}
+@media(max-width:420px){
+  .wrap{width:94%}
+  .brand{padding:10px 12px}
+  .right{gap:7px}
+  .hero{padding:42px 0}
+  section{padding:45px 0}
+  .pageBox h1{font-size:31px}
+}
+
+
+.socialLinks{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.socialBtn{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);text-decoration:none;font-weight:700;font-size:13px}
+.socialBtn svg{width:18px;height:18px;fill:currentColor}
+.channelBtn{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:14px 16px;margin-top:16px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--text);text-decoration:none;font-weight:800}
+.infoList{padding-left:20px}.infoList li{margin:10px 0}
+.featureCardGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px}
+.featureCard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}.course-library-btn,.upgrade-course-btn{width:100%;font:inherit;color:var(--text);text-align:left;cursor:pointer}.course-library-btn:hover,.upgrade-course-btn:hover{border-color:#0871cf}
+.featureCard h3{margin:0 0 8px}.featureCard p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}
+.leaderboardTabs{display:flex;gap:8px;overflow-x:auto;margin:20px 0 14px;padding-bottom:3px}.leaderboardTab{flex:1;min-width:125px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--muted);font:inherit;font-size:12px;font-weight:700;cursor:pointer}.leaderboardTab.active{border-color:#0871cf;background:#0871cf;color:#fff;box-shadow:0 0 0 2px #0871cf30}.leaderboardTable{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}.leaderboardRow{display:grid;grid-template-columns:45px minmax(130px,1fr) 110px 105px;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}.leaderboardRow:last-child{border-bottom:0}.leaderboardHead{color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase}.leaderboardUser{display:flex;align-items:center;gap:10px;min-width:0}.leaderboardAvatar{width:34px;height:34px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--text);font-size:12px;font-weight:900}.leaderboardName{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}.leaderboardScore{font-weight:900;color:#0871cf}.leaderboardBadge{justify-self:start;padding:5px 8px;border-radius:99px;background:var(--soft);color:var(--muted);font-size:10px;font-weight:800}.rankGold{color:#8a6500;background:#fff2b8}.rankSilver{color:#5f6b78;background:#e9edf2}.rankBronze{color:#8a542d;background:#f5d6bd}.leaderboardEmpty{padding:24px;color:var(--muted);text-align:center}.leaderboardSpinner{width:24px;height:24px;margin:24px auto;border:3px solid var(--line);border-top-color:#0871cf;border-radius:50%;animation:leaderboardSpin .8s linear infinite}@keyframes leaderboardSpin{to{transform:rotate(360deg)}}@media(max-width:600px){.leaderboardRow{grid-template-columns:32px minmax(110px,1fr) 78px 78px;padding:12px 10px;gap:7px}.leaderboardRow .leaderboardHead{font-size:9px}.leaderboardScore{font-size:12px}.leaderboardBadge{font-size:9px;padding:4px 5px}}
+@media(max-width:600px){.featureCardGrid{grid-template-columns:1fr}}
+
+.refBox{width:100%;margin:12px 0;padding:14px;border:1px solid var(--line);border-radius:9px;word-break:break-all;background:var(--soft);color:var(--text)}.referralBadge{display:inline-block!important;width:max-content;padding:5px 9px;border-radius:99px;background:#e4f8ed;color:#18794e;font-size:12px;font-weight:800}
+.backBtn{margin-top:20px}
+.communityGrid{display:grid;gap:12px;margin-top:18px}
+.communityBtn{width:100%;display:flex;align-items:center;gap:12px;padding:15px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--text);text-decoration:none;text-align:left;cursor:pointer}
+.communityBtn>span:nth-child(2){flex:1}
+.communityBtn b{display:block}.communityBtn small{display:block;color:var(--muted);margin-top:4px}
+.socialIcon{width:38px;height:38px;border-radius:10px;background:var(--soft);display:grid;place-items:center;font-weight:900}
+.instagramIcon{font-size:24px}.whatsappIcon{font-size:20px}
+.dots{width:22px;height:22px;padding:2px;display:grid;place-content:center}.dots i{width:3px;height:3px;margin:2px}
+.dashboardHeader{display:none}.dashboardMenuBtn{position:static;width:34px;height:34px;padding:4px;border-radius:7px}.dashboardMenuBtn i{width:3px;height:3px;margin:2px}.nav .dashboardMenuBtn{display:grid;place-items:center}
+@media(max-width:600px){.dashboardHeader{padding-top:12px}}
+.inlineLogo{display:block;width:112px;height:48px;flex:none;color:var(--navy)}.inlineLogo .wing{fill:none;stroke:#0871cf;stroke-width:2.2;stroke-linecap:round}.inlineLogo .star{fill:#f2bd45}.inlineLogo .mono{font:900 24px Arial,sans-serif;letter-spacing:-2px}.inlineLogo .tag{font:700 5px Arial,sans-serif;letter-spacing:.6px;fill:#0871cf}
+.headerLeft{display:flex;align-items:center;gap:10px;margin-left:130px}
+header .nav{min-height:72px}
+#dashboard .profileCard{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px 24px;text-align:center;box-shadow:0 8px 25px #071d3b09}
+#dashboard .profileStatus{position:absolute;left:20px;top:20px;display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:99px;background:#e4f8ed;color:#18794e;font-size:11px;font-weight:800}
+#dashboard .statusDot{width:7px;height:7px;border-radius:50%;background:#20a866}
+#dashboard .profilePhoto{width:96px;height:96px;margin:8px auto 13px;border:4px solid var(--card);border-radius:50%;background:linear-gradient(135deg,#72c8f5,#075db9);display:grid;place-items:center;color:#fff;font-size:28px;font-weight:900;box-shadow:0 7px 20px #071d3b25;overflow:hidden}
+#dashboard .profileEditIcon{position:absolute;top:82px;left:calc(50% + 27px);width:28px;height:28px;border:2px solid var(--card);border-radius:50%;background:#075db9;color:#fff;font-size:14px}
+#dashboard .profileCard h1{margin:0 0 8px;font-size:24px}
+#dashboard .profileBadge{display:inline-block;margin-left:5px;color:#0871cf;font-size:16px}
+#dashboard .userId{margin:0;color:var(--muted);font-size:12px}
+#dashboard .copyUserId{margin-left:6px;padding:3px 7px;border:1px solid var(--line);border-radius:5px;background:transparent;color:var(--text);font-size:11px}
+#dashboard .earnings{grid-template-columns:1fr;gap:12px;margin-top:22px}
+#dashboard .earning{position:relative;min-height:112px;padding:19px 18px;text-align:center}
+#dashboard .earningIcon{position:absolute;top:15px;right:17px;color:#0871cf;font-size:20px}
+#dashboard .earning span:not(.earningIcon){display:block;margin-top:18px}
+#dashboard .earning strong{font-size:28px;margin-top:8px}
+#dashboard .chartBlock{margin:0 0 30px;padding:23px 25px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 25px #071d3b09}
+#dashboard .chartBlock h2{margin:0 0 5px;font-size:20px}
+#dashboard .chartBlock p{margin:0;color:var(--muted);font-size:13px}
+#dashboard .chartArea{height:135px;margin-top:20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#72c8f51c,transparent);clip-path:polygon(0 78%,12% 68%,24% 74%,36% 45%,48% 58%,60% 30%,72% 42%,84% 22%,100% 34%,100% 100%,0 100%)}
+@media(max-width:600px){#dashboard .profileCard{padding:18px 15px 22px}#dashboard .profileStatus{left:14px;top:14px}#dashboard .profileEditIcon{top:76px}}
+body>header:not(.top-nav-bar),body>img[src="logo.jpg"]{display:none}.top-nav-bar{display:flex;align-items:center;justify-content:space-between;width:100%}.menu-toggle-btn{border:0;background:transparent;color:var(--text);display:grid;place-items:center;width:34px;height:34px;padding:0;cursor:pointer}.menu-toggle-btn i{display:block;width:4px;height:4px;border-radius:50%;background:currentColor;margin:2px}.nav-left,.nav-right{display:flex;align-items:center}.top-nav-bar .menu-toggle-btn{display:none}.top-nav-bar .menu-toggle-btn.show{display:grid}
+</style>
+</head>
+<body>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<style>.signupOnly{display:none}</style>
+<style>
+body{overflow:auto}
+.authDialog{width:min(450px,100%);max-width:450px;padding:30px;background:#fff;border-radius:20px;box-shadow:0 4px 20px rgba(0,0,0,.06);color:#1a202c}
+.authDialog{max-height:90vh;overflow-y:auto;overflow-x:hidden}
+.authDialog .form{display:flex;flex-direction:column;align-items:stretch;gap:0}
+.authDialog .form,.authDialog .authField{min-width:0}
+.authDialog .authField{display:block;width:100%;margin:0 0 18px;color:#2d3748;font-size:14px;font-weight:600}
+.authDialog .authField input,.authDialog .authField select{display:block;width:100%;height:48px;margin:6px 0 0;padding:12px 16px;border:1px solid #e2e8f0;border-radius:12px;background:#fff;color:#1a202c;font-size:14px}
+.authDialog .authField select{padding-right:40px;cursor:pointer}
+.authDialog #authSubmit{display:block;width:100%;height:50px;order:10;margin-top:10px;padding:0;border:0;border-radius:12px;background:#3b4279;color:#fff;font-weight:600}
+.authDialog .authError{order:9;min-height:0;margin:0;color:#c44}
+.signupPrice{margin:-4px 0 18px;padding:12px 14px;border:1px solid #d9e2f1;border-radius:10px;background:#f7faff;color:#263b5e;font-size:13px;line-height:1.5;font-weight:600;overflow-wrap:anywhere}
+.comingSoonBanner{margin-top:24px;padding:28px 20px;border:1px solid var(--line);border-radius:12px;background:var(--soft);color:var(--text);font-size:22px;font-weight:800;text-align:center;box-shadow:0 8px 25px #071d3b12}
+.authDialog .authSwitch{display:block;width:100%;margin:20px 0 0;text-align:center;color:#718096;font-size:14px}
+.authDialog .authSwitch button{color:#3b4279;font-weight:700}
+@media(max-width:600px){.authDialog{padding:30px 22px}}
+</style>
+<header class="top-nav-bar" id="home-bottom-bar" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; width: 100%;">
+  <div class="nav-left" style="display: flex; align-items: center; gap: 15px;">
+    <img id="home-bottom-bar-logo" src="logo.jpg" alt="Logo" style="height: 50px; width: auto; object-fit: contain;">
+    <button class="menu-toggle-btn" id="dashboardMenuBtn" onclick="openFeatures()" aria-label="Open menu"><i></i><i></i><i></i></button>
+  </div>
+  <div class="nav-right" style="display: flex; align-items: center;">
+    <button class="theme" onclick="dark()" aria-label="Dark mode"><svg viewBox="0 0 24 24"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg></button>
+  </div>
+</header>
+
+<header><div class="wrap nav"><div class="headerLeft"><svg class="inlineLogo landingLogo" id="landingLogo" viewBox="0 0 112 48" role="img" aria-labelledby="landingLogoTitle landingLogoDesc"><title id="landingLogoTitle">Indian Skills</title><desc id="landingLogoDesc">IS monogram with blue wings and a star</desc><path class="wing" d="M35 18c-8-6-14-6-22-2 5 1 8 3 11 6-5-1-10 0-14 3 8 0 14 2 20 6M77 18c8-6 14-6 22-2-5 1-8 3-11 6 5-1 10 0 14 3 8 0 14 2 20 6"/><path class="star" d="m94 4 1.6 3.2 3.4.5-2.5 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4L89 7.7l3.4-.5L94 4Z"/><text class="mono" x="39" y="29">IS</text><text class="tag" x="28" y="41">INDIA'S FUTURE RISES</text></svg><button class="dashboardMenuBtn" id="dashboardMenuBtn" onclick="openFeatures()" aria-label="Open dashboard menu"><i></i><i></i><i></i></button></div><div class="right" style="margin-left:auto">
+<button class="theme" onclick="dark()" aria-label="Dark mode"><svg viewBox="0 0 24 24"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg></button>
+</div></div></header>
+
+<div class="authModal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-describedby="authSubtitle" onclick="if(event.target.id==='authModal')closeAuthModal()">
+  <div class="authDialog">
+    <div class="authHeader"><div><h2 id="authTitle">Welcome Back</h2><p id="authSubtitle">Sign in to access your courses and content</p></div><button class="authClose" onclick="closeAuthModal()" aria-label="Close">×</button></div>
+    <form class="form" id="loginForm" novalidate onsubmit="handleAuthSubmit(event)">
+      <label class="authField signupOnly">Full Name<input id="authName" type="text" placeholder="John Doe" autocomplete="name" minlength="2" maxlength="60"></label>
+      <label class="authField signupOnly">Phone Number<input id="authPhone" type="tel" placeholder="1234567890" autocomplete="tel" maxlength="20"></label>
+      <label class="authField">Email Address<input id="authEmail" type="email" placeholder="you@example.com" autocomplete="email" required></label>
+      <label class="authField">Password<input id="authPassword" type="password" placeholder="At least 6 characters" autocomplete="current-password" minlength="6" required></label>
+      <a class="forgotPassword loginOnly" href="#" onclick="handleForgotPassword(event)">Forgot Password?</a>
+      <label class="authField signupOnly">Referral Link<input id="authReferral" type="text" placeholder="Enter referral link" autocomplete="off" maxlength="40"></label>
+      <div class="paymentSection signupOnly">
+      <label class="authField">Package Selection<select id="authPackage" onchange="updateSignupPricing()"><option value="">Select a package</option><option>Traffic Management</option><option>Branding Management</option><option>Marketing Management</option><option>Influence Management</option><option value="Finance Management">Finance Management</option></select></label>
+      <div class="signupPrice" id="signupPrice" aria-live="polite">Select a course to see the price.</div>
+      <label class="authField">Payment Method<select id="authPayment" onchange="toggleQrPayment()"><option value="QR Code" selected>QR Code</option><option value="UPI ID">UPI ID</option></select></label>
+      <div id="qrPaymentFields"><div id="qrPaymentDetails"><img src="qr-code.png.jpeg" alt="Payment QR" style="max-width: 200px; display: block; margin: 12px auto; border-radius: 8px;"><p style="text-align:center;margin:0 0 12px">Scan to pay with any UPI app</p></div><div id="upiPaymentDetails" hidden><p style="text-align:center;margin:0 0 12px">UPI ID: <strong>learner0zon@oksbi</strong></p></div><label class="authField">Transaction ID / UTR Number<input id="authUtr" type="text" placeholder="Enter Transaction ID / UTR Number" autocomplete="off" maxlength="100"></label></div>
+      </div>
+      <p class="authError" id="authError" role="alert"></p>
+      <button type="submit" id="authSubmit">Sign In</button>
+    </form>
+    <p class="authSwitch"><span id="authSwitchText">Don't have an account?</span> <button type="button" id="authSwitchButton" onclick="toggleAuthMode()">Sign up</button></p>
+  </div>
+</div>
+
+<div id="home">
+<section class="hero"><div class="wrap heroGrid"><div><div class="heroBranding"><h1>THE INDIAN<br>SKILLS</h1><p>Learn. Grow. Succeed. Build practical skills today and shape your tomorrow.</p></div>
+<div class="actions">
+<button class="action explore-courses-btn" type="button" onclick="showCoursesSection(event)"><span class="actionIcon"><svg viewBox="0 0 24 24"><path d="M2 8l10-4 10 4-10 4L2 8Zm4 3v5l6 3 6-3v-5l-6 3-6-3Z"/></svg></span><span><b>Explore Courses</b><small>Discover best courses</small></span><span class="arrow">›</span></button>
+<button class="action" type="button" onclick="page('login')"><span class="actionIcon"><svg viewBox="0 0 24 24"><path d="M12 2a6 6 0 0 0-6 6v3H4v11h16V11h-2V8a6 6 0 0 0-6-6Zm-4 9V8a4 4 0 0 1 8 0v3H8Z"/></svg></span><span><b>Student Login</b><small>Access your student dashboard</small></span><span class="arrow">›</span></button>
+</div></div></div></section>
+
+<section id="courses"><div class="wrap"><div class="title"><h2>Our Courses</h2><p>Professional learning for practical growth.</p></div><div class="courses">
+<div class="course"><div class="poster"></div><div class="body"><h3>Traffic Management</h3><p>Understand audience and traffic growth.</p><b class="price">₹999</b><button class="view" onclick="coursePage('Traffic Management','₹999','Understand audience and traffic growth.')">View Course</button></div></div>
+<div class="course"><div class="poster"></div><div class="body"><h3>Branding Management</h3><p>Learn how strong brands are created.</p><b class="price">₹2,499</b><button class="view" onclick="coursePage('Branding Management','₹2,499','Learn how strong brands are created.')">View Course</button></div></div>
+<div class="course"><div class="poster"></div><div class="body"><h3>Marketing Management</h3><p>Learn modern marketing fundamentals.</p><b class="price">₹5,000</b><button class="view" onclick="coursePage('Marketing Management','₹5,000','Learn modern marketing fundamentals.')">View Course</button></div></div>
+<div class="course"><div class="poster"></div><div class="body"><h3>Influence Management</h3><p>Develop communication and leadership influence.</p><b class="price">₹10,000</b><button class="view" onclick="coursePage('Influence Management','₹10,000','Develop communication and leadership influence.')">View Course</button></div></div>
+<div class="course"><div class="poster"></div><div class="body"><h3>Finance Management</h3><p>Master the fundamentals of corporate and personal finance.</p><b class="price">₹15,000</b><button class="view" onclick="coursePage('Finance Management','₹15,000','Master the fundamentals of corporate and personal finance.')">View Course</button></div></div>
+</div><div class="comingSoonBanner">More Courses Coming Soon</div></div></section>
+
+<section><div class="wrap"><div class="title"><h2>Why The Indian Skills?</h2><p>A simple and focused learning experience.</p></div><div class="why">
+<div class="quality"><div class="qualityIcon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM7 7v10h10V7H7Z"/></svg></div><h3>Expert Designed</h3><p>Structured learning designed around practical knowledge.</p></div>
+<div class="quality"><div class="qualityIcon"><svg viewBox="0 0 24 24"><path d="m4 17 6-6 4 4 6-7 1.5 1.3-7.5 9-4-4-4.5 4.5Z"/></svg></div><h3>Practical Learning</h3><p>Focus on useful skills that can be applied in real situations.</p></div>
+<div class="quality"><div class="qualityIcon"><svg viewBox="0 0 24 24"><path d="M12 2 3 6v5c0 5 3.5 9.5 9 11 5.5-1.5 9-6 9-11V6l-9-4Z"/></svg></div><h3>Quality Focused</h3><p>Clear courses and a clean learning experience.</p></div>
+<div class="quality"><div class="qualityIcon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm1 5v4h4v2h-6V7Z"/></svg></div><h3>Career Growth</h3><p>Encouraging continuous development and improvement.</p></div>
+</div></div></section>
+
+<section><div class="wrap lower"><div class="feedback"><h2>Student Feedback</h2><p>Hear from our learners.</p><div class="video"><button class="play" onclick="openFeedback()"><svg viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></svg></button></div></div>
+<div class="faq"><h2>Frequently Asked Questions</h2><details><summary>What is The Indian Skills?</summary><p>A private educational platform focused on skill development.</p></details><details><summary>How can I enroll in a course?</summary><p>Select a course and follow the enrollment process.</p></details><details><summary>Do courses guarantee employment or fixed income?</summary><p>The Indian Skills is strictly an educational platform focused on skill development. We do not guarantee jobs, internships, or fixed financial returns. Learning outcomes and financial success depend entirely on the individual learner's effort, dedication, and external market factors.</p></details><details><summary>Can I access courses on mobile?</summary><p>The platform is designed to be responsive and mobile friendly.</p></details><details><summary>What is the refund policy?</summary><p>All course sales and registrations are final and non-refundable once payment is completed.</p></details></div></div></section>
+
+<footer><div class="wrap"><div class="foot"><div><h3>About The Indian Skills</h3><p>The Indian Skills is a privately operated educational platform. It is not a Government of India website, government department or government-affiliated organisation.</p><p>Our mission is to encourage practical learning and skill development.</p></div><div><h3>Important Links</h3><a href="#" onclick="page('about');return false">About Us</a><a href="#" onclick="page('privacy');return false">Privacy Policy</a><a href="#" onclick="page('terms');return false">Terms & Conditions</a><a href="#" onclick="page('contact');return false">Contact Us</a></div><div><h3>Contact Us</h3><p>Phone: +91 XXXXX XXXXX</p><p>WhatsApp: Chat with us</p><p>Email: Learner0zon@gmail.com</p><p>India</p><p>For course, account, payment or technical questions, contact us through email or WhatsApp. Never send your password, OTP or full card number.</p><div class="socialLinks"><a class="socialBtn" href="#" onclick="showToast('Add your Instagram URL here.');return false">Instagram</a><a class="socialBtn" href="#" onclick="showToast('Add your WhatsApp URL here.');return false">WhatsApp</a></div><a class="channelBtn" href="#" onclick="showToast('Add your official community channel link here.');return false"><span>Access Community Channel</span><span>→</span></a></div><div><h3>Our Policies</h3><a href="#" onclick="page('privacy');return false">Privacy Policy</a><a href="#" onclick="page('terms');return false">Terms & Conditions</a></div></div><div class="made">Made with ❤️ by Rishuu</div></div></footer>
+</div>
+
+<div class="drawer" id="drawer" onclick="if(event.target.id==='drawer')openMenu()"><div class="menu"><button class="close" onclick="openMenu()">×</button><h2>Menu</h2><a href="#courses" class="explore-courses-link">Explore Courses</a><a href="#" onclick="page('privacy');return false">Privacy Policy</a><a href="#" onclick="page('login');return false">Student Login</a></div></div>
+
+<div id="dashboard">
+<div class="wrap"><div class="dashTop"><div class="profileCard"><div class="profileStatus"><span class="statusDot"></span>Active</div><div class="profilePhoto"><span class="profileInitial"></span></div><button class="profileEditIcon" onclick="page('edit')" aria-label="Edit profile">✎</button><h1 class="profileName"></h1><span class="profileBadge" aria-label="Verified profile" hidden>◆</span><p class="userId">User ID: <strong class="userIdValue"></strong><button class="copyUserId" onclick="copyUserId()">Copy</button></p></div><div class="enrolled">No Course Enrolled</div></div>
+<div class="earnings"><div class="earning"><span class="earningIcon">◆</span><span>Today's Earning</span><strong>₹0</strong></div><div class="earning"><span class="earningIcon">🚀</span><span>Last 7 Days</span><strong>₹0</strong></div><div class="earning"><span class="earningIcon">🏆</span><span>Last 30 Days</span><strong>₹0</strong></div><div class="earning"><span class="earningIcon">◷</span><span>All Time</span><strong>₹0</strong></div></div>
+<div class="chartBlock"><h2>Earnings Chart</h2><p>Showing earnings and referrals over time</p><div class="chartArea" aria-label="Earnings chart"></div></div>
+<div class="current"><h2>Current Course</h2><p style="color:var(--muted)">No Course Enrolled</p></div>
+<div class="profileEdit"><div><strong>Profile Settings</strong><p style="margin:6px 0 0;color:var(--muted);font-size:13px">Update your personal information</p></div><button class="editBtn" onclick="page('edit')">Edit Profile</button></div>
+<div id="featurePages"></div></div></div>
+
+<div class="featureOverlay" id="featureOverlay" onclick="if(event.target.id==='featureOverlay')openFeatures()"><div class="featureMenu"><div class="featureHeader"><svg class="inlineLogo" viewBox="0 0 112 48" role="img" aria-labelledby="sidebarLogoTitle sidebarLogoDesc"><title id="sidebarLogoTitle">Indian Skills</title><desc id="sidebarLogoDesc">IS monogram with blue wings and a star</desc><path class="wing" d="M35 18c-8-6-14-6-22-2 5 1 8 3 11 6-5-1-10 0-14 3 8 0 14 2 20 6M77 18c8-6 14-6 22-2-5 1-8 3-11 6 5-1 8 3 11 6-5-1-10 0-14 3 8 0 14 2 20 6"/><path class="star" d="m94 4 1.6 3.2 3.4.5-2.5 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4L89 7.7l3.4-.5L94 4Z"/><text class="mono" x="39" y="29">IS</text><text class="tag" x="28" y="41">INDIA'S FUTURE RISES</text></svg><button class="featureClose" onclick="openFeatures()">×</button></div>
+<div class="featureList">
+<button class="feature active" data-tab="dashboard" onclick="dashboardHome(this)"><span class="featureIcon">⌂</span><span>DASHBOARD</span></button>
+<button class="feature" data-tab="team" onclick="featurePage('team',this)"><span class="featureIcon">♟</span><span>MY TEAM</span></button>
+<button class="feature" data-tab="courses" onclick="featurePage('courses',this)"><span class="featureIcon">▣</span><span>MY COURSES</span></button>
+<button class="feature" data-tab="upgrade" onclick="featurePage('upgrade',this)"><span class="featureIcon">ϟ</span><span>UPGRADE COURSES</span></button>
+<button class="feature" data-tab="referral" onclick="featurePage('referral',this)"><span class="featureIcon">↗</span><span>REFERRAL LINKS</span></button>
+<button class="feature" data-tab="leaderboard" onclick="featurePage('leaderboard',this)"><span class="featureIcon">★</span><span>LEADERBOARD</span></button>
+<button class="feature" data-tab="elite" onclick="featurePage('elite',this)"><span class="featureIcon" style="background:#fff2b8;color:#8a6500">♛</span><span style="color:#b88900">ELITE DASHBOARD</span></button>
+<button class="feature" data-tab="community" onclick="featurePage('community',this)"><span class="featureIcon">☁</span><span>COMMUNITY</span></button>
+<button class="feature" data-tab="support" onclick="featurePage('support',this)"><span class="featureIcon">?</span><span>SUPPORT</span></button>
+</div><div class="featureBottom"><button class="logout" onclick="logout()">LOG OUT</button></div></div></div>
+
+<div id="pageArea"></div>
+
+<script>
+const SUPABASE_URL='https://rhcddqqoajcejtuzaquc.supabase.co';
+const SUPABASE_ANON_KEY='sb_publishable_MNpVU2BSZSGykvo9crfVxw_Dv7KTzwu';
+const PROFILE_TABLE='profiles';
+
+const NORMALIZED_SUPABASE_URL=(SUPABASE_URL||'').trim().replace(/\/+$/,'');
+const VALID_SUPABASE_URL=/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(NORMALIZED_SUPABASE_URL);
+const VALID_SUPABASE_KEY=Boolean((SUPABASE_ANON_KEY||'').trim());
+
+try{
+  if(!VALID_SUPABASE_URL || !VALID_SUPABASE_KEY){
+    console.error('[Supabase Config Error]: Invalid Supabase URL or anon key.');
+    window.supabase=null;
+  }else{
+    const supabaseSdk=window.supabase;
+    const client = window.__tisSupabaseClient && window.__tisSupabaseClient.auth
+      ? window.__tisSupabaseClient
+      : (supabaseSdk?.createClient
+        ? supabaseSdk.createClient(NORMALIZED_SUPABASE_URL, SUPABASE_ANON_KEY.trim(), {
+            auth:{persistSession:true,autoRefreshToken:true},
+            global:{headers:{'x-app-name':'the-indian-skills'}}
+          })
+        : null);
+    window.supabase = client;
+    window.__tisSupabaseClient = client;
+  }
+}catch(error){
+  console.error('[App Error]:',error);
+  window.supabase=null;
+}
+function dark(){
+  document.body.classList.toggle('dark');
+  localStorage.setItem('tisDark',document.body.classList.contains('dark'));
+  showToast(document.body.classList.contains('dark')?'Dark mode enabled':'Light mode enabled');
+}
+function setHomeBottomBarLogoVisible(visible){
+  const logo=document.getElementById('home-bottom-bar-logo');
+  if(logo)logo.hidden=!visible;
+}
+if(localStorage.getItem('tisDark')==='true')document.body.classList.add('dark');
+
+function openMenu(){
+  document.getElementById('drawer')?.classList.toggle('open');
+}
+function openFeatures(){
+  document.getElementById('featureOverlay')?.classList.toggle('open');
+}
+function copyUserId(){
+  const id=currentUser?.id||'student';
+  if(navigator.clipboard)navigator.clipboard.writeText(id).then(()=>showToast('User ID copied.'));
+  else showToast('User ID: '+id);
+}
+
+function page(type){
+  const drawer=document.getElementById('drawer');
+  const home=document.getElementById('home');
+  const dash=document.getElementById('dashboard');
+  const area=document.getElementById('pageArea');
+  if(!home||!dash||!area){goHomePublic();return}
+  drawer?.classList.remove('open');
+
+  home.style.display='none';
+  dash.style.display='none';
+  setHomeBottomBarLogoVisible(false);
+  document.getElementById('dashboardMenuBtn')?.classList.remove('show');
+
+  if(type==='login'){
+    goHome();
+    openAuthModal('login');
+    return;
+  } else if(type==='edit'){
+    const profileName=escapeHtml(userFullName(currentUser));
+    const profileEmail=escapeHtml(currentUser?.email||'');
+    area.innerHTML=`<div class="page"><div class="pageBox">
+      <h1>Edit Profile</h1>
+      <form class="form" onsubmit="event.preventDefault();saveProfile()">
+        <input id="editName" value="${profileName}" placeholder="Full name" required>
+        <input id="editEmail" type="email" value="${profileEmail}" placeholder="Email">
+        <input id="editPhone" placeholder="Phone">
+        <button type="submit">Save Changes</button>
+        <button type="button" onclick="showDashboard()" style="background:transparent!important;color:var(--text)!important;border:1px solid var(--line)">Cancel</button>
+      </form>
+    </div></div>`;
+  } else {
+    const pages={
+      about:['About Us','<h3>Mission</h3><p>The Indian Skills provides high-impact, practical skill education to help individuals excel in finance, marketing, branding, and management.</p><h3>Skill-First Learning</h3><p>Courses focus on real-world application, enabling students to gain industry-relevant capabilities.</p><h3>Digital Convenience</h3><p>Entirely online learning models allow students to access top-tier training from anywhere.</p><h3>Professional Growth</h3><p>Designed to help learners scale their careers, freelance businesses, or entrepreneurial projects.</p>'],
+      privacy:['Privacy Policy','<h3>Information Collection</h3><p>We collect essential user information, including full name, email address, and authentication details during account creation.</p><h3>Data Security</h3><p>User data is encrypted and securely processed using industry-standard protocols; we never store plain-text credentials.</p><h3>Data Usage</h3><p>Information collected is strictly used to provide platform access, deliver course content, manage user accounts, and communicate with learners.</p><h3>Third-Party Confidentiality</h3><p>Student personal information is strictly confidential and will never be sold, rented, or traded to external third parties.</p><div class="policyNotice"><h3>Cancellation & Refund Policy</h3><p>All digital course purchases, registrations, and payments made on The Indian Skills are final, non-refundable, and non-cancellable under any circumstances once access is granted.</p></div>'],
+      terms:['Terms & Conditions','<div class="policyNotice"><h3>No Refund Policy</h3><p>All purchases of courses, packages, or services on The Indian Skills are final and strictly non-refundable under any circumstances once payment is processed.</p><h3>No Cancellation Policy</h3><p>Orders and course enrollments cannot be canceled, exchanged, or transferred to another user once confirmed.</p></div><h3>Non-Transferable Access</h3><p>Course access and user accounts are non-transferable; credentials cannot be shared, reassigned, or resold to any third party.</p><h3>Intellectual Property Rights</h3><p>All content, course materials, videos, and branding are the exclusive property of The Indian Skills and protected under applicable copyright laws.</p><h3>Account Termination</h3><p>Any unauthorized distribution of course content, misuse of platform access, or fraudulent activity will result in immediate account termination without prior notice.</p><h3>No Job or Income Guarantee</h3><p>The Indian Skills provides educational and skill-development courses only. We do not guarantee job placements, employment, or specific income results. All earning outcomes depend entirely on individual effort, market conditions, and personal implementation.</p>']
+    };
+    const p=pages[type] || pages.about;
+    area.innerHTML=`<div class="page"><div class="pageBox">
+      <h1>${p[0]}</h1><div class="pageContent">${p[1]}</div>
+      <button class="editBtn" onclick="goHome()">Back to Home</button>
+    </div></div>`;
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+async function coursePage(name,price,desc){
+  setHomeBottomBarLogoVisible(false);
+  document.getElementById('home').style.display='none';
+  document.getElementById('dashboard').style.display='none';
+  document.getElementById('dashboardMenuBtn')?.classList.remove('show');
+  document.getElementById('pageArea').innerHTML=`<div class="page"><div class="pageBox">
+    <h1>${name}</h1>
+    <p>${desc}</p>
+    <h2 style="font-size:28px">${price}</h2>
+    <button class="editBtn enrolled-course-card" data-course-name="${escapeHtml(name)}" type="button">Open Course PDF</button>
+    <ul>
+      <li>Practical learning content</li>
+      <li>Mobile-friendly access</li>
+    </ul>
+    <button class="form enroll-btn" data-course-name="${escapeHtml(name)}" data-course-price="${escapeHtml(price)}" style="width:100%;padding:12px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700">Enroll / Preview Course</button>
+    <button class="editBtn" style="margin-top:10px" onclick="goHome()">Back to Home</button>
+  </div></div>`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+async function hasActiveEnrollment(courseName){
+  try{
+    const {data:userData,error:userError}=await window.supabase.auth.getUser();
+    const user=userData?.user;
+    if(userError||!user)return false;
+    const {data,error}=await window.supabase.from('Enrollments').select('id').eq('user_id',user.id).eq('course_name',courseName).eq('status','approved').limit(1);
+    if(error){console.error('[App Error]:',error);return false}
+    return Boolean(data?.length);
+  }catch(error){console.error('[App Error]:',error);return false}
+}
+function showCoursesSection(event){
+  event?.preventDefault();
+  document.getElementById('drawer')?.classList.remove('open');
+  document.getElementById('featureOverlay')?.classList.remove('open');
+  const pageArea=document.getElementById('pageArea');
+  const dashboard=document.getElementById('dashboard');
+  const dashboardMenu=document.getElementById('dashboardMenuBtn');
+  const home=document.getElementById('home');
+  const courses=document.getElementById('courses');
+  setHomeBottomBarLogoVisible(true);
+  if(pageArea)pageArea.innerHTML='';
+  if(dashboard)dashboard.style.display='none';
+  dashboardMenu?.classList.remove('show');
+  if(home)home.style.display='block';
+  courses?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+async function returnToSessionView(){
+  try{
+    const {data,error}=await window.supabase.auth.getSession();
+    if(!error&&data.session?.user){
+      currentUser=data.session.user;
+      await showDashboard();
+      return;
+    }
+  }catch(error){console.error('[App Error]:',error)}
+  goHomePublic();
+}
+function goHomePublic(){
+  document.getElementById('drawer')?.classList.remove('open');
+  document.getElementById('featureOverlay')?.classList.remove('open');
+  const pageArea=document.getElementById('pageArea');
+  const dashboard=document.getElementById('dashboard');
+  const dashboardMenu=document.getElementById('dashboardMenuBtn');
+  const home=document.getElementById('home');
+  setHomeBottomBarLogoVisible(true);
+  if(pageArea)pageArea.innerHTML='';
+  if(dashboard)dashboard.style.display='none';
+  dashboardMenu?.classList.remove('show');
+  if(home)home.style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function handleDocumentClick(event){
+  const target=event.target instanceof Element?event.target:null;
+  if(!target)return;
+  const enrolledCourseCard=target.closest('.enrolled-course-card');
+  if(enrolledCourseCard){
+    event.preventDefault();
+    openCoursePdf(enrolledCourseCard.dataset.courseName);
+    return;
+  }
+  const enrollButton=target.closest('.enroll-btn');
+  if(enrollButton){
+    event.preventDefault();
+    enrollCourse(enrollButton.dataset.courseName,enrollButton.dataset.coursePrice);
+    return;
+  }
+  const homeButton=target.closest('.home-btn');
+  if(homeButton){
+    event.preventDefault();
+    returnToSessionView();
+    return;
+  }
+  const coursesButton=target.closest('.course-library-btn,.explore-courses-btn,.explore-courses-link');
+  if(coursesButton){
+    event.preventDefault();
+    showCoursesSection(event);
+  }
+}
+async function openCoursePdf(courseName){
+  const pdfUrl=COURSE_PDFS[courseName];
+  if(!pdfUrl){showToast('Course PDF is unavailable.');return}
+  if(!await hasActiveEnrollment(courseName)){
+    showToast('Please enroll in this course first to access the PDF.');
+    return;
+  }
+  try{
+    const {data,error}=await window.supabase.storage.from('course-pdfs').createSignedUrl(pdfUrl,3600);
+    if(error||!data?.signedUrl)throw error||new Error('Signed URL unavailable');
+    window.open(data.signedUrl,'_blank','noopener');
+  }catch(error){
+    console.error('[App Error]:',error);
+    showToast('The course PDF could not be opened. Please try again.');
+  }
+}
+document.addEventListener('DOMContentLoaded',()=>document.addEventListener('click',handleDocumentClick));
+document.addEventListener('DOMContentLoaded',()=>{
+  const referralInput=document.getElementById('authReferral');
+  referralInput?.addEventListener('input',updateSignupPricing);
+  referralInput?.addEventListener('change',updateSignupPricing);
+});
+async function enrollCourse(name,price='₹15,999'){
+  try{
+    const {data,error}=await window.supabase.auth.getUser();
+    if(error||!data.user){
+      currentUser=null;
+      showToast('Please sign in or sign up before enrolling.');
+      openAuthModal('login');
+      return;
+    }
+    currentUser=data.user;
+    openPaymentModal(name,price);
+  }catch(error){
+    console.error('[App Error]:',error);
+    currentUser=null;
+    showToast('We could not verify your account. Please try again.');
+  }
+}
+async function fetchEnrollments(){
+  if(!currentUser)return [];
+  try{
+    const userId=currentUser.id;
+    const normalizedEmail=(currentUser.email||'').trim().toLowerCase();
+    const requests=[];
+
+    if(userId){
+      requests.push(window.supabase.from('Enrollments').select('*').eq('user_id',userId).eq('status','approved'));
+    }
+    if(normalizedEmail){
+      requests.push(window.supabase.from('Enrollments').select('*').eq('email',normalizedEmail).eq('status','approved'));
+    }
+
+    if(!requests.length){return []}
+
+    const results=await Promise.all(requests);
+    const mergedMap=new Map();
+    results.forEach(({data,error})=>{
+      if(error){console.error('[App Error]:',error);return}
+      (data||[]).forEach(row=>{
+        if(row?.course_name){mergedMap.set(row.id || `${row.email}-${row.course_name}`, row)}
+      });
+    });
+
+    return Array.from(mergedMap.values());
+  }catch(error){
+    console.error('[App Error]:',error);
+    return [];
+  }
+}
+async function updateDashboardEarnings(){
+  const earningValues=document.querySelectorAll('#dashboard .earning strong');
+  if(!currentUser||earningValues.length<4)return;
+  try{
+    const {data,error}=await window.supabase.from('user_earnings').select('amount,total_earnings,created_at').eq('user_id',currentUser.id);
+    if(error){console.error('[App Error]:',error);return}
+    const rows=data||[];
+  const amounts=rows.map(row=>Number(row.amount)).filter(Number.isFinite);
+  const total=amounts.length
+    ? amounts.reduce((sum,amount)=>sum+amount,0)
+    : Math.max(0,...rows.map(row=>Number(row.total_earnings)).filter(Number.isFinite));
+  const today=new Date();
+  const todayEarnings=rows.reduce((sum,row)=>{
+    const amount=Number(row.amount);
+    if(!Number.isFinite(amount)||!row.created_at)return sum;
+    const created=new Date(row.created_at);
+    return created.toDateString()===today.toDateString()?sum+amount:sum;
+  },0);
+    earningValues[0].textContent=formatCoursePrice(todayEarnings);
+    earningValues[3].textContent=formatCoursePrice(total);
+  }catch(error){console.error('[App Error]:',error)}
+}
+function parseCoursePrice(value){
+  const amount=Number.parseFloat(String(value??'').replace(/[^0-9.]/g,''));
+  return Number.isFinite(amount)?amount:0;
+}
+function formatCoursePrice(value){
+  return '₹'+Number(value).toLocaleString('en-IN',{minimumFractionDigits:Number(value)%1?2:0,maximumFractionDigits:2});
+}
+function checkoutReferralCode(){
+  return referralQueryCode;
+}
+const validReferralLinks=['REF100','SKILLS2026','https://theindianskills.com/ref/user1'];
+function isValidReferralLink(value){
+  const referralLink=value.trim();
+  if(!referralLink)return false;
+  if(validReferralLinks.includes(referralLink))return true;
+  if(/(?:^|[?&])ref=[^&\s]+/i.test(referralLink))return true;
+  if(/^(?:REF\d+|SKILLS[A-Z0-9_-]*)$/i.test(referralLink))return true;
+  try{
+    const url=new URL(referralLink);
+    return /^https?:$/.test(url.protocol)&&(url.searchParams.size>0||/\/(?:user|ref)\//i.test(url.pathname));
+  }catch(error){
+    return false;
+  }
+}
+async function findReferralProfile(value){
+  const referralLink=value.trim();
+  if(!referralLink)return null;
+  const candidates=[referralLink];
+  try{
+    const url=new URL(referralLink);
+    const code=url.searchParams.get('ref');
+    if(code&&!candidates.includes(code))candidates.push(code);
+  }catch(error){}
+  try{
+    for(const candidate of candidates){
+      const {data}=await window.supabase.from(PROFILE_TABLE).select('id,referral_code').eq('referral_code',candidate).maybeSingle();
+      if(data)return data;
+      const {data:linkData}=await window.supabase.from(PROFILE_TABLE).select('id,referral_code').eq('referral_link',candidate).maybeSingle();
+      if(linkData)return linkData;
+    }
+  }catch(error){console.error('[App Error]:',error)}
+  return null;
+}
+function updateSignupPricing(){
+  const packageName=document.getElementById('authPackage')?.value||'';
+  const priceBox=document.getElementById('signupPrice');
+  if(!priceBox)return;
+  const originalPrice=COURSE_PRICES[packageName];
+  if(!originalPrice){priceBox.textContent='Select a course to see the price.';return}
+  const hasReferral=isValidReferralLink(document.getElementById('authReferral')?.value||'');
+  const finalPrice=hasReferral?originalPrice*.25:originalPrice;
+  priceBox.textContent=hasReferral
+    ? `Original Price: ${formatCoursePrice(originalPrice)} | Payable Price (75% OFF): ${formatCoursePrice(finalPrice)}`
+    : `Original Price: ${formatCoursePrice(originalPrice)} | Payable Price: ${formatCoursePrice(finalPrice)}`;
+}
+function updateCheckoutPricing(){
+  const modal=document.getElementById('paymentModal');
+  if(!modal)return;
+  const originalPrice=Number(modal.dataset.originalPrice)||0;
+  const referralCode=modal.dataset.referralApplied==='true'?(modal.dataset.referralCode||'').trim():'';
+  const discount=referralCode?originalPrice*.75:0;
+  const finalPrice=originalPrice-discount;
+  modal.dataset.referralCode=referralCode;
+  modal.dataset.finalPrice=String(finalPrice);
+  const discountRow=document.getElementById('referralDiscountRow');
+  const badge=document.getElementById('referralAppliedBadge');
+  const removeButton=document.getElementById('removeReferralButton');
+  if(discountRow)discountRow.textContent='Referral Discount (75% OFF): -'+formatCoursePrice(discount);
+  if(discountRow)discountRow.hidden=!referralCode;
+  if(badge)badge.hidden=!referralCode;
+  if(removeButton)removeButton.hidden=!referralCode;
+  const finalAmount=document.getElementById('finalPayableAmount');
+  if(finalAmount)finalAmount.textContent='Final Payable Amount: '+formatCoursePrice(finalPrice);
+  const payButton=document.getElementById('payNowButton');
+  if(payButton)payButton.textContent='Pay '+formatCoursePrice(finalPrice);
+}
+async function applyCheckoutReferral(){
+  const modal=document.getElementById('paymentModal');
+  const input=document.getElementById('checkoutReferralCode');
+  const error=document.getElementById('referralLinkError');
+  const referralCode=(input?.value||'').trim();
+  const matchedProfile=await findReferralProfile(referralCode);
+  const isValid=Boolean(matchedProfile);
+  if(error){
+    error.hidden=false;
+    error.textContent=referralCode
+      ? (isValid?'Referral Link Applied!':'Invalid Referral Link')
+      : 'Please enter a referral link first';
+    error.style.color=isValid?'#18794e':'#c44';
+  }
+  if(modal){
+    modal.dataset.referralApplied=String(isValid);
+    modal.dataset.referralCode=isValid?(matchedProfile.referral_code||referralCode):'';
+  }
+  updateCheckoutPricing();
+}
+function removeCheckoutReferral(){
+  const input=document.getElementById('checkoutReferralCode');
+  if(input)input.value='';
+  const error=document.getElementById('referralLinkError');
+  if(error)error.hidden=true;
+  const modal=document.getElementById('paymentModal');
+  if(modal){modal.dataset.referralApplied='false';modal.dataset.referralCode='';}
+  updateCheckoutPricing();
+}
+function openPaymentModal(name,price){
+  closePaymentModal();
+  const originalPrice=parseCoursePrice(price);
+  const referralCode=checkoutReferralCode();
+  const modal=document.createElement('div');
+  modal.id='paymentModal';
+  modal.className='paymentModal open';
+  modal.dataset.courseName=name;
+  modal.dataset.originalPrice=String(originalPrice);
+  modal.dataset.referralCode='';
+  modal.dataset.referralApplied='false';
+  modal.innerHTML=`<div class="paymentDialog" role="dialog" aria-modal="true" aria-labelledby="paymentTitle" aria-describedby="paymentDescription">
+    <div class="authHeader"><div><h2 id="paymentTitle">Complete Enrollment</h2><p id="paymentDescription">Choose a payment method to continue.</p></div><button class="authClose" onclick="closePaymentModal(true)" aria-label="Close">×</button></div>
+    <div class="paymentSummary"><strong>${escapeHtml(name)}</strong><del>Original Course Price: ${formatCoursePrice(originalPrice)}</del><span id="referralDiscountRow">Referral Discount (75% OFF): -${formatCoursePrice(originalPrice*.75)}</span><strong id="finalPayableAmount">Final Payable Amount: ${formatCoursePrice(originalPrice*.25)}</strong><span id="referralAppliedBadge" class="referralBadge">Referral Link Applied!</span></div>
+    <div class="referralControls"><label class="authField">Referral Link<input id="checkoutReferralCode" type="text" value="${escapeHtml(referralCode)}" placeholder="Enter referral link" autocomplete="off" maxlength="40"><span id="referralLinkError" hidden style="display:block;margin-top:6px;color:#c44;font-size:13px">Invalid Referral Link</span></label><div class="referralActions"><button type="button" class="paymentCancel" id="applyReferralButton" onclick="applyCheckoutReferral()">Apply Link</button><button type="button" class="paymentCancel" id="removeReferralButton" onclick="removeCheckoutReferral()">Remove Link</button></div></div>
+    <p style="margin:0;font-weight:700">Payment method</p>
+    <div class="paymentOptions" role="group" aria-label="Payment method">
+      <button class="paymentOption selected" data-method="UPI" onclick="selectPaymentMethod(this)">UPI ID</button>
+      <button class="paymentOption" data-method="QR Code" onclick="selectPaymentMethod(this)">QR Code</button>
+    </div>
+    <div id="paymentMethodDetails" class="paymentMethodDetails"></div>
+    <p class="paymentStatus" id="paymentStatus" role="status"></p>
+    <div class="paymentActions"><button class="paymentCancel" onclick="closePaymentModal(true)">Cancel</button><button class="paymentPay" id="payNowButton" onclick="processPayment(this)">Pay ${formatCoursePrice(originalPrice*.25)}</button></div>
+  </div>`;
+  modal.addEventListener('click',event=>{if(event.target===modal)closePaymentModal(true)});
+  document.body.appendChild(modal);
+  updateCheckoutPricing();
+  renderPaymentMethodDetails('UPI');
+}
+function selectPaymentMethod(button){
+  document.querySelectorAll('.paymentOption').forEach(option=>option.classList.toggle('selected',option===button));
+  renderPaymentMethodDetails(button.dataset.method);
+}
+function renderPaymentMethodDetails(method){
+  const details=document.getElementById('paymentMethodDetails');
+  if(!details)return;
+  if(method==='UPI'){
+    details.innerHTML='<div class="upiPaymentSection"><div class="upiReceivingBox"><span class="upiReceivingId">learner0zon@oksbi</span><button type="button" class="copyUpiButton" onclick="copyReceivingUpi()">Copy</button></div><label class="authField transactionField">Payment Transaction ID / UTR<input id="paymentTransactionId" type="text" placeholder="Enter Payment Transaction ID / UTR" autocomplete="off" maxlength="100" required></label></div>';
+    return;
+  }
+  if(method==='QR Code'){
+    details.innerHTML='<div class="qrPaymentSection"><div class="qrPaymentView"><img src="qr-code.png.jpeg" alt="Payment QR code"><p>Scan this QR code with your UPI app to pay.</p></div><label class="authField transactionField">Payment Transaction ID / UTR<input id="paymentTransactionId" type="text" placeholder="Enter Payment Transaction ID / UTR" autocomplete="off" maxlength="100" required></label></div>';
+    return;
+  }
+  details.innerHTML='';
+}
+function copyReceivingUpi(){
+  const upiId='learner0zon@oksbi';
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(upiId).then(()=>showToast('UPI ID copied to clipboard.'));
+  }else showToast('UPI ID: '+upiId);
+}
+async function closePaymentModal(restoreSession=false){
+  const modal=document.getElementById('paymentModal');
+  if(modal)modal.remove();
+  if(restoreSession&&currentUser)await returnToSessionView();
+}
+async function processPayment(button){
+  try{
+    const modal=document.getElementById('paymentModal');
+    const name=modal?.dataset.courseName;
+    const status=document.getElementById('paymentStatus');
+    if(!modal||!button||!status||!currentUser)return;
+    button.disabled=true;
+    button.textContent='Processing...';
+    status.textContent='Processing payment securely...';
+  const selectedMethod=document.querySelector('#paymentModal .paymentOption.selected')?.dataset.method||'UPI';
+  const transactionId=document.getElementById('paymentTransactionId')?.value.trim()||'';
+  if((selectedMethod==='UPI'||selectedMethod==='QR Code')&&!transactionId){
+    button.disabled=false;
+    button.textContent='Pay '+formatCoursePrice(Number(modal.dataset.finalPrice)||0);
+    status.textContent='Please enter your Payment Transaction ID / UTR before proceeding.';
+    return;
+  }
+  const finalPrice=Number(modal.dataset.finalPrice)||0;
+  const referralCode=(modal.dataset.referralCode||'').trim();
+  const referrerId=referralCode?await findReferrerId(referralCode):null;
+  const {error}=await window.supabase.from('Enrollments').insert([{user_id:currentUser.id,course_name:name,amount:finalPrice,status:'approved',payment_method:selectedMethod,payment_details:{method:selectedMethod,receiving_upi_id:'learner0zon@oksbi',transaction_id:transactionId||null}}]);
+  if(error){button.disabled=false;button.textContent='Pay '+formatCoursePrice(finalPrice);status.textContent=error.message;return}
+  const {error:profileError}=await window.supabase.from(PROFILE_TABLE).update({status:'active'}).eq('id',currentUser.id);
+  if(referrerId)await window.supabase.from('user_earnings').insert({user_id:referrerId,amount:finalPrice});
+  closePaymentModal();
+  showToast(profileError?name+' purchased, but profile activation needs attention.':name+' enrollment successful.');
+    await showDashboard();
+  }catch(error){
+    console.error('[App Error]:',error);
+    const status=document.getElementById('paymentStatus');
+    const button=document.getElementById('payNowButton');
+    if(button){button.disabled=false;button.textContent='Pay';}
+    if(status)status.textContent='Payment could not be completed. Please try again.';
+  }
+}
+function openFeedback(){
+  if(document.getElementById('feedbackModal')) return;
+  const m=document.createElement('div');
+  m.id='feedbackModal';
+  m.style.cssText='position:fixed;inset:0;background:#0009;z-index:300;display:grid;place-items:center;padding:20px';
+  m.innerHTML=`<div style="width:min(650px,100%);background:var(--card);color:var(--text);border-radius:14px;padding:24px;border:1px solid var(--line)">
+    <div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">Student Feedback</h2>
+    <button onclick="closeFeedback()" style="border:0;background:none;color:var(--text);font-size:25px">×</button></div>
+    <div style="height:260px;margin-top:18px;border-radius:10px;background:linear-gradient(135deg,var(--soft),var(--blue));display:grid;place-items:center">
+      <div style="text-align:center"><div style="font-size:48px">▶</div><p>Student feedback preview</p></div>
+    </div>
+    <p style="color:var(--muted);line-height:1.6">This is a local preview panel. Connect your real feedback video URL here when you have one.</p>
+  </div>`;
+  m.addEventListener('click',e=>{if(e.target===m)closeFeedback()});
+  document.body.appendChild(m);
+}
+function closeFeedback(){const m=document.getElementById('feedbackModal');if(m)m.remove()}
+async function saveProfile(){
+  const name=normalizeName(document.getElementById('editName').value);
+  const email=(document.getElementById('editEmail').value||'').trim();
+  const phone=normalizePhone(document.getElementById('editPhone').value||'');
+  if(!name){showToast('Please enter your name.');return;}
+  if(email && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){
+    showToast('Please enter a valid email.');return;
+  }
+  if(!currentUser){showToast('Please sign in again to update your profile.');return;}
+  try{
+    const {data,error}=await window.supabase.auth.updateUser({data:{full_name:name}});
+    if(error){showToast(error.message);return;}
+    currentUser=data.user;
+    localStorage.setItem('tisEmail',email);
+    localStorage.setItem('tisPhone',phone);
+    updateDashboardIdentity();
+    showToast('Profile updated successfully.');
+    showDashboard();
+  }catch(error){console.error('[App Error]:',error);showToast('Profile could not be updated. Please try again.')}
+}
+
+async function showDashboard(){
+  try{
+    if(!currentUser){goHome();return}
+    setHomeBottomBarLogoVisible(false);
+    const home=document.getElementById('home');
+    const pageArea=document.getElementById('pageArea');
+    const dashboard=document.getElementById('dashboard');
+    const dashboardMenu=document.getElementById('dashboardMenuBtn');
+    if(!home||!pageArea||!dashboard||!dashboardMenu)throw new Error('Dashboard elements are unavailable.');
+    home.style.display='none';
+    pageArea.innerHTML='';
+    dashboard.style.display='block';
+    dashboardMenu.classList.add('show');
+    const savedName=userFullName(currentUser);
+    const title=document.querySelector('.dashTop h1');
+    const profile=document.querySelector('.profileInitial');
+    if(title)title.textContent=savedName;
+    if(profile)profile.textContent=savedName.charAt(0).toUpperCase();
+    const profileName=document.querySelector('.profileName');
+    const userId=document.querySelector('.userIdValue');
+    const profileBadge=document.querySelector('.profileBadge');
+    if(profileName)profileName.textContent=savedName;
+    if(userId)userId.textContent=(currentUser.id||'student').slice(0,12);
+    const enrolledCourses=await fetchEnrollments();
+    const activeCourses=Array.isArray(enrolledCourses)
+      ? enrolledCourses.filter(course=>String(course?.status||'').trim().toLowerCase()==='approved'&&String(course?.course_name||'').trim())
+      : [];
+    const enrollment=activeCourses[activeCourses.length-1];
+    const savedCourse=enrollment?.course_name||'';
+    const enrolled=document.querySelector('.enrolled');
+    const currentCourse=document.querySelector('.current p');
+    if(profileBadge)profileBadge.hidden=!savedCourse;
+    if(enrolled)enrolled.textContent=savedCourse||'No Course Enrolled';
+    if(currentCourse)currentCourse.textContent=savedCourse||'No Course Enrolled';
+    await updateDashboardEarnings();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }catch(error){
+    console.error('[App Error]:',error);
+    const dashboard=document.getElementById('dashboard');
+    if(dashboard)dashboard.style.display='block';
+    showToast('Your dashboard could not load completely. Please try again.');
+  }
+}
+async function goHome(){await returnToSessionView()}
+function setDashboardMainView(show){
+  ['.dashTop','.earnings','.chartBlock','.current','.profileEdit'].forEach(selector=>{
+    const element=document.querySelector(selector);
+    if(element)element.style.display=show?'':'none';
+  });
+}
+function setActiveFeature(button){
+  document.querySelectorAll('.feature').forEach(item=>item.classList.toggle('active',item===button));
+}
+function dashboardHome(button){
+  setDashboardMainView(true);
+  setActiveFeature(button||document.querySelector('[data-tab="dashboard"]'));
+  resetDashboardMenu();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+const todayData=[];
+const last7DaysData=[];
+const last30DaysData=[];
+const allTimeData=[];
+const leaderboardData={today:todayData,week:last7DaysData,month:last30DaysData,all:allTimeData};
+const leaderboardViews={today:'leaderboard_today',week:'leaderboard_7days',month:'leaderboard_30days',all:'leaderboard_alltime'};
+async function loadLeaderboardData(period){
+  const target=leaderboardData[period];
+  target.length=0;
+  try{
+    const {data,error}=await window.supabase.from(leaderboardViews[period]).select('*');
+    if(error||!data)return target;
+    data.sort((left,right)=>Number(right.total_earnings||0)-Number(left.total_earnings||0));
+    data.forEach(row=>target.push({name:row.student_name||row.name||row.user_name||row.email||'Platform User',earnings:Number(row.total_earnings||0),status:row.status||row.badge||'Participant',avatar:row.avatar||row.initials||''}));
+  }catch(error){console.error('[App Error]:',error)}
+  return target;
+}
+function formatLeaderboardCurrency(value){return new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(value);}
+function leaderboardRows(period,loading=false){
+  if(loading)return '<div class="leaderboardSpinner" role="status" aria-label="Loading leaderboard"></div>';
+  const users=leaderboardData[period];
+  if(!users.length)return '<div class="leaderboardEmpty">No earnings recorded yet for this period</div>';
+  return users.map((user,index)=>{
+    const rank=index+1;
+    const rankClass=rank===1?'rankGold':rank===2?'rankSilver':rank===3?'rankBronze':'';
+    const initials=user.avatar||user.name.split(' ').map(name=>name[0]).join('').slice(0,2);
+    return `<div class="leaderboardRow"><strong class="${rankClass}">#${rank}</strong><div class="leaderboardUser"><span class="leaderboardAvatar">${initials}</span><span class="leaderboardName">${escapeHtml(user.name)}</span></div><span class="leaderboardScore">${formatLeaderboardCurrency(user.earnings)}</span><span class="leaderboardBadge ${rankClass}">${escapeHtml(user.status)}</span></div>`;
+  }).join('');
+}
+function buildLeaderboardView(period='today'){
+  const tabs=[['today',"Today's Leaderboard"],['week','Last 7 Days'],['month','Last 30 Days'],['all','All Time']];
+  const tabMarkup=tabs.map(tab=>`<button class="leaderboardTab${tab[0]===period?' active':''}" type="button" onclick="renderLeaderboardTab('${tab[0]}',this)">${tab[1]}</button>`).join('');
+  return `<p>Track top performers by points across the platform.</p><div class="leaderboardTabs" role="tablist">${tabMarkup}</div><div class="leaderboardTable"><div class="leaderboardRow leaderboardHead"><span>#</span><span>User</span><span>Points</span><span>Status</span></div><div id="leaderboardRows">${leaderboardRows(period,true)}</div></div>`;
+}
+async function renderLeaderboardTab(period,button){
+  const view=document.querySelector('.featurePage');
+  if(!view)return;
+  view.querySelectorAll('.leaderboardTab').forEach(tab=>tab.classList.toggle('active',tab===button));
+  const rows=view.querySelector('#leaderboardRows');
+  rows.innerHTML='<div class="leaderboardSpinner" role="status" aria-label="Loading leaderboard"></div>';
+  await loadLeaderboardData(period);
+  rows.innerHTML=leaderboardRows(period);
+}
+async function featurePage(type,button){
+  const names={
+    team:'My Team',courses:'My Courses',upgrade:'Upgrade Courses',
+    referral:'Referral Links',leaderboard:'Leaderboard',elite:'Elite Dashboard',community:'Community',support:'Support'
+  };
+  const area=document.getElementById('featurePages');
+  const overlay=document.getElementById('featureOverlay');
+  if(!area||!overlay){goHomePublic();return}
+  overlay.classList.remove('open');
+  setDashboardMainView(false);
+  setActiveFeature(button||document.querySelector(`[data-tab="${type}"]`));
+
+  let body='';
+  if(type==='leaderboard') body=buildLeaderboardView();
+  else if(type==='team') body=`
+    <p>Manage your learning network and track team activity.</p>
+    <div class="featureCardGrid">
+      <div class="featureCard"><h3>Team Members</h3><p>View members connected through your referral activity.</p></div>
+      <div class="featureCard"><h3>Team Activity</h3><p>Monitor new joins and learning activity.</p></div>
+      <div class="featureCard"><h3>Team Earnings</h3><p>View eligible team earnings when a backend is connected.</p></div>
+      <div class="featureCard"><h3>Invite Members</h3><p>Share your referral link to invite learners.</p></div>
+    </div>`;
+  else if(type==='courses'){
+    const enrolledCourses=await fetchEnrollments();
+    const activeCourses=Array.isArray(enrolledCourses)
+      ? enrolledCourses.filter(course=>String(course?.status||'').trim().toLowerCase()==='approved'&&String(course?.course_name||'').trim())
+      : [];
+    body=activeCourses.length
+      ? `<p>Your enrolled courses.</p>
+    <div class="featureCardGrid">
+      ${activeCourses.map(course=>`<button class="featureCard enrolled-course-card" data-course-name="${escapeHtml(course.course_name)}" type="button"><h3>${escapeHtml(course.course_name)}</h3><p>Open enrolled course PDF.</p></button>`).join('')}
+      <button class="featureCard course-library-btn" type="button"><h3>Course Library</h3><p>Use Explore Courses to preview other courses.</p></button>
+    </div>`
+      : '<p>No Enrolled Courses</p>';
+  } else if(type==='upgrade') body=`
+    <p>Explore available courses and upgrade your learning journey.</p>
+    <div class="featureCardGrid">
+      <button class="featureCard upgrade-course-btn" data-course-name="Traffic Management" data-course-price="₹999" type="button" onclick="openPaymentModal('Traffic Management','₹999')"><h3>Traffic Management</h3><p>Audience and traffic growth.</p><strong>₹999</strong><small>Purchase course</small></button>
+      <button class="featureCard upgrade-course-btn" data-course-name="Branding Management" data-course-price="₹2,499" type="button" onclick="openPaymentModal('Branding Management','₹2,499')"><h3>Branding Management</h3><p>Build strong brands.</p><strong>₹2,499</strong><small>Purchase course</small></button>
+      <button class="featureCard upgrade-course-btn" data-course-name="Marketing Management" data-course-price="₹5,000" type="button" onclick="openPaymentModal('Marketing Management','₹5,000')"><h3>Marketing Management</h3><p>Modern marketing fundamentals.</p><strong>₹5,000</strong><small>Purchase course</small></button>
+      <button class="featureCard upgrade-course-btn" data-course-name="Influence Management" data-course-price="₹10,000" type="button" onclick="openPaymentModal('Influence Management','₹10,000')"><h3>Influence Management</h3><p>Communication and leadership.</p><strong>₹10,000</strong><small>Purchase course</small></button>
+      <button class="featureCard upgrade-course-btn" data-course-name="Finance Management" data-course-price="₹15,000" type="button" onclick="openPaymentModal('Finance Management','₹15,000')"><h3>Finance Management</h3><p>Master the fundamentals of corporate and personal finance.</p><strong>₹15,000</strong><small>Purchase course</small></button>
+    </div><div class="comingSoonBanner">More Courses Coming Soon</div>`;
+  else if(type==='referral') body=`<p>Share your unique link with people interested in learning.</p><input id="referralLinkBox" class="refBox" type="text" readonly value="Loading your referral link..."><button id="copyReferralButton" class="editBtn" type="button" onclick="copyReferral()">Copy Link</button><div class="featureCardGrid"><div class="featureCard"><h3>Total Invited Users</h3><p id="refCount">Loading...</p></div><div class="featureCard"><h3>Total Referral Earnings</h3><p id="refEarnings">Loading...</p></div></div>`;
+  else if(type==='community') body=`
+    <p>Access The Indian Skills community and official social channels.</p>
+    <div class="communityGrid">
+      <a class="communityBtn" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+        <span class="socialIcon instagramIcon">◎</span><span><b>Instagram</b><small>Follow us on Instagram</small></span><span>→</span>
+      </a>
+      <a class="communityBtn" href="https://www.whatsapp.com/" target="_blank" rel="noopener noreferrer">
+        <span class="socialIcon whatsappIcon">◉</span><span><b>WhatsApp</b><small>Open WhatsApp community</small></span><span>→</span>
+      </a>
+      <button class="communityBtn" onclick="openChannel()">
+        <span class="socialIcon">☁</span><span><b>Community Channel</b><small>Access the official channel</small></span><span>→</span>
+      </button>
+    </div>`;
+  else if(type==='elite') body=`<p>Elite Dashboard is ready for future membership and backend integration.</p>`;
+  else if(type==='support') body=`<p>For support, use the Contact Us page. Never share your password, OTP or full card number.</p>`;
+
+  area.innerHTML=`<div class="pageBox featurePage show"><h1>${names[type]}</h1>${body}<button class="editBtn backBtn" onclick="dashboardHome()">Back to Dashboard</button></div>`;
+  if(type==='leaderboard'){
+    await loadLeaderboardData('today');
+    document.getElementById('leaderboardRows').innerHTML=leaderboardRows('today');
+  }
+  if(type==='referral') await loadReferralDashboard();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+async function copyReferral(){
+  const button=document.getElementById('copyReferralButton');
+  const link=button?.dataset.referralLink||await buildReferralLink();
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(link).then(()=>showToast('Referral link copied to clipboard!'));
+  }else showToast('Copy this referral link: '+link);
+}
+async function getReferralCode(){
+  if(!currentUser)return '';
+  try{
+    const {data}=await window.supabase.from(PROFILE_TABLE).select('referral_code').eq('id',currentUser.id).maybeSingle();
+    const referralCode=String(data?.referral_code||'').trim();
+    return referralCode||currentUser.id.slice(0,6).toUpperCase();
+  }catch(error){console.error('[App Error]:',error);return currentUser.id.slice(0,6).toUpperCase()}
+}
+async function buildReferralLink(){
+  const code=await getReferralCode();
+  const origin=window.location.origin;
+  const baseUrl=origin.startsWith('file://')||origin==='null'?'http://localhost:5500':origin;
+  return `${baseUrl}/index.html?ref=${encodeURIComponent(code)}`;
+}
+async function loadReferralDashboard(){
+  let link='',invited=0,earnings=[];
+  try{
+    const result=await Promise.all([buildReferralLink(),window.supabase.from('referrals').select('*',{count:'exact',head:true}).eq('referrer_id',currentUser.id),window.supabase.from('user_earnings').select('amount,total_earnings').eq('user_id',currentUser.id)]);
+    link=result[0];invited=result[1].count||0;earnings=result[2].data||[];
+  }catch(error){console.error('[App Error]:',error)}
+  const linkBox=document.getElementById('referralLinkBox');
+  const count=document.getElementById('refCount');
+  const total=document.getElementById('refEarnings');
+  if(linkBox)linkBox.value=link||'Referral link unavailable';
+  const copyButton=document.getElementById('copyReferralButton');
+  if(copyButton)copyButton.dataset.referralLink=link||'';
+  if(count)count.textContent=String(invited||0);
+  if(total)total.textContent=formatLeaderboardCurrency((earnings||[]).reduce((sum,row)=>sum+Number(row.total_earnings??row.amount??0),0));
+}
+function openChannel(){
+  showToast('Add your official WhatsApp/Community channel link in openChannel().');
+}
+
+async function logout(){
+  try{
+    const {error}=await window.supabase.auth.signOut();
+    if(error){showToast(error.message);return}
+    currentUser=null;
+    resetDashboardMenu();
+    goHome();
+    updateAuthNav();
+    showToast('Logged out successfully.');
+  }catch(error){console.error('[App Error]:',error);showToast('Logout failed. Please try again.')}
+}
+let authMode='login';
+let currentUser=null;
+function getPendingReferralCode(){
+  try{
+    const params=new URLSearchParams(window.location.search);
+    return (params.get('ref')||params.get('referral')||'').trim();
+  }catch(error){
+    console.error('[App Error]:',error);
+    return '';
+  }
+}
+const referralQueryCode=getPendingReferralCode();
+const urlParams=new URLSearchParams(window.location.search);
+const hasRef=urlParams.has('ref');
+const COURSE_PRICES={'Traffic Management':999,'Branding Management':2499,'Marketing Management':5000,'Influence Management':10000,'Finance Management':15000,'finance management':15000};
+const COURSE_PDFS={'Finance Management':'finance-management.Pdf.pdf','Influence Management':'influence-management.pdf','Marketing Management':'marketing-management.pdf','Branding Management':'branding-management.pdf','Traffic Management':'traffic-management.pdf'};
+updateSignupPricing();
+async function findReferrerId(code=referralQueryCode){
+  if(!code)return null;
+  try{
+    const {data}=await window.supabase.from(PROFILE_TABLE).select('id').eq('referral_code',code).maybeSingle();
+    return data?.id||null;
+  }catch(error){console.error('[App Error]:',error);return null}
+}
+async function attachReferrer(user,referrerId){
+  if(!user||!referrerId||referrerId===user.id)return;
+  try{await window.supabase.from(PROFILE_TABLE).update({referred_by:referrerId}).eq('id',user.id)}catch(error){console.error('[App Error]:',error)}
+}
+function userFullName(user){
+  return user?.user_metadata?.full_name || user?.email || '';
+}
+function updateAuthNav(user=currentUser){
+  const nav=document.getElementById('authActions');
+  if(!nav)return;
+  nav.innerHTML='';
+}
+function escapeHtml(value){
+  return String(value).replace(/[&<>'"]/g,character=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[character]));
+}
+function openAuthModal(mode='login'){
+  try{
+    authMode=mode;
+    const modal=document.getElementById('authModal');
+    const signUp=mode==='signup';
+    const nameField=document.getElementById('authName');
+    if(!modal||!nameField)throw new Error('Authentication elements are unavailable.');
+    document.getElementById('authTitle').textContent=signUp?'Create Your Account':'Welcome Back';
+    document.getElementById('authSubtitle').textContent=signUp?'Join thousands of learners achieving mastery':'Sign in to access your courses and content';
+    document.getElementById('authSubmit').textContent=signUp?'Create Account':'Sign In';
+    document.getElementById('authPassword').autocomplete=signUp?'new-password':'current-password';
+    document.querySelectorAll('.signupOnly').forEach(field=>{field.style.display=signUp?'block':'none'});
+    document.querySelectorAll('.loginOnly').forEach(field=>{field.style.display=signUp?'none':'block'});
+    nameField.required=signUp;
+    document.getElementById('authPhone').required=signUp;
+    document.getElementById('authPackage').required=signUp;
+    document.getElementById('authPayment').required=signUp;
+    document.getElementById('authSwitchText').textContent=signUp?'Already have an account?':"Don't have an account?";
+    document.getElementById('authSwitchButton').textContent=signUp?'Sign in':'Sign up';
+    if(signUp&&referralQueryCode)document.getElementById('authReferral').value=referralQueryCode;
+    toggleQrPayment();
+    updateSignupPricing();
+    document.getElementById('authError').textContent='';
+    modal.classList.add('open');
+    document.getElementById('authEmail').focus();
+  }catch(error){
+    console.error('[App Error]:',error);
+    showToast('Authentication is temporarily unavailable.');
+  }
+}
+async function closeAuthModal(){
+  document.getElementById('authModal')?.classList.remove('open');
+  document.getElementById('loginForm')?.reset();
+  const authError=document.getElementById('authError');
+  if(authError)authError.textContent='';
+  if(currentUser)await returnToSessionView();
+}
+function toggleAuthMode(){openAuthModal(authMode==='login'?'signup':'login')}
+function toggleQrPayment(){
+  const payment=document.getElementById('authPayment');
+  const qrDetails=document.getElementById('qrPaymentDetails');
+  const upiDetails=document.getElementById('upiPaymentDetails');
+  const utr=document.getElementById('authUtr');
+  const showQr=payment?.value!=='UPI ID';
+  if(qrDetails)qrDetails.hidden=!showQr;
+  if(upiDetails)upiDetails.hidden=showQr;
+  if(utr)utr.required=Boolean(payment?.value);
+}
+async function handleForgotPassword(event){
+  try{
+    event.preventDefault();
+    const email=document.getElementById('authEmail').value.trim().toLowerCase();
+    if(!email){document.getElementById('authError').textContent='Enter your email address first.';return}
+    const {error}=await window.supabase.auth.resetPasswordForEmail(email,{redirectTo:location.href});
+    if(error)console.error('[App Error]:',error);
+    document.getElementById('authError').textContent=error?error.message:'Password reset link sent to your email.';
+  }catch(error){
+    console.error('[App Error]:',error);
+    document.getElementById('authError').textContent='Password reset could not be completed. Please try again.';
+  }
+}
+async function hashPassword(value){
+  try{
+    if(!value)return '';
+    const encoder=new TextEncoder();
+    const digest=await crypto.subtle.digest('SHA-256',encoder.encode(value));
+    return Array.from(new Uint8Array(digest)).map(byte=>byte.toString(16).padStart(2,'0')).join('');
+  }catch(error){
+    console.error('[Password Hash Error]:',error);
+    return value;
+  }
+}
+function clearApprovalErrorState(){
+  const authError=document.getElementById('authError');
+  if(authError)authError.textContent='';
+  const paymentStatus=document.getElementById('paymentStatus');
+  if(paymentStatus)paymentStatus.textContent='';
+  const authUtr=document.getElementById('authUtr');
+  if(authUtr)authUtr.value='';
+  const paymentTransactionId=document.getElementById('paymentTransactionId');
+  if(paymentTransactionId)paymentTransactionId.value='';
+}
+async function submitPendingSignup({name,phone,email,password,referralCode,packageName,paymentMethod}){
+  const originalPrice=COURSE_PRICES[packageName]||0;
+  const capturedReferralCode=(referralCode||checkoutReferralCode()).trim();
+  const referrerId=await findReferrerId(capturedReferralCode);
+  const hasValidReferral=isValidReferralLink(capturedReferralCode);
+  const discountAmount=hasValidReferral?Math.round(originalPrice*.75):0;
+  const paidPrice=hasValidReferral?Math.round(originalPrice*.25):originalPrice;
+  const utrNumber=(document.getElementById('authUtr')?.value||'').trim();
+  const passwordHash=await hashPassword(password);
+
+  const pendingRecord={
+    email,
+    full_name:name,
+    phone,
+    course_name: packageName || 'Unspecified course',
+    password_hash:passwordHash,
+    pending_password:password,
+    status:'pending',
+    referral_code:capturedReferralCode||null,
+    referrer_id:referrerId,
+    payment_method:paymentMethod,
+    utr_number:utrNumber,
+    transaction_id:utrNumber || null,
+    payment_details:{method:paymentMethod,utr_number:utrNumber,status:'received',received_at:new Date().toISOString()},
+    original_price:originalPrice,
+    discount_amount:discountAmount,
+    paid_price:paidPrice,
+    referral_discount_price:paidPrice,
+    created_at:new Date().toISOString()
+  };
+
+  const {data,error}=await window.supabase.from('Enrollments').insert([pendingRecord]);
+  if(error){
+    console.error('[Enrollments Insert Error]:',error);
+    return {data:null,error};
+  }
+
+  return {data,error:null};
+}
+async function approvePendingEnrollment(enrollmentId, enrollmentRow){
+  try{
+    if(!enrollmentRow?.email){
+      throw new Error('Missing enrollment email for approval.');
+    }
+
+    let authUserId = enrollmentRow.user_id || enrollmentRow.auth_user_id || null;
+    const passwordToUse = enrollmentRow.pending_password || enrollmentRow.password_hash || '';
+
+    if(!authUserId && passwordToUse){
+      const {data:authData,error:authError}=await window.supabase.auth.signUp({
+        email: enrollmentRow.email,
+        password: passwordToUse,
+        options:{
+          data:{
+            full_name: enrollmentRow.full_name || '',
+            phone: enrollmentRow.phone || '',
+            package_name: enrollmentRow.package_name || enrollmentRow.course_name || '',
+            referral_code: enrollmentRow.referral_code || null
+          }
+        }
+      });
+
+      if(authError){
+        console.error('[Admin Approval Auth Signup Error]:',authError);
+        throw authError;
+      }
+
+      authUserId = authData?.user?.id || null;
+    }
+
+    if(!authUserId){
+      throw new Error('No auth user available for this approval.');
+    }
+
+    const {error:updateError}=await window.supabase
+      .from('Enrollments')
+      .update({
+        status:'approved',
+        approved_at:new Date().toISOString(),
+        user_id: authUserId,
+        auth_user_id: authUserId,
+        pending_password:null,
+        password_hash: enrollmentRow.password_hash || null
+      })
+      .eq('email', enrollmentRow.email);
+
+    if(updateError){
+      console.error('[Admin Approval Update Error]:',updateError);
+      throw updateError;
+    }
+
+    return {success:true, userId: authUserId};
+  }catch(error){
+    console.error('[Admin Approval Error]:',error);
+    throw error;
+  }
+}
+async function handleAuthSubmit(event){
+  try{
+    event.preventDefault();
+    const name=document.getElementById('authName').value.trim();
+    const phone=document.getElementById('authPhone').value.trim();
+    const referralCode=document.getElementById('authReferral').value.trim();
+    const packageName=document.getElementById('authPackage').value;
+    const paymentMethod=document.getElementById('authPayment').value;
+    const email=document.getElementById('authEmail').value.trim().toLowerCase();
+    const password=document.getElementById('authPassword').value;
+    const error=document.getElementById('authError');
+    if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){error.textContent='Please enter a valid email address.';return}
+    if(authMode==='signup' && name.length<2){error.textContent='Please enter your full name.';return}
+    if(authMode==='signup' && !phone){error.textContent='Please enter your phone number.';return}
+    if(authMode==='signup' && !packageName){error.textContent='Please select a package.';return}
+    if(authMode==='signup' && !paymentMethod){error.textContent='Please select a payment method.';return}
+    if(password.length<6){error.textContent='Password must be at least 6 characters.';return}
+
+    const submit=document.getElementById('authSubmit');
+    submit.disabled=true;
+    error.textContent='';
+
+    if(authMode==='signup'){
+      const signUpAttempt=await window.supabase.auth.signUp({
+        email,
+        password,
+        options:{
+          data:{
+            full_name:name,
+            phone,
+            package_name:packageName,
+            referral_code:referralCode || null,
+            payment_method:paymentMethod || null
+          }
+        }
+      });
+
+      if(signUpAttempt.error){
+        console.error('[Signup Error]:',signUpAttempt.error);
+        submit.disabled=false;
+        error.textContent=signUpAttempt.error.message || 'Registration could not be completed.';
+        return;
+      }
+
+      const authUser=signUpAttempt.data?.user || null;
+      if(!authUser){
+        submit.disabled=false;
+        error.textContent='Unable to create your Supabase Auth account.';
+        return;
+      }
+
+      let sessionUser = authUser;
+      try{
+        const {data:sessionData,error:sessionError}=await window.supabase.auth.signInWithPassword({email,password});
+        if(!sessionError && sessionData?.user){
+          sessionUser = sessionData.user;
+        }
+      }catch(sessionException){
+        console.warn('[Signup Session Recovery Warning]:',sessionException);
+      }
+
+      const utrNumber=(document.getElementById('authUtr')?.value||'').trim();
+      const enrollmentPayload={
+        user_id:sessionUser.id,
+        email,
+        full_name:name,
+        phone,
+        course_name:packageName || 'Unspecified course',
+        transaction_id:utrNumber || null,
+        status:'pending',
+        payment_method:paymentMethod || null,
+        referral_code:referralCode || null,
+        created_at:new Date().toISOString(),
+        updated_at:new Date().toISOString()
+      };
+
+      const {error:enrollmentError}=await window.supabase.from('Enrollments').insert([enrollmentPayload]);
+
+      if(enrollmentError){
+        console.error('[Enrollments Insert Error]:',enrollmentError);
+        submit.disabled=false;
+        error.textContent='Account created, but we could not save your enrollment record.';
+        return;
+      }
+
+      try{
+        await window.supabase.auth.signOut();
+      }catch(signoutError){
+        console.warn('[Signup SignOut Warning]:',signoutError);
+      }
+
+      submit.disabled=false;
+      await closeAuthModal();
+      showToast('Registration successful! Awaiting admin approval.');
+      return;
+    }
+
+    const loginEmail=document.getElementById('authEmail')?.value.trim().toLowerCase() || '';
+    const loginPassword=document.getElementById('authPassword')?.value || '';
+
+    console.log('[Login Attempt] signInWithPassword payload:', {
+      email: loginEmail,
+      password: loginPassword
+    });
+
+    if(!loginEmail || !loginPassword){
+      error.textContent='Please enter your email and password.';
+      submit.disabled=false;
+      return;
+    }
+
+    const loginAttempt=await window.supabase.auth.signInWithPassword({
+      email: loginEmail,
+      password: loginPassword
+    });
+    submit.disabled=false;
+    if(loginAttempt.error){
+      console.error('[App Error]:',loginAttempt.error);
+      error.textContent=loginAttempt.error.message;
+      return;
+    }
+
+    const loggedInUser=loginAttempt.data?.user || null;
+    if(!loggedInUser){
+      error.textContent='Unable to sign in. Please try again.';
+      return;
+    }
+
+    const signedInEmail=loggedInUser.email || email;
+    const isAdminBypass=signedInEmail.toLowerCase()==='admin8controls@gmail.com';
+
+    if(!isAdminBypass){
+      let approvalData=null;
+      let approvalError=null;
+
+      try{
+        const approvalResult=await window.supabase
+          .from('Enrollments')
+          .select('status,email,user_id')
+          .or(`user_id.eq.${loggedInUser.id},email.eq.${signedInEmail}`)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        approvalData=approvalResult.data || null;
+        approvalError=approvalResult.error || null;
+      }catch(fetchError){
+        approvalError=fetchError;
+        console.error('[Approval Check] Enrollment lookup threw an exception:', fetchError);
+      }
+
+      if(approvalError && approvalError.code !== 'PGRST116'){
+        console.warn('[Approval Check] Enrollment status lookup failed for regular user:', approvalError);
+      }
+
+      const latestStatus=String(approvalData?.status || '').trim().toLowerCase();
+      const isApproved=latestStatus === 'approved';
+
+      if(!approvalData || !isApproved){
+        console.warn('[Approval Check] User is not approved or no enrollment record was found:', {
+          email: signedInEmail,
+          userId: loggedInUser.id,
+          approvalData,
+          status: latestStatus,
+          approvalError
+        });
+        clearApprovalErrorState();
+        error.textContent='Your account is pending admin approval.';
+        try{
+          await window.supabase.auth.signOut();
+        }catch(signOutError){
+          console.warn('[Approval Check] Sign out failed after pending approval rejection:', signOutError);
+        }
+        return;
+      }
+    }
+
+    await initializeAuth(loggedInUser);
+    await closeAuthModal();
+    showToast('Signed in successfully.');
+  }catch(error){
+    console.error('[App Error]:',error);
+    const submit=document.getElementById('authSubmit');
+    if(submit)submit.disabled=false;
+    showToast('We could not complete sign in. Please try again.');
+  }
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('drawer').classList.remove('open');document.getElementById('featureOverlay').classList.remove('open');closeFeedback();closeAuthModal()}});
+window.addEventListener('popstate',()=>returnToSessionView());
+
+async function initializeAuth(user){
+  try{
+    if(!user){currentUser=null;updateAuthNav();return}
+    const {data,error}=await window.supabase.auth.getUser();
+    if(error)throw error;
+    currentUser=data.user;
+    await attachReferrer(currentUser,currentUser.user_metadata?.referrer_id);
+    const name=userFullName(currentUser);
+    localStorage.setItem('tisEmail',currentUser.email||'');
+    updateAuthNav(currentUser);
+    await showDashboard();
+  }catch(error){
+    console.error('[App Error]:',error);
+    currentUser=null;
+    updateAuthNav(null);
+    goHomePublic();
+    showToast('We could not load your account. Please sign in again.');
+  }
+}
+
+window.addEventListener('DOMContentLoaded',async()=>{
+  goHomePublic();
+  updateAuthNav(null);
+  if(!window.supabase)return;
+  try{
+    const {data}=await window.supabase.auth.getSession();
+    await initializeAuth(data.session?.user||null);
+  }catch(error){
+    console.error('[App Error]:',error);
+    goHomePublic();
+  }
+});
+
+function showToast(message){
+  const t=document.getElementById('toast');
+  if(!t)return;
+  t.textContent=message;
+  t.classList.add('show');
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+function normalizeName(value){
+  return value.trim().replace(/\s+/g,' ').slice(0,60);
+}
+
+function normalizePhone(value){
+  return value.trim().slice(0,20);
+}
+
+function updateDashboardIdentity(){
+  const name=userFullName(currentUser);
+  const title=document.querySelector('.dashTop h1');
+  const profile=document.querySelector('.profileInitial');
+  if(title) title.textContent=name;
+  if(profile) profile.textContent=name.charAt(0).toUpperCase();
+  const profileName=document.querySelector('.profileName');
+  const userId=document.querySelector('.userIdValue');
+  if(profileName)profileName.textContent=name;
+  if(userId)userId.textContent=(currentUser?.id||'student').slice(0,12);
+}
+
+function resetDashboardMenu(){
+  document.getElementById('featureOverlay')?.classList.remove('open');
+  const featurePages=document.getElementById('featurePages');
+  if(featurePages)featurePages.innerHTML='';
+  document.querySelectorAll('.feature').forEach(x=>x.classList.remove('active'));
+  const first=document.querySelector('.feature');
+  if(first)first.classList.add('active');
+}
+
+document.querySelectorAll('.featureHeader .inlineLogo').forEach(logo=>{
+  logo.outerHTML='<img src="logo.jpg" alt="Indian Skills Logo" style="width: auto; height: 80px; object-fit: contain;">';
+});
+
+</script>
+</body>
+</html>
