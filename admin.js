@@ -98,20 +98,24 @@ function renderMetrics(enrollments) {
 
 function renderPendingSignups(pendingUsers) {
   if (!pendingUsers.length) {
-    elements.pendingRows.innerHTML = '<tr><td colspan="9" class="empty">No pending signups found.</td></tr>';
+    elements.pendingRows.innerHTML = '<tr><td colspan="5" class="empty">No pending signups found.</td></tr>';
     return;
   }
-  elements.pendingRows.innerHTML = pendingUsers.map(user => `<tr>
-    <td><div class="student"><span class="studentAvatar">${escapeHtml(initials(user.full_name))}</span><span class="studentName">${escapeHtml(user.full_name)}</span></div></td>
-    <td>${escapeHtml(user.email)}<br><span class="studentEmail">${escapeHtml(user.phone)}</span></td>
-    <td>${escapeHtml(user.package_name)}</td>
-    <td class="amount">${escapeHtml(formatAmount(user.original_price))}</td>
-    <td class="amount">${escapeHtml(formatAmount(user.paid_price || user.referral_discount_price))}</td>
-    <td>${user.referral_code ? `Yes (${escapeHtml(user.referral_code)})` : 'No'}</td>
-    <td>${escapeHtml(user.utr_number || user.payment_details?.utr_number || 'Not provided')}</td>
-    <td>${escapeHtml(user.payment_method)}</td>
-    <td><button class="approve" data-pending-id="${escapeHtml(user.id)}">Approve</button></td>
-  </tr>`).join('');
+
+  elements.pendingRows.innerHTML = pendingUsers.map(user => {
+    const name = firstValue(user, ['full_name', 'name', 'student_name'], 'Pending user');
+    const email = firstValue(user, ['email', 'student_email'], 'Email unavailable');
+    const courseName = firstValue(user, ['course_name', 'package_name', 'course'], 'Unspecified course');
+    const status = String(firstValue(user, ['status'], 'pending')).trim();
+
+    return `<tr>
+      <td><div class="student"><span class="studentAvatar">${escapeHtml(initials(name))}</span><span class="studentName">${escapeHtml(name)}</span></div></td>
+      <td>${escapeHtml(email)}</td>
+      <td>${escapeHtml(courseName)}</td>
+      <td><span class="status pending">${escapeHtml(status)}</span></td>
+      <td><button class="approve" data-pending-id="${escapeHtml(user.id)}">Approve</button></td>
+    </tr>`;
+  }).join('');
 }
 
 function getLocalPendingSignups() {
@@ -151,14 +155,19 @@ async function fetchDashboardData() {
   }
 
   try {
-    const { data, error } = await supabaseClient.from('pending_users').select('*').eq('status', 'pending').order('created_at', { ascending: false });
+    const { data, error } = await supabaseClient
+      .from('Enrollments')
+      .select('*')
+      .eq('status', 'pending')
+      .order('created_at', { ascending: false });
+
     if (error) throw error;
     pendingUsers = data || [];
   } catch (error) {
-    console.error('Unable to fetch pending signups:', error);
+    console.error('Unable to fetch pending signups from Enrollments:', error);
     pendingUsers = getLocalPendingSignups();
     if (!pendingUsers.length) {
-      elements.pendingRows.innerHTML = '<tr><td colspan="9" class="error">Pending signups table is not configured. Run supabase_pending_approval.sql.</td></tr>';
+      elements.pendingRows.innerHTML = '<tr><td colspan="5" class="error">No pending signups are currently available in the Enrollments table.</td></tr>';
     }
   }
 
@@ -177,22 +186,23 @@ async function fetchDashboardData() {
 async function approvePendingSignup(button) {
   button.disabled = true;
   button.textContent = 'Approving...';
-  if (button.dataset.pendingId.startsWith('local-')) {
-    const localRecords = getLocalPendingSignups().filter(user => user.id !== button.dataset.pendingId);
-    localStorage.setItem('tisPendingUsers', JSON.stringify(localRecords));
+
+  try {
+    const { error } = await supabaseClient
+      .from('Enrollments')
+      .update({ status: 'approved' })
+      .eq('id', button.dataset.pendingId);
+
+    if (error) throw error;
+
     await fetchDashboardData();
     return;
-  }
-  const { data, error } = await supabaseClient.functions.invoke('approve-pending-user', {
-    body: { pendingId: button.dataset.pendingId }
-  });
-  if (error || data?.error) {
+  } catch (error) {
+    console.error('Unable to approve pending signup:', error);
     button.disabled = false;
     button.textContent = 'Approve';
-    alert(error?.message || data.error);
-    return;
+    alert(error?.message || 'Unable to approve this signup.');
   }
-  await fetchDashboardData();
 }
 
 async function authorizeAndLoad() {

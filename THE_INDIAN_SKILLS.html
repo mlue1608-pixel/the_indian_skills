@@ -8,23 +8,27 @@
 <style>
 :root{--bg:#f7fbff;--card:#fff;--text:#071d3b;--muted:#63758a;--navy:#071d3b;--blue:#72c8f5;--line:#dce8f1;--soft:#e9f7ff}
 .dark{--bg:#07111e;--card:#0d1c2c;--text:#f5f9ff;--muted:#b5c4d4;--navy:#020a15;--blue:#73cdf8;--line:#263d52;--soft:#102c43}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}button{font-family:inherit;cursor:pointer}.wrap{width:min(1120px,92%);margin:auto}
-header{height:72px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;position:sticky;top:0;z-index:20}.nav{display:flex;align-items:center;justify-content:space-between}.brand{background:var(--blue);color:var(--navy);font-size:22px;font-weight:900;padding:13px 18px;border-radius:4px}.right{display:flex;align-items:center;gap:12px}.theme,.dots{border:0;background:none;color:var(--text)}.theme svg{width:21px;height:21px;fill:currentColor}.dots{width:25px}.dots i,.dashboardMenuBtn i{display:block;width:4px;height:4px;border-radius:50%;background:currentColor;margin:4px}
-.hero{min-height:430px;padding:70px 0;background:linear-gradient(100deg,var(--soft),var(--bg));display:flex;align-items:center}.heroGrid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:45px}.hero h1{font-size:clamp(45px,6vw,70px);line-height:.98;margin:0;font-weight:900;letter-spacing:-2px}.hero p{font-size:18px;color:var(--muted);line-height:1.6;margin:22px 0}.actions{display:flex;gap:14px}.action{width:250px;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:14px;display:flex;align-items:center;gap:14px;text-align:left;color:var(--text);box-shadow:0 8px 25px #071d3b12}.actionIcon{width:48px;height:48px;border-radius:9px;background:#075db9;color:#fff;display:grid;place-items:center}.actionIcon svg{width:25px;fill:currentColor}.action b{display:block;font-size:16px}.action small{color:var(--muted);display:block;margin-top:5px}.arrow{margin-left:auto;font-size:22px}
-section{padding:60px 0}.title{margin-bottom:25px}.title h2{font-size:30px;margin:0 0 7px}.title p{color:var(--muted)}.courses{display:grid;grid-template-columns:repeat(5,1fr);gap:15px}.course{background:var(--card);border:1px solid var(--line);border-radius:11px;overflow:hidden}.poster{height:150px;background:center/cover}.course:nth-child(1) .poster{background-image:url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=90')}.course:nth-child(2) .poster{background-image:url('https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=90')}.course:nth-child(3) .poster{background-image:url('https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=1200&q=90')}.course:nth-child(4) .poster{background-image:url('https://images.unsplash.com/photo-1553484771-371a605b060b?auto=format&fit=crop&w=1200&q=90')}.course:nth-child(5) .poster{background-image:url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=90')}.body{padding:15px}.body h3{margin:0 0 8px}.body p{font-size:13px;color:var(--muted);line-height:1.5}.price{font-size:19px;font-weight:900}.view{width:100%;margin-top:12px;padding:9px;border:1px solid #0871cf;background:transparent;color:#0871cf;border-radius:7px;font-weight:700}
+*{box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;overflow-x:hidden;max-width:100%;overflow-wrap:break-word}button{font-family:inherit;cursor:pointer}.wrap{width:min(1120px,92%);margin:auto;max-width:100%;box-sizing:border-box}
+header{height:72px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;position:sticky;top:0;z-index:20;width:100%;box-sizing:border-box;overflow:hidden}.nav{display:flex;align-items:center;justify-content:space-between;width:100%;box-sizing:border-box}.brand{background:var(--blue);color:var(--navy);font-size:22px;font-weight:900;padding:13px 18px;border-radius:4px}.right{display:flex;align-items:center;gap:12px}.dots{border:0;background:none;color:var(--text);width:25px}.dots i,.dashboardMenuBtn i{display:block;width:4px;height:4px;border-radius:50%;background:currentColor;margin:4px}
+.hero{min-height:430px;padding:70px 0;background:linear-gradient(100deg,var(--soft),var(--bg));display:flex;align-items:center}.heroGrid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:45px}.hero h1{font-size:clamp(45px,6vw,70px);line-height:.98;margin:0;font-weight:900;letter-spacing:-2px}.hero p{font-size:18px;color:var(--muted);line-height:1.6;margin:22px 0}.actions{display:flex;gap:14px}.action{width:250px;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:14px;display:flex;align-items:center;gap:14px;text-align:left;color:var(--text);box-shadow:0 8px 25px #071d3b12;max-width:100%;box-sizing:border-box}@media(max-width:600px){.action{width:100%;min-height:44px}}.actionIcon{width:48px;height:48px;border-radius:9px;background:#075db9;color:#fff;display:grid;place-items:center}.actionIcon svg{width:25px;fill:currentColor}.action b{display:block;font-size:16px}.action small{color:var(--muted);display:block;margin-top:5px}.arrow{margin-left:auto;font-size:22px}
+section{padding:60px 0}.title{margin-bottom:25px}.title h2{font-size:30px;margin:0 0 7px}.title p{color:var(--muted)}.courses{display:grid;grid-template-columns:repeat(5,1fr);gap:15px;align-items:stretch}.course{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:11px;overflow:hidden}.poster{position:relative;height:220px;overflow:hidden;background:var(--soft);display:flex;align-items:center;justify-content:center}.poster img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;transform:none;background:#f3f8ff}.course:nth-child(1) .poster{background-image:url('marketing management.jpeg');background-size:contain;background-position:center;background-repeat:no-repeat}.course:nth-child(2) .poster{background-image:url('branding management.jpeg');background-size:contain;background-position:center;background-repeat:no-repeat}.course:nth-child(3) .poster{background-image:url('traffic management.jpeg');background-size:contain;background-position:center;background-repeat:no-repeat}.course:nth-child(4) .poster{background-image:url('influence management.jpeg');background-size:contain;background-position:center;background-repeat:no-repeat}.course:nth-child(5) .poster{background-image:url('finance management.jpeg');background-size:contain;background-position:center;background-repeat:no-repeat}.body{padding:15px;display:flex;flex:1;flex-direction:column}.body h3{margin:0 0 8px}.body p{font-size:13px;color:var(--muted);line-height:1.5}.price{font-size:19px;font-weight:900}.view{width:100%;margin-top:12px;padding:9px;border:1px solid #0871cf;background:transparent;color:#0871cf;border-radius:7px;font-weight:700}
 .why{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.quality{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:25px;text-align:center}.qualityIcon{width:54px;height:54px;border-radius:50%;background:var(--soft);display:grid;place-items:center;margin:auto}.qualityIcon svg{width:28px;fill:var(--navy)}.quality h3{margin:14px 0 7px}.quality p{font-size:14px;color:var(--muted);line-height:1.5}
 .lower{display:grid;grid-template-columns:1fr 1.2fr;gap:30px}.feedback{background:var(--navy);border-radius:14px;padding:25px;color:#fff}.video{height:230px;border-radius:10px;margin-top:18px;background:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=90') center/cover;display:grid;place-items:center}.play{width:58px;height:58px;border-radius:50%;background:var(--blue);display:grid;place-items:center;color:var(--navy)}.play svg{width:24px;fill:currentColor}.faq details{background:var(--card);border:1px solid var(--line);padding:16px;margin:8px 0;border-radius:8px}.faq summary{font-weight:700;cursor:pointer}.faq p{color:var(--muted);line-height:1.6}
-footer{background:var(--navy);color:#fff;padding:38px 0 18px}.foot{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:30px}.foot h3{margin-top:0}.foot p,.foot a{font-size:13px;line-height:1.7;color:#c5d2df;text-decoration:none;display:block}.made{margin-top:25px;padding:14px 20px;border-top:1px solid #ffffff20;text-align:right;color:#c5d2df;font-size:13px}
-.drawer,.featureOverlay{position:fixed;inset:0;background:#0008;z-index:50;display:none}.drawer.open,.featureOverlay.open{display:block}.menu{width:min(340px,88%);height:100%;margin-left:auto;background:var(--card);padding:25px}.menu a{display:block;color:var(--text);text-decoration:none;padding:15px 5px;border-bottom:1px solid var(--line);font-weight:700}.close,.featureClose{float:right;border:0;background:none;color:var(--text);font-size:25px}.page{min-height:75vh;padding:80px 0}.pageBox{max-width:700px;margin:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:35px}.pageBox h1{font-size:40px;margin-top:0}.pageBox p,.pageBox li{color:var(--muted);line-height:1.7}.form input{width:100%;padding:13px;margin:6px 0;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--text)}.form button{width:100%;padding:12px;margin-top:8px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700}.google{background:var(--blue)!important;color:var(--navy)!important}
-#dashboard{display:none;min-height:100vh;background:var(--bg)}.dashTop{padding:35px 0 20px;text-align:center}.profile{width:82px;height:82px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--navy));display:grid;place-items:center;margin:auto;font-size:28px;font-weight:900;color:#fff;border:4px solid var(--card);box-shadow:0 8px 25px #071d3b20}.dashTop h1{margin:12px 0 5px;font-size:25px}.dashTop p{margin:0;color:var(--muted)}.enrolled{display:inline-block;margin-top:12px;padding:8px 16px;background:var(--blue);color:var(--navy);border-radius:7px;font-size:13px;font-weight:800}.earnings{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px auto 30px}.earning{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center;box-shadow:0 6px 20px #071d3b09}.earning span{font-size:12px;color:var(--muted)}.earning strong{display:block;font-size:21px;margin-top:8px}.current{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:25px;box-shadow:0 8px 25px #071d3b09}.current h2{margin:0}.profileEdit{margin:25px 0 50px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;justify-content:space-between;align-items:center}.editBtn{padding:9px 18px;border:1px solid var(--navy);background:transparent;color:var(--text);border-radius:7px;font-weight:700}
-.featureOverlay{z-index:100}.featureMenu{position:absolute;left:0;top:0;height:100%;width:min(350px,88vw);background:var(--card);padding:24px 18px;overflow-y:auto;box-shadow:15px 0 45px #0003}.featureHeader{display:flex;align-items:center;justify-content:space-between;padding:5px 8px 22px;border-bottom:1px solid var(--line)}.featureHeader h2{margin:0;font-size:21px}.featureHeader .featureClose{float:none}.featureList{margin-top:18px}.feature{width:100%;border:0;background:none;color:var(--text);display:flex;align-items:center;gap:14px;padding:13px 12px;margin:3px 0;border-radius:9px;text-align:left;font-size:14px;font-weight:700}.feature:hover,.feature.active{background:var(--soft)}.featureIcon{width:34px;height:34px;flex:none;border-radius:8px;background:var(--soft);display:grid;place-items:center;color:var(--navy)}.featureIcon svg{width:19px;height:19px;fill:currentColor}.featureBottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line)}.logout{width:100%;padding:11px;border:1px solid #d66;background:transparent;color:#c44;border-radius:8px;font-weight:700}.dashboardMenuBtn{position:fixed;left:18px;top:90px;z-index:60;width:44px;height:44px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;box-shadow:0 5px 18px #071d3b12;display:none}.dashboardMenuBtn.show{display:grid;place-items:center}
-.featurePage{display:none}.featurePage.show{display:block}
-.pageContent h3{margin:22px 0 6px}.pageContent h3:first-child{margin-top:0}.pageContent p{margin:0 0 14px}
+footer{background:var(--navy);color:#fff;padding:38px 0 18px}.foot{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:30px}.foot h3{margin-top:0}.foot p,.foot a{font-size:13px;line-height:1.7;color:#c5d2df;text-decoration:none;display:block}.made{margin-top:25px;padding:14px 20px;border-top:1px solid #ffffff20;color:#c5d2df;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.made-top,.made-links,.made-credit{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;line-height:1.6}
+.made-links a,.made-credit a{color:#c5d2df;text-decoration:none}
+.made-links span{color:#8da0b6}
+.made-credit{margin-top:2px}
+.drawer,.featureOverlay{position:fixed;inset:0;background:#0008;z-index:50;display:none;overflow:hidden}.drawer.open,.featureOverlay.open{display:block}.menu{width:min(340px,88%);height:100%;margin-left:auto;background:var(--card);padding:25px;overflow-y:auto;-webkit-overflow-scrolling:touch;box-sizing:border-box;max-width:100%}.menu a{display:block;color:var(--text);text-decoration:none;padding:15px 5px;border-bottom:1px solid var(--line);font-weight:700}.close,.featureClose{float:right;border:0;background:none;color:var(--text);font-size:25px}.page{min-height:75vh;padding:80px 0;overflow-x:hidden}.pageBox{max-width:700px;margin:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:35px;box-sizing:border-box;width:100%}.pageBox h1{font-size:40px;margin-top:0}.pageBox p,.pageBox li{color:var(--muted);line-height:1.7}.form input{width:100%;padding:13px;margin:6px 0;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--text);box-sizing:border-box;font-size:16px;min-height:44px}@media(max-width:600px){.form input{padding:12px 10px}}.form button{width:100%;padding:12px;margin-top:8px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-weight:700;font-size:16px;min-height:44px;cursor:pointer;box-sizing:border-box}@media(max-width:600px){.form button{padding:14px 12px}}.google{background:var(--blue)!important;color:var(--navy)!important}
+#dashboard{display:none;min-height:100vh;background:var(--bg);width:100%;max-width:100%;overflow-x:hidden;box-sizing:border-box}.dashTop{padding:35px 0 20px;text-align:center;max-width:100%;box-sizing:border-box}.profile{width:82px;height:82px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--navy));display:grid;place-items:center;margin:auto;font-size:28px;font-weight:900;color:#fff;border:4px solid var(--card);box-shadow:0 8px 25px #071d3b20}.dashTop h1{margin:12px 0 5px;font-size:25px}.dashTop p{margin:0;color:var(--muted)}.enrolled{display:inline-block;margin-top:12px;padding:8px 16px;background:var(--blue);color:var(--navy);border-radius:7px;font-size:13px;font-weight:800}.earnings{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px auto 30px}.earning{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center;box-shadow:0 6px 20px #071d3b09}.earning span{font-size:12px;color:var(--muted)}.earning strong{display:block;font-size:21px;margin-top:8px}.profileEdit{margin:25px 0 50px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;justify-content:space-between;align-items:center}.editBtn{padding:9px 18px;border:1px solid var(--navy);background:transparent;color:var(--text);border-radius:7px;font-weight:700}
+.featureOverlay{z-index:100}.featureMenu{position:absolute;left:0;top:0;height:100%;width:min(350px,88vw);background:var(--card);padding:24px 18px;overflow-y:auto;box-shadow:15px 0 45px #0003;box-sizing:border-box;max-width:100%}.featureHeader{display:flex;align-items:center;justify-content:space-between;padding:5px 8px 22px;border-bottom:1px solid var(--line)}.featureHeader h2{margin:0;font-size:21px}.featureHeader .featureClose{float:none}.featureList{margin-top:18px}.feature{width:100%;border:0;background:none;color:var(--text);display:flex;align-items:center;gap:14px;padding:13px 12px;margin:3px 0;border-radius:9px;text-align:left;font-size:14px;font-weight:700}.feature:hover,.feature.active{background:var(--soft)}.featureIcon{width:34px;height:34px;flex:none;border-radius:8px;background:var(--soft);display:grid;place-items:center;color:var(--navy)}.featureIcon svg{width:19px;height:19px;fill:currentColor}.featureBottom{margin-top:30px;padding-top:20px;border-top:1px solid var(--line)}.logout{width:100%;padding:11px;border:1px solid #d66;background:transparent;color:#c44;border-radius:8px;font-weight:700}.dashboardMenuBtn{position:fixed;left:18px;top:90px;z-index:60;width:44px;height:44px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;box-shadow:0 5px 18px #071d3b12;display:none}.dashboardMenuBtn.show{display:grid;place-items:center}
+.featurePage{display:none;max-width:100%;overflow-x:hidden}.featurePage.show{display:block}
+.pageContent{max-width:100%;box-sizing:border-box;word-wrap:break-word;overflow-wrap:break-word;padding:0 4px}.pageContent h3:first-child{margin-top:0}.pageContent p{margin:0 0 14px}
 .policyNotice{margin:0 0 22px;padding:18px 20px;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:9px;background:var(--soft)}.policyNotice h3{margin:0 0 8px}.policyNotice p{margin:0 0 12px}.policyNotice p:last-child{margin-bottom:0}
-.authActions{display:flex;align-items:center;gap:8px}.authActions button{padding:9px 13px;border-radius:7px;font-weight:700}.authBtn{border:1px solid var(--line);background:transparent;color:var(--text)}.authBtn.primary{border-color:var(--navy);background:var(--navy);color:#fff}.home-btn{border:0;cursor:pointer}.welcome{color:var(--muted);font-size:14px;font-weight:700;max-width:210px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.authModal{position:fixed;inset:0;z-index:400;background:#0008;display:none;place-items:center;padding:20px}.authModal.open{display:grid}.authDialog{width:min(440px,100%);background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:0 20px 60px #0004}.authHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.authHeader h2{margin:0 0 6px}.authHeader p{margin:0;color:var(--muted);font-size:14px}.authClose{border:0;background:none;color:var(--text);font-size:28px;line-height:1}.authSwitch{margin:18px 0 0;color:var(--muted);font-size:13px;text-align:center}.authSwitch button{border:0;background:none;color:#0871cf;font-weight:700}.authError{min-height:18px;color:#c44;font-size:13px;margin:10px 0 0}@media(max-width:600px){.welcome{max-width:125px}.authActions button{padding:8px 9px;font-size:12px}.authDialog{padding:23px}}
-.paymentModal{position:fixed;inset:0;z-index:450;background:#0008;display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto}.paymentModal.open{display:flex}.paymentDialog{display:flex;flex-direction:column;gap:15px;width:min(470px,100%);max-height:calc(100vh - 40px);overflow-y:auto;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:32px}.paymentSummary{display:flex;flex-direction:column;align-items:flex-start;gap:8px;background:var(--soft);border-radius:9px;padding:18px;margin:0}.paymentSummary strong,.paymentSummary del,.paymentSummary span{display:block;margin:0}.paymentSummary strong{font-size:18px}.paymentSummary span{color:var(--muted)}.paymentSummary .referralBadge{display:block!important;align-self:flex-start;margin-top:2px}.referralControls{display:flex;flex-direction:column;gap:12px;margin:0}.referralControls .authField{display:block;width:100%;margin:0}.referralControls input,.paymentMethodDetails input{display:block;width:100%;height:46px;margin:6px 0 0;padding:11px 13px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit}.referralActions{display:flex;gap:10px}.paymentOptions{display:flex;gap:10px;width:100%;margin:0}.paymentOption{flex:1;border:1px solid var(--line);border-radius:8px;padding:12px 8px;background:var(--card);color:var(--text);font-weight:700;cursor:pointer}.paymentOption.selected{border-color:#0871cf;background:var(--soft);box-shadow:0 0 0 2px #0871cf30}.paymentMethodDetails{display:flex;flex-direction:column;gap:15px;width:100%;margin:0}.upiPaymentSection,.qrPaymentSection{display:flex;flex-direction:column;gap:15px;width:100%}.upiReceivingBox{display:flex;align-items:center;gap:10px;width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}.upiReceivingId{flex:1;min-width:0;overflow-wrap:anywhere;font-weight:700}.copyUpiButton{flex:none;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--text);font-weight:700}.qrPaymentView{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;padding:16px;background:var(--soft);border-radius:9px}.qrPaymentView img{display:block;width:100%;max-width:180px;height:auto;margin:0 auto}.qrPaymentView p{margin:0;color:var(--muted);font-size:13px;text-align:center}.transactionField{margin:0!important}.paymentStatus{min-height:20px;margin:0;color:var(--muted);font-size:13px}.paymentActions{display:flex;gap:12px;margin:0}.paymentActions button{flex:1;padding:12px;border-radius:7px;font-weight:700}.paymentCancel{border:1px solid var(--line);background:transparent;color:var(--text)}.paymentPay{border:0;background:var(--navy);color:#fff}@media(max-width:420px){.paymentModal{padding:12px}.paymentDialog{max-height:calc(100vh - 24px);padding:24px}.referralActions,.paymentActions{gap:10px}.paymentOptions{gap:8px}}
+.authActions{display:flex;align-items:center;gap:8px}.authActions button{padding:9px 13px;border-radius:7px;font-weight:700}.authBtn{border:1px solid var(--line);background:transparent;color:var(--text)}.authBtn.primary{border-color:var(--navy);background:var(--navy);color:#fff}.home-btn{border:0;cursor:pointer}.welcome{color:var(--muted);font-size:14px;font-weight:700;max-width:210px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.authModal{position:fixed;inset:0;z-index:400;background:rgba(7,29,59,.68);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:none;place-items:center;padding:20px;overflow-y:auto;-webkit-overflow-scrolling:touch;pointer-events:none}.authModal.open{display:grid;pointer-events:auto}.authDialog{position:relative;z-index:2;width:min(440px,100%);background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:0 20px 60px #0004;max-height:calc(100vh - 40px);overflow-y:auto;box-sizing:border-box}.authHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.authHeader h2{margin:0 0 6px}.authHeader p{margin:0;color:var(--muted);font-size:14px}.authClose{border:0;background:none;color:var(--text);font-size:28px;line-height:1}.authSwitch{margin:18px 0 0;color:var(--muted);font-size:13px;text-align:center}.authSwitch button{border:0;background:none;color:#0871cf;font-weight:700}.authError{min-height:18px;color:#c44;font-size:13px;margin:10px 0 0}body.modal-open{overflow:hidden}.modal-open #home,.modal-open #dashboard,.modal-open #pageArea,.modal-open header,.modal-open footer,.modal-open .top-nav-bar,.modal-open .featureOverlay,.modal-open .drawer{filter:blur(1.5px);opacity:.18;pointer-events:none;transition:filter .2s ease,opacity .2s ease}@media(max-width:600px){.welcome{max-width:125px}.authActions button{padding:8px 9px;font-size:12px}.authDialog{padding:23px}}
+.paymentModal{position:fixed;inset:0;z-index:450;background:#0008;display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto;-webkit-overflow-scrolling:touch}.paymentModal.open{display:flex}.paymentDialog{display:flex;flex-direction:column;gap:15px;width:min(470px,100%);max-height:calc(100vh - 40px);overflow-y:auto;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:32px;box-sizing:border-box}.paymentSummary{display:flex;flex-direction:column;align-items:flex-start;gap:8px;background:var(--soft);border-radius:9px;padding:18px;margin:0}.paymentSummary strong,.paymentSummary del,.paymentSummary span{display:block;margin:0}.paymentSummary strong{font-size:18px}.paymentSummary span{color:var(--muted)}.paymentSummary .referralBadge{display:block!important;align-self:flex-start;margin-top:2px}.referralControls{display:flex;flex-direction:column;gap:12px;margin:0}.referralControls .authField{display:block;width:100%;margin:0}.referralControls input,.paymentMethodDetails input{display:block;width:100%;height:46px;margin:6px 0 0;padding:11px 13px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit}.referralActions{display:flex;gap:10px}.paymentOptions{display:flex;gap:10px;width:100%;margin:0}.paymentOption{flex:1;border:1px solid var(--line);border-radius:8px;padding:12px 8px;background:var(--card);color:var(--text);font-weight:700;cursor:pointer}.paymentOption.selected{border-color:#0871cf;background:var(--soft);box-shadow:0 0 0 2px #0871cf30}.paymentMethodDetails{display:flex;flex-direction:column;gap:15px;width:100%;margin:0}.upiPaymentSection,.qrPaymentSection{display:flex;flex-direction:column;gap:15px;width:100%}.upiReceivingBox{display:flex;align-items:center;gap:10px;width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}.upiReceivingId{flex:1;min-width:0;overflow-wrap:anywhere;font-weight:700}.copyUpiButton{flex:none;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--text);font-weight:700}.qrPaymentView{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;padding:16px;background:var(--soft);border-radius:9px}.qrPaymentView img{display:block;width:100%;max-width:180px;height:auto;margin:0 auto}.qrPaymentView p{margin:0;color:var(--muted);font-size:13px;text-align:center}.transactionField{margin:0!important}.paymentStatus{min-height:20px;margin:0;color:var(--muted);font-size:13px}.paymentActions{display:flex;gap:12px;margin:0}.paymentActions button{flex:1;padding:12px;border-radius:7px;font-weight:700}.paymentCancel{border:1px solid var(--line);background:transparent;color:var(--text)}.paymentPay{border:0;background:var(--navy);color:#fff}@media(max-width:420px){.paymentModal{padding:12px}.paymentDialog{max-height:calc(100vh - 24px);padding:24px}.referralActions,.paymentActions{gap:10px}.paymentOptions{gap:8px}}
 @media(max-width:950px){.courses{grid-template-columns:repeat(2,1fr)}.why{grid-template-columns:repeat(2,1fr)}.foot{grid-template-columns:1fr 1fr}.heroGrid{grid-template-columns:1fr}.lower{grid-template-columns:1fr}.earnings{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.brand{font-size:17px}.hero{padding:55px 0}.actions{flex-direction:column}.action{width:100%}.courses,.why,.foot{grid-template-columns:1fr}.pageBox{padding:23px}.earnings{grid-template-columns:repeat(2,1fr);gap:9px}.earning{padding:14px 8px}.earning strong{font-size:17px}.dashboardMenuBtn{top:82px;left:12px}.current{padding:20px}}
+@media(max-width:600px){html,body{overflow-x:hidden}.brand{font-size:17px}.hero{padding:55px 0}.actions{flex-direction:column}.action{width:100%;max-width:100%}.courses,.why,.foot{grid-template-columns:1fr}.pageBox{padding:23px;max-width:100%}.earnings{grid-template-columns:repeat(2,1fr);gap:9px}.earning{padding:14px 8px}.earning strong{font-size:17px}.dashboardMenuBtn{top:82px;left:12px}.wrap{width:94%;max-width:100%}.featurePage{padding:0;overflow-x:hidden}}
 
 /* ===== UI/UX FIXES ===== */
 button,a,input{ -webkit-tap-highlight-color:transparent; }
@@ -33,7 +37,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{
   outline-offset:2px;
 }
 button:disabled{opacity:.6;cursor:not-allowed}
-.action,.course,.quality,.earning,.current,.profileEdit,.pageBox{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.action,.course,.quality,.earning,.profileEdit,.pageBox{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
 .action:hover,.course:hover,.quality:hover,.earning:hover{transform:translateY(-3px);box-shadow:0 12px 30px #071d3b18}
 .view:hover{background:var(--blue);color:var(--navy)}
 .heroGrid{width:100%}
@@ -45,10 +49,26 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .google{border:1px solid var(--blue)!important}
 .menu{overflow-y:auto}
 .menu a:hover{background:var(--soft)}
-#pageArea{min-height:75vh}
+#pageArea{min-height:75vh;overflow-x:hidden;max-width:100%}
 .profile{overflow:hidden}
 .featurePage{animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.foot .socialBtn,.foot .channelBtn{background:#bfe7fb;color:#071d3b;border-color:#8bcfee}
+/* ===== Mobile Touch & Scroll Optimization ===== */
+html,body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html{-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}
+.menu,.featureMenu,.drawer,.paymentDialog,.authDialog{-webkit-overflow-scrolling:touch}
+input,button,select,textarea{-webkit-appearance:none;appearance:none;font-size:16px}
+input[type="button"],input[type="submit"],button{min-height:44px;min-width:44px}
+input[type="text"],input[type="email"],input[type="password"],input[type="tel"],select,textarea{min-height:44px;padding:12px;font-size:16px}
+@media(max-width:600px){
+  html,body{overflow-x:hidden;width:100%;max-width:100%}
+  *{max-width:100%;box-sizing:border-box}
+  input,button,select,textarea{font-size:16px;min-height:44px}
+  .menu,.featureMenu{-webkit-overflow-scrolling:touch;overflow-y:auto}
+  .teamTableScroll{-webkit-overflow-scrolling:touch;overflow-x:auto}
+  img{max-width:100%;height:auto;display:block}
+}
 .toast{
   position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);
   z-index:500;background:var(--navy);color:#fff;padding:12px 18px;border-radius:9px;
@@ -81,14 +101,34 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .socialBtn svg{width:18px;height:18px;fill:currentColor}
 .channelBtn{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:14px 16px;margin-top:16px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--text);text-decoration:none;font-weight:800}
 .infoList{padding-left:20px}.infoList li{margin:10px 0}
-.featureCardGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px}
-.featureCard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}.course-library-btn,.upgrade-course-btn{width:100%;font:inherit;color:var(--text);text-align:left;cursor:pointer}.course-library-btn:hover,.upgrade-course-btn:hover{border-color:#0871cf}
+.featureCardGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px;max-width:100%;box-sizing:border-box}
+.featureCard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;max-width:100%;box-sizing:border-box;word-wrap:break-word;overflow-wrap:break-word}
+@media(max-width:600px){.featureCardGrid{grid-template-columns:1fr;gap:10px;margin-top:14px}}.course-library-btn,.upgrade-course-btn{width:100%;font:inherit;color:var(--text);text-align:left;cursor:pointer}.course-library-btn:hover,.upgrade-course-btn:hover{border-color:#0871cf}
+.upgradeSuccess{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:20px;padding:22px;border:1px solid #9bd8b5;border-radius:12px;background:linear-gradient(135deg,#eefcf4,#edf7ff);color:#176b3a}.upgradeSuccessContent{flex:1;display:flex;flex-direction:column;justify-content:center}.upgradeSuccess h2{margin:0 0 8px;font-size:clamp(24px,3vw,34px);font-weight:900;line-height:1.15;color:#0f172a}.upgradeSuccess p{margin:0;color:#1f5f46;font-size:16px;font-weight:600}.upgradeBackBtn{margin:0;flex-shrink:0}.upgradeSuccess .backBtn{margin-top:0}@media(max-width:700px){.upgradeSuccess{flex-direction:column;align-items:flex-start}.upgradeBackBtn{width:100%}}
+.teamTableView{width:100%;margin:22px 0 8px}.teamTableControls{display:flex;align-items:center;gap:12px;margin-bottom:14px}.teamTableSearch{flex:1;min-width:0;padding:12px 13px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit}.teamTableSearch::placeholder{color:var(--muted)}.teamTablePerPage{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;font-weight:700;white-space:nowrap}.teamTablePerPage select{padding:11px 28px 11px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit}.teamTableScroll{width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card);max-width:100%;box-sizing:border-box}.teamTable{width:100%;min-width:900px;border-collapse:collapse;text-align:left;max-width:100%}.teamTable th{padding:13px 16px;background:var(--soft);color:var(--muted);font-size:11px;letter-spacing:.6px;text-transform:uppercase;white-space:nowrap}.teamTable td{padding:14px 16px;border-top:1px solid var(--line);font-size:13px;white-space:nowrap}.teamTable tbody tr:hover{background:var(--soft)}.teamMemberIdentity{display:flex;align-items:center;gap:9px}.teamMemberAvatar{width:30px;height:30px;display:grid;place-items:center;flex:none;border-radius:50%;background:#075db9;color:#fff;font-size:11px;font-weight:800}.teamMemberStatus{display:inline-block;padding:5px 9px;border-radius:99px;background:var(--soft);color:var(--muted);font-size:11px;font-weight:800;text-transform:capitalize}.teamMemberStatus.active,.teamMemberStatus.approved{background:#e4f8ed;color:#18794e}.teamMemberEmpty,.teamMemberLoading{padding:40px 20px!important;text-align:center;color:var(--muted);white-space:normal!important}.teamMemberEmptyIcon{display:grid;place-items:center;width:44px;height:44px;margin:0 auto 12px;border-radius:50%;background:var(--soft);color:#0871cf}.teamMemberEmptyIcon svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8}.teamMemberEmpty strong{display:block;color:var(--text);font-size:14px}.teamMemberEmpty span{display:block;margin-top:6px;font-size:13px}@media(max-width:600px){.teamTableControls{align-items:stretch;flex-direction:column}.teamTablePerPage{justify-content:space-between}.teamTablePerPage select{flex:1}}
+.teamPageBox{width:100%;max-width:100%;margin:0;padding:35px;box-sizing:border-box;overflow-x:hidden}.teamPageBox .teamTableView{width:100%;box-sizing:border-box}
+.teamTableControls{width:100%;flex-wrap:nowrap}.teamTableSearch{flex:0 1 min(520px,70%);height:42px}.teamTablePerPage{margin-left:auto}.teamTablePerPage select{width:78px;height:42px;padding:8px}.teamTableScroll{min-height:420px}.teamTableScroll .teamTable{min-height:418px}@media(max-width:600px){.teamTableControls{flex-direction:row;align-items:center;gap:8px}.teamTableSearch{flex:1;width:auto;max-width:none}.teamTablePerPage{margin-left:0;flex:none}.teamTablePerPage select{width:70px}.teamTable{min-width:auto;width:100%}.teamTableScroll{overflow-x:auto;-webkit-overflow-scrolling:touch}.teamPageBox{padding:18px 12px}.pageBox{padding:18px 12px}}
 .featureCard h3{margin:0 0 8px}.featureCard p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}
-.leaderboardTabs{display:flex;gap:8px;overflow-x:auto;margin:20px 0 14px;padding-bottom:3px}.leaderboardTab{flex:1;min-width:125px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--muted);font:inherit;font-size:12px;font-weight:700;cursor:pointer}.leaderboardTab.active{border-color:#0871cf;background:#0871cf;color:#fff;box-shadow:0 0 0 2px #0871cf30}.leaderboardTable{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}.leaderboardRow{display:grid;grid-template-columns:45px minmax(130px,1fr) 110px 105px;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}.leaderboardRow:last-child{border-bottom:0}.leaderboardHead{color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase}.leaderboardUser{display:flex;align-items:center;gap:10px;min-width:0}.leaderboardAvatar{width:34px;height:34px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--text);font-size:12px;font-weight:900}.leaderboardName{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}.leaderboardScore{font-weight:900;color:#0871cf}.leaderboardBadge{justify-self:start;padding:5px 8px;border-radius:99px;background:var(--soft);color:var(--muted);font-size:10px;font-weight:800}.rankGold{color:#8a6500;background:#fff2b8}.rankSilver{color:#5f6b78;background:#e9edf2}.rankBronze{color:#8a542d;background:#f5d6bd}.leaderboardEmpty{padding:24px;color:var(--muted);text-align:center}.leaderboardSpinner{width:24px;height:24px;margin:24px auto;border:3px solid var(--line);border-top-color:#0871cf;border-radius:50%;animation:leaderboardSpin .8s linear infinite}@keyframes leaderboardSpin{to{transform:rotate(360deg)}}@media(max-width:600px){.leaderboardRow{grid-template-columns:32px minmax(110px,1fr) 78px 78px;padding:12px 10px;gap:7px}.leaderboardRow .leaderboardHead{font-size:9px}.leaderboardScore{font-size:12px}.leaderboardBadge{font-size:9px;padding:4px 5px}}
+.supportLayout{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:start;margin-top:14px}.supportPanel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 8px 22px rgba(7,29,59,.04)}.sectionHeader{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.sectionBadge{display:inline-flex;align-items:center;justify-content:center;padding:6px 10px;border-radius:999px;background:var(--soft);color:#0b5ea8;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}.sectionBadge.accent{background:#ecfdf5;color:#1a7a52}.supportPanel h3{margin:0;font-size:24px}.supportPanel > p{margin:14px 0 18px;color:var(--muted);line-height:1.7}.supportList{display:flex;flex-direction:column;gap:12px}.supportItem{padding:14px 14px 12px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,var(--card),var(--soft));}.supportItem h4{margin:0 0 6px;font-size:16px}.supportItem p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}.supportFaqList{display:flex;flex-direction:column;gap:12px;margin-top:18px}.supportFaqItem{border:1px solid var(--line);border-radius:10px;background:linear-gradient(180deg,var(--card),var(--soft));overflow:hidden}.supportFaqQuestion{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:16px 16px;border:0;background:transparent;color:var(--text);font:inherit;font-weight:800;text-align:left;cursor:pointer}.supportFaqQuestion::-webkit-details-marker{display:none}.supportFaqQuestion::after{content:'+';font-size:20px;line-height:1;color:#0b5ea8;transition:transform .2s ease}.supportFaqItem[open] .supportFaqQuestion::after{content:'−';transform:rotate(180deg)}.supportFaqAnswer{padding:0 16px 16px;color:var(--muted);font-size:14px;line-height:1.7}.supportFaqAnswer p{margin:0}.supportFaqEmailButton{display:inline-flex;align-items:center;justify-content:center;margin-top:12px;padding:10px 14px;border-radius:8px;background:var(--navy);color:#fff;text-decoration:none;font-weight:800}.securityTips{margin-top:18px;padding:18px;border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:10px;background:var(--soft)}.securityTips h4{margin:0 0 10px;font-size:16px}.securityTips ul{margin:0;padding-left:18px;color:var(--muted);line-height:1.8}.supportComplaintForm{display:flex;flex-direction:column;gap:12px}.supportComplaintForm label{display:flex;flex-direction:column;gap:7px;color:var(--text);font-weight:700;font-size:14px}.supportComplaintForm input,.supportComplaintForm select,.supportComplaintForm textarea{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text);font:inherit;resize:vertical;box-sizing:border-box}.supportComplaintForm textarea{min-height:120px}.supportComplaintForm button{margin-top:4px;padding:12px 16px;border:0;border-radius:9px;background:var(--navy);color:#fff;font-weight:800;cursor:pointer}.supportPanel .backBtn{margin-top:18px}.complaintPanel{background:linear-gradient(180deg,var(--card),#f7fbff)}@media(max-width:800px){.supportLayout{grid-template-columns:1fr}.supportPanel{padding:18px}}.leaderboardTabs{display:none}.leaderboardTab{display:none}.leaderboardTab.active{border-color:#0871cf;background:#0871cf;color:#fff;box-shadow:0 0 0 2px #0871cf30}.leaderboardTable{display:flex;flex-direction:column;gap:12px;background:transparent;border:none;overflow:visible}.leaderboardRow{display:flex;align-items:center;gap:16px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:0 3px 12px rgba(0,0,0,0.06);transition:all .2s ease}.leaderboardRow:hover{transform:translateY(-2px);border-color:#0871cf;box-shadow:0 6px 20px rgba(0,0,0,0.12)}.leaderboardHead{display:none}.leaderboardUser{display:flex;align-items:center;gap:12px;flex:1;min-width:0}.leaderboardAvatar{width:44px;height:44px;flex:none;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:var(--soft);color:var(--text);font-size:13px;font-weight:900}.leaderboardAvatar img{width:100%;height:100%;object-fit:cover}.leaderboardName{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700;font-size:14px}.leaderboardScore{font-weight:900;color:#18794e;white-space:nowrap;font-size:16px}.leaderboardBadge{display:none}.leaderboardRank{display:none}.rankGold{color:#8a6500;background:#fff2b8}.rankSilver{color:#5f6b78;background:#e9edf2}.rankBronze{color:#8a542d;background:#f5d6bd}.leaderboardEmpty{padding:24px;color:var(--muted);text-align:center}.leaderboardSpinner{width:24px;height:24px;margin:24px auto;border:3px solid var(--line);border-top-color:#0871cf;border-radius:50%;animation:leaderboardSpin .8s linear infinite}@keyframes leaderboardSpin{to{transform:rotate(360deg)}}.leaderboardSections{display:flex;flex-direction:column;gap:28px;margin-top:20px;max-width:100%;box-sizing:border-box;overflow-x:hidden}@media(max-width:600px){.leaderboardSections{gap:18px;margin-top:14px}.leaderboardSectionTitle{font-size:14px;padding-bottom:6px}.leaderboardCard{padding:12px 12px;gap:10px}.leaderboardCardAvatar{width:32px;height:32px;font-size:10px}.leaderboardCardName{font-size:12px}.leaderboardCardAmount{font-size:13px}.leaderboardBadge{min-width:30px;height:30px;font-size:13px}}.leaderboardSection{display:flex;flex-direction:column;gap:12px}.leaderboardSectionTitle{margin:0;font-size:16px;font-weight:800;color:var(--text);padding-bottom:8px;border-bottom:2px solid var(--line)}.leaderboardCardList{display:flex;flex-direction:column;gap:10px}.leaderboardCard{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);transition:all .2s ease;max-width:100%;box-sizing:border-box;overflow:hidden}.leaderboardCard:hover{transform:translateY(-1px);border-color:#0871cf;box-shadow:0 4px 12px rgba(0,0,0,0.08)}.leaderboardBadge{display:flex;align-items:center;justify-content:center;min-width:36px;height:36px;border-radius:50%;background:var(--soft);color:var(--muted);font-weight:900;font-size:16px;flex-shrink:0}.leaderboardBadge.rankGold{background:#fff2b8;color:#8a6500}.leaderboardBadge.rankSilver{background:#e9edf2;color:#5f6b78}.leaderboardBadge.rankBronze{background:#f5d6bd;color:#8a542d}.leaderboardCardContent{display:flex;align-items:center;gap:10px;flex:1;min-width:0}.leaderboardCardAvatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:var(--soft);color:var(--text);font-size:12px;font-weight:900;flex-shrink:0}.leaderboardCardAvatar img{width:100%;height:100%;object-fit:cover}.leaderboardCardName{font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}.leaderboardCardAmount{font-weight:900;color:#18794e;white-space:nowrap;font-size:15px}.leaderboardSectionEmpty{padding:16px;color:var(--muted);text-align:center;font-size:13px;background:var(--soft);border-radius:8px}@media(max-width:600px){.leaderboardSectionTitle{font-size:15px}.leaderboardCard{padding:12px 14px;gap:10px}.leaderboardBadge{min-width:32px;height:32px;font-size:14px}.leaderboardCardAvatar{width:32px;height:32px;font-size:10px}.leaderboardCardName{font-size:13px}.leaderboardCardAmount{font-size:14px}}@media(max-width:600px){.leaderboardRow{grid-template-columns:32px minmax(110px,1fr) 78px 78px;padding:12px 10px;gap:7px}.leaderboardRow .leaderboardHead{font-size:9px}.leaderboardScore{font-size:12px}.leaderboardBadge{font-size:9px;padding:4px 5px}}
 @media(max-width:600px){.featureCardGrid{grid-template-columns:1fr}}
 
-.refBox{width:100%;margin:12px 0;padding:14px;border:1px solid var(--line);border-radius:9px;word-break:break-all;background:var(--soft);color:var(--text)}.referralBadge{display:inline-block!important;width:max-content;padding:5px 9px;border-radius:99px;background:#e4f8ed;color:#18794e;font-size:12px;font-weight:800}
+.refBox{width:100%;margin:12px 0;padding:14px;border:1px solid var(--line);border-radius:9px;word-break:break-all;background:var(--soft);color:var(--text)}.referralActions{display:flex;flex-direction:column;gap:12px;max-width:420px;margin-top:6px}.referralActions .editBtn,.referralActions .backBtn{width:100%;margin:0}.referralActions .backBtn{margin-top:0}.referralBadge{display:inline-block!important;width:max-content;padding:5px 9px;border-radius:99px;background:#e4f8ed;color:#18794e;font-size:12px;font-weight:800}
+.rewardGrid{display:flex;flex-direction:column;gap:18px;margin-top:18px}.rewardSection{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}.rewardSection h3{margin:0 0 14px;font-size:17px}.rewardNoticeCard{display:flex;align-items:center;justify-content:center;min-height:120px;padding:16px;border:1px dashed var(--line);border-radius:12px;background:var(--soft);text-align:center}.rewardNoticeCard p{margin:0;color:var(--muted);font-size:15px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}.rewardCard{padding:18px;border-radius:12px;border:1px solid var(--line);background:linear-gradient(180deg,var(--soft),var(--card));display:flex;flex-direction:column;gap:8px}.rewardLabel{margin:0;color:var(--muted);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}.rewardCard strong{font-size:28px;line-height:1.1}.rewardCard small{color:var(--muted);font-size:13px;line-height:1.5}
+.eliteAccessLock{position:relative;min-height:420px;display:grid;place-items:center;padding:32px 20px;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,0.45);background:radial-gradient(circle at top left, rgba(255,255,255,0.45), transparent 28%),radial-gradient(circle at bottom right, rgba(255,184,77,0.38), transparent 30%),linear-gradient(135deg,#4f46e5 0%,#8b5cf6 18%,#ec4899 42%,#3b82f6 68%,#f59e0b 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.25),0 18px 45px rgba(64,46,143,0.18)}
+.eliteAccessBackdrop{position:absolute;inset:0;background:rgba(12,18,40,.12);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.eliteAccessCard{position:relative;z-index:1;max-width:440px;width:min(100%,440px);padding:30px 22px;border-radius:18px;background:rgba(255,255,255,.96);border:1px solid rgba(255,255,255,.7);box-shadow:0 18px 48px rgba(15,23,42,.22);text-align:center}
+.eliteAccessEmoji{font-size:48px;line-height:1;margin-bottom:18px;display:block}
+.eliteAccessTitle{margin:0 0 12px;font-size:clamp(26px,4vw,36px);line-height:1.15;color:#111827}
+.eliteAccessDesc{margin:0;color:#334155;font-size:15px;line-height:1.6;font-weight:600}
+.eliteAccessActions{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:22px}
+.eliteAccessBtn{border:0;border-radius:10px;padding:12px 18px;font-weight:800;cursor:pointer;min-height:44px}
+.eliteAccessBtn.primary{background:linear-gradient(135deg,#1d4ed8,#312e81);color:#fff;box-shadow:0 10px 22px rgba(30,64,175,.25)}
+.eliteAccessBtn.secondary{background:rgba(255,255,255,.7);border:1px solid rgba(148,163,184,.85);color:#0f172a}
 .backBtn{margin-top:20px}
+.dashboard-floating-menu{width:26px;height:26px;padding:0;border:0;background:transparent;box-shadow:none;display:grid;place-items:center;gap:0;font-size:16px;line-height:1;font-weight:800}
+.dashboard-floating-menu i{display:none}
+#dashboard .dashboard-floating-menu{position:fixed;top:2px;left:10px;right:auto;width:24px;height:24px;padding:0;border:0;background:transparent;box-shadow:none;display:grid;place-items:center;font-size:16px;line-height:1;font-weight:800}
+#dashboard .profileStatus{left:58px}
 .communityGrid{display:grid;gap:12px;margin-top:18px}
 .communityBtn{width:100%;display:flex;align-items:center;gap:12px;padding:15px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--text);text-decoration:none;text-align:left;cursor:pointer}
 .communityBtn>span:nth-child(2){flex:1}
@@ -105,7 +145,9 @@ header .nav{min-height:72px}
 #dashboard .profileStatus{position:absolute;left:20px;top:20px;display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:99px;background:#e4f8ed;color:#18794e;font-size:11px;font-weight:800}
 #dashboard .statusDot{width:7px;height:7px;border-radius:50%;background:#20a866}
 #dashboard .profilePhoto{width:96px;height:96px;margin:8px auto 13px;border:4px solid var(--card);border-radius:50%;background:linear-gradient(135deg,#72c8f5,#075db9);display:grid;place-items:center;color:#fff;font-size:28px;font-weight:900;box-shadow:0 7px 20px #071d3b25;overflow:hidden}
-#dashboard .profileEditIcon{position:absolute;top:82px;left:calc(50% + 27px);width:28px;height:28px;border:2px solid var(--card);border-radius:50%;background:#075db9;color:#fff;font-size:14px}
+#dashboard .profilePhoto img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+#dashboard .profileInitial{display:grid;place-items:center;width:100%;height:100%;font-size:28px;font-weight:900}
+#dashboard .profileEditIcon{display:none !important}
 #dashboard .profileCard h1{margin:0 0 8px;font-size:24px}
 #dashboard .profileBadge{display:inline-block;margin-left:5px;color:#0871cf;font-size:16px}
 #dashboard .userId{margin:0;color:var(--muted);font-size:12px}
@@ -115,12 +157,9 @@ header .nav{min-height:72px}
 #dashboard .earningIcon{position:absolute;top:15px;right:17px;color:#0871cf;font-size:20px}
 #dashboard .earning span:not(.earningIcon){display:block;margin-top:18px}
 #dashboard .earning strong{font-size:28px;margin-top:8px}
-#dashboard .chartBlock{margin:0 0 30px;padding:23px 25px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 25px #071d3b09}
-#dashboard .chartBlock h2{margin:0 0 5px;font-size:20px}
-#dashboard .chartBlock p{margin:0;color:var(--muted);font-size:13px}
-#dashboard .chartArea{height:135px;margin-top:20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#72c8f51c,transparent);clip-path:polygon(0 78%,12% 68%,24% 74%,36% 45%,48% 58%,60% 30%,72% 42%,84% 22%,100% 34%,100% 100%,0 100%)}
+
 @media(max-width:600px){#dashboard .profileCard{padding:18px 15px 22px}#dashboard .profileStatus{left:14px;top:14px}#dashboard .profileEditIcon{top:76px}}
-body>header:not(.top-nav-bar),body>img[src="logo.jpg"]{display:none}.top-nav-bar{display:flex;align-items:center;justify-content:space-between;width:100%}.menu-toggle-btn{border:0;background:transparent;color:var(--text);display:grid;place-items:center;width:34px;height:34px;padding:0;cursor:pointer}.menu-toggle-btn i{display:block;width:4px;height:4px;border-radius:50%;background:currentColor;margin:2px}.nav-left,.nav-right{display:flex;align-items:center}.top-nav-bar .menu-toggle-btn{display:none}.top-nav-bar .menu-toggle-btn.show{display:grid}
+body>header:not(.top-nav-bar),body>img[src="logo.png2.jpeg"]{display:none}.top-nav-bar{display:flex;align-items:center;justify-content:space-between;width:100%}.brand-lockup{display:flex;align-items:center;gap:8px}.brand-text{display:flex;flex-direction:column;justify-content:center;line-height:1}.brand-row{display:flex;align-items:flex-end;gap:4px}.brand-main{display:flex;flex-direction:column;align-items:flex-start}.brand-small{font-size:1.35rem;font-weight:400;letter-spacing:-.04em;color:var(--navy);line-height:0.9;white-space:nowrap;display:inline-block;transform:scaleY(1.5);transform-origin:center bottom}.brand-word{font-size:.8rem;font-weight:700;letter-spacing:-.03em;color:var(--navy);line-height:1;white-space:nowrap}.brand-tagline{margin-top:2px;font-size:.46rem;letter-spacing:1px;text-transform:uppercase;color:#D4AF37;font-weight:600;white-space:nowrap;line-height:1.2;text-shadow:0 1px 0 rgba(0,0,0,.08)}.logo-image{display:block;width:auto;max-width:100%;height:58px;object-fit:contain;object-position:center}.sidebar-logo-image{height:32px;max-height:32px;width:auto}.menu-toggle-btn{border:0;background:transparent;color:var(--text);display:grid;place-items:center;width:34px;height:34px;padding:0;cursor:pointer;flex-shrink:0}.menu-toggle-btn i{display:block;width:4px;height:4px;border-radius:50%;background:currentColor;margin:2px}.header-signin-btn{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 18px;border:1px solid var(--line);border-radius:10px;background:var(--navy);color:#fff;text-decoration:none;font-weight:700;font-size:14px;box-shadow:0 8px 18px rgba(7,29,59,.12);transition:opacity .2s ease,transform .2s ease}.header-signin-btn:hover{opacity:.95;transform:translateY(-1px)}.nav-left,.nav-right{display:flex;align-items:center}.nav-right{margin-left:auto}.top-nav-bar .menu-toggle-btn{display:grid}.top-nav-bar .menu-toggle-btn.show{display:grid}body.dashboard-mode > header{display:none !important}body.dashboard-mode #dashboardMenuBtn{position:fixed;left:18px;top:18px;z-index:60;width:44px;height:44px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;box-shadow:0 5px 18px #071d3b12;display:grid;place-items:center;cursor:pointer}body.dashboard-mode #dashboardMenuBtn.show{display:grid;place-items:center}body.dashboard-mode .header-signin-btn{display:none !important}.dashboard-floating-menu{position:fixed;left:18px;top:18px;z-index:60;width:44px;height:44px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;box-shadow:0 5px 18px #071d3b12;display:grid;place-items:center;cursor:pointer}.dashboard-floating-menu i,.dashboardMenuBtn i{display:block;width:4px;height:4px;border-radius:50%;background:currentColor;margin:4px}
 </style>
 </head>
 <body>
@@ -135,7 +174,7 @@ body{overflow:auto}
 .authDialog .authField{display:block;width:100%;margin:0 0 18px;color:#2d3748;font-size:14px;font-weight:600}
 .authDialog .authField input,.authDialog .authField select{display:block;width:100%;height:48px;margin:6px 0 0;padding:12px 16px;border:1px solid #e2e8f0;border-radius:12px;background:#fff;color:#1a202c;font-size:14px}
 .authDialog .authField select{padding-right:40px;cursor:pointer}
-.authDialog #authSubmit{display:block;width:100%;height:50px;order:10;margin-top:10px;padding:0;border:0;border-radius:12px;background:#3b4279;color:#fff;font-weight:600}
+#authSubmit{display:block;width:100%;height:50px;order:10;margin-top:10px;padding:0;border:0;border-radius:12px;background:#3b4279;color:#fff;font-weight:600;cursor:pointer;font-size:16px;box-sizing:border-box;-webkit-appearance:none;appearance:none;min-height:50px}@media(max-width:600px){#authSubmit{min-height:48px}}
 .authDialog .authError{order:9;min-height:0;margin:0;color:#c44}
 .signupPrice{margin:-4px 0 18px;padding:12px 14px;border:1px solid #d9e2f1;border-radius:10px;background:#f7faff;color:#263b5e;font-size:13px;line-height:1.5;font-weight:600;overflow-wrap:anywhere}
 .comingSoonBanner{margin-top:24px;padding:28px 20px;border:1px solid var(--line);border-radius:12px;background:var(--soft);color:var(--text);font-size:22px;font-weight:800;text-align:center;box-shadow:0 8px 25px #071d3b12}
@@ -145,16 +184,26 @@ body{overflow:auto}
 </style>
 <header class="top-nav-bar" id="home-bottom-bar" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; width: 100%;">
   <div class="nav-left" style="display: flex; align-items: center; gap: 15px;">
-    <img id="home-bottom-bar-logo" src="logo.jpg" alt="Logo" style="height: 50px; width: auto; object-fit: contain;">
-    <button class="menu-toggle-btn" id="dashboardMenuBtn" onclick="openFeatures()" aria-label="Open menu"><i></i><i></i><i></i></button>
+    <div class="brand-lockup" aria-label="The Indian Skills brand">
+      <img id="home-bottom-bar-logo" class="logo-image" src="logo.png.jpeg" alt="The Indian Skills Logo">
+      <div class="brand-text">
+        <div class="brand-row">
+          <span class="brand-small">The</span>
+          <div class="brand-main">
+            <span class="brand-word">Indian Skills</span>
+            <span class="brand-tagline" style="font-family: Arial, sans-serif !important; letter-spacing: 1.5px !important; font-weight: 500 !important; color: #D4AF37 !important;">INDIA'S FUTURE RISES</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="nav-right" style="display: flex; align-items: center;">
-    <button class="theme" onclick="dark()" aria-label="Dark mode"><svg viewBox="0 0 24 24"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg></button>
+  <div class="nav-right" style="display: flex; align-items: center; margin-left: auto;">
+    <a class="header-signin-btn" href="#" onclick="page('login');return false;">Sign In</a>
   </div>
 </header>
 
-<header><div class="wrap nav"><div class="headerLeft"><svg class="inlineLogo landingLogo" id="landingLogo" viewBox="0 0 112 48" role="img" aria-labelledby="landingLogoTitle landingLogoDesc"><title id="landingLogoTitle">Indian Skills</title><desc id="landingLogoDesc">IS monogram with blue wings and a star</desc><path class="wing" d="M35 18c-8-6-14-6-22-2 5 1 8 3 11 6-5-1-10 0-14 3 8 0 14 2 20 6M77 18c8-6 14-6 22-2-5 1-8 3-11 6 5-1 10 0 14 3 8 0 14 2 20 6"/><path class="star" d="m94 4 1.6 3.2 3.4.5-2.5 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4L89 7.7l3.4-.5L94 4Z"/><text class="mono" x="39" y="29">IS</text><text class="tag" x="28" y="41">INDIA'S FUTURE RISES</text></svg><button class="dashboardMenuBtn" id="dashboardMenuBtn" onclick="openFeatures()" aria-label="Open dashboard menu"><i></i><i></i><i></i></button></div><div class="right" style="margin-left:auto">
-<button class="theme" onclick="dark()" aria-label="Dark mode"><svg viewBox="0 0 24 24"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg></button>
+<header><div class="wrap nav"><div class="headerLeft"><img class="logo-image" src="logo.png.jpeg" alt="The Indian Skills Logo" style="height: 48px; width: auto; object-fit: contain; object-position: center;" /><button class="dashboardMenuBtn" id="dashboardMenuBtn" onclick="openFeatures()" aria-label="Open dashboard menu"><i></i><i></i><i></i></button></div><div class="right" style="margin-left:auto">
+<button class="dashboardMenuBtn" onclick="openFeatures()" aria-label="Open menu"><i></i><i></i><i></i></button>
 </div></div></header>
 
 <div class="authModal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-describedby="authSubtitle" onclick="if(event.target.id==='authModal')closeAuthModal()">
@@ -168,7 +217,7 @@ body{overflow:auto}
       <a class="forgotPassword loginOnly" href="#" onclick="handleForgotPassword(event)">Forgot Password?</a>
       <label class="authField signupOnly">Referral Link<input id="authReferral" type="text" placeholder="Enter referral link" autocomplete="off" maxlength="40"></label>
       <div class="paymentSection signupOnly">
-      <label class="authField">Package Selection<select id="authPackage" onchange="updateSignupPricing()"><option value="">Select a package</option><option>Traffic Management</option><option>Branding Management</option><option>Marketing Management</option><option>Influence Management</option><option value="Finance Management">Finance Management</option></select></label>
+      <label class="authField">Package Selection<select id="authPackage" onchange="updateSignupPricing()"><option value="">Select a package</option><option value="marketing management">Marketing Management</option><option value="branding management">Branding Management</option><option value="traffic management">Traffic Management</option><option value="influence management">Influence Management</option><option value="finance management">Finance management</option></select></label>
       <div class="signupPrice" id="signupPrice" aria-live="polite">Select a course to see the price.</div>
       <label class="authField">Payment Method<select id="authPayment" onchange="toggleQrPayment()"><option value="QR Code" selected>QR Code</option><option value="UPI ID">UPI ID</option></select></label>
       <div id="qrPaymentFields"><div id="qrPaymentDetails"><img src="qr-code.png.jpeg" alt="Payment QR" style="max-width: 200px; display: block; margin: 12px auto; border-radius: 8px;"><p style="text-align:center;margin:0 0 12px">Scan to pay with any UPI app</p></div><div id="upiPaymentDetails" hidden><p style="text-align:center;margin:0 0 12px">UPI ID: <strong>learner0zon@oksbi</strong></p></div><label class="authField">Transaction ID / UTR Number<input id="authUtr" type="text" placeholder="Enter Transaction ID / UTR Number" autocomplete="off" maxlength="100"></label></div>
@@ -188,11 +237,11 @@ body{overflow:auto}
 </div></div></div></section>
 
 <section id="courses"><div class="wrap"><div class="title"><h2>Our Courses</h2><p>Professional learning for practical growth.</p></div><div class="courses">
-<div class="course"><div class="poster"></div><div class="body"><h3>Traffic Management</h3><p>Understand audience and traffic growth.</p><b class="price">₹999</b><button class="view" onclick="coursePage('Traffic Management','₹999','Understand audience and traffic growth.')">View Course</button></div></div>
+<div class="course"><div class="poster"></div><div class="body"><h3>Marketing Management</h3><p>Learn modern marketing fundamentals.</p><b class="price">₹999</b><button class="view" onclick="coursePage('Marketing Management','₹999','Learn modern marketing fundamentals.')">View Course</button></div></div>
 <div class="course"><div class="poster"></div><div class="body"><h3>Branding Management</h3><p>Learn how strong brands are created.</p><b class="price">₹2,499</b><button class="view" onclick="coursePage('Branding Management','₹2,499','Learn how strong brands are created.')">View Course</button></div></div>
-<div class="course"><div class="poster"></div><div class="body"><h3>Marketing Management</h3><p>Learn modern marketing fundamentals.</p><b class="price">₹5,000</b><button class="view" onclick="coursePage('Marketing Management','₹5,000','Learn modern marketing fundamentals.')">View Course</button></div></div>
+<div class="course"><div class="poster"></div><div class="body"><h3>Traffic Management</h3><p>Understand audience and traffic growth.</p><b class="price">₹5,000</b><button class="view" onclick="coursePage('Traffic Management','₹5,000','Understand audience and traffic growth.')">View Course</button></div></div>
 <div class="course"><div class="poster"></div><div class="body"><h3>Influence Management</h3><p>Develop communication and leadership influence.</p><b class="price">₹10,000</b><button class="view" onclick="coursePage('Influence Management','₹10,000','Develop communication and leadership influence.')">View Course</button></div></div>
-<div class="course"><div class="poster"></div><div class="body"><h3>Finance Management</h3><p>Master the fundamentals of corporate and personal finance.</p><b class="price">₹15,000</b><button class="view" onclick="coursePage('Finance Management','₹15,000','Master the fundamentals of corporate and personal finance.')">View Course</button></div></div>
+<div class="course"><div class="poster"></div><div class="body"><h3>Finance management</h3><p>Master the fundamentals of corporate and personal finance.</p><b class="price">₹15,000</b><button class="view" onclick="coursePage('Finance management','₹15,000','Master the fundamentals of corporate and personal finance.')">View Course</button></div></div>
 </div><div class="comingSoonBanner">More Courses Coming Soon</div></div></section>
 
 <section><div class="wrap"><div class="title"><h2>Why The Indian Skills?</h2><p>A simple and focused learning experience.</p></div><div class="why">
@@ -203,28 +252,37 @@ body{overflow:auto}
 </div></div></section>
 
 <section><div class="wrap lower"><div class="feedback"><h2>Student Feedback</h2><p>Hear from our learners.</p><div class="video"><button class="play" onclick="openFeedback()"><svg viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></svg></button></div></div>
-<div class="faq"><h2>Frequently Asked Questions</h2><details><summary>What is The Indian Skills?</summary><p>A private educational platform focused on skill development.</p></details><details><summary>How can I enroll in a course?</summary><p>Select a course and follow the enrollment process.</p></details><details><summary>Do courses guarantee employment or fixed income?</summary><p>The Indian Skills is strictly an educational platform focused on skill development. We do not guarantee jobs, internships, or fixed financial returns. Learning outcomes and financial success depend entirely on the individual learner's effort, dedication, and external market factors.</p></details><details><summary>Can I access courses on mobile?</summary><p>The platform is designed to be responsive and mobile friendly.</p></details><details><summary>What is the refund policy?</summary><p>All course sales and registrations are final and non-refundable once payment is completed.</p></details></div></div></section>
+<div class="faq"><h2>Frequently Asked Questions</h2><details><summary>Is The Indian Skills a government website?</summary><p>No. The Indian Skills is a privately operated educational platform and is not affiliated with, owned by, or endorsed by the Government of India or any government department.</p></details><details><summary>Are your courses government-approved or government-certified?</summary><p>Unless specifically stated for a particular course, our courses are not government-certified or government-approved. Any certificate issued by us represents completion of our course/program only.</p></details><details><summary>Does purchasing a course guarantee a job or income?</summary><p>No. We do not guarantee employment, business success, income, profits, clients, or any specific financial outcome. Results depend on individual effort, skills, market conditions, and other factors.</p></details><details><summary>Can I get a refund after purchasing a course?</summary><p>Refund eligibility depends on our Refund Policy. Please review the Refund &amp; Cancellation Policy before purchasing.</p></details><details><summary>Can I share my course account with another person?</summary><p>No. Course access is intended for the purchaser/account holder and may not be shared, resold, copied, or redistributed.</p></details><details><summary>Can my account be suspended?</summary><p>Yes. We may suspend or terminate accounts involved in fraud, unauthorized access, piracy, harassment, payment abuse, redistribution of course material, or other violations of our Terms.</p></details><details><summary>Does The Indian Skills ask for my password or OTP?</summary><p>We will never ask you to disclose your password, UPI PIN, card PIN, CVV, or OTP through support channels.</p></details><details><summary>Can I resell your courses?</summary><p>No, unless The Indian Skills has expressly provided a written authorization or reseller/affiliate arrangement.</p></details><details><summary>How do you use my personal information?</summary><p>We collect and use personal information according to our Privacy Policy. We explain what information we collect, why we collect it, how it is used, and applicable user rights.</p></details><details><summary>What should I do if I find suspicious activity on my account?</summary><p>Contact our support/security team immediately. We may temporarily restrict an account when necessary to protect users, the platform, or our systems.</p></details></div></div></section>
 
-<footer><div class="wrap"><div class="foot"><div><h3>About The Indian Skills</h3><p>The Indian Skills is a privately operated educational platform. It is not a Government of India website, government department or government-affiliated organisation.</p><p>Our mission is to encourage practical learning and skill development.</p></div><div><h3>Important Links</h3><a href="#" onclick="page('about');return false">About Us</a><a href="#" onclick="page('privacy');return false">Privacy Policy</a><a href="#" onclick="page('terms');return false">Terms & Conditions</a><a href="#" onclick="page('contact');return false">Contact Us</a></div><div><h3>Contact Us</h3><p>Phone: +91 XXXXX XXXXX</p><p>WhatsApp: Chat with us</p><p>Email: Learner0zon@gmail.com</p><p>India</p><p>For course, account, payment or technical questions, contact us through email or WhatsApp. Never send your password, OTP or full card number.</p><div class="socialLinks"><a class="socialBtn" href="#" onclick="showToast('Add your Instagram URL here.');return false">Instagram</a><a class="socialBtn" href="#" onclick="showToast('Add your WhatsApp URL here.');return false">WhatsApp</a></div><a class="channelBtn" href="#" onclick="showToast('Add your official community channel link here.');return false"><span>Access Community Channel</span><span>→</span></a></div><div><h3>Our Policies</h3><a href="#" onclick="page('privacy');return false">Privacy Policy</a><a href="#" onclick="page('terms');return false">Terms & Conditions</a></div></div><div class="made">Made with ❤️ by Rishuu</div></div></footer>
+<footer><div class="wrap"><div class="foot"><div><h3>About The Indian Skills</h3><p>The Indian Skills is a privately operated educational platform. It is not a Government of India website, government department or government-affiliated organisation.</p><p>Our mission is to encourage practical learning and skill development.</p></div><div><h3>Important Links</h3><a href="#" onclick="page('about');return false">About Us</a><a href="#" onclick="page('privacy');return false">Privacy Policy</a><a href="#" onclick="page('terms');return false">Terms & Conditions</a><a href="#" onclick="page('disclaimer');return false">Disclaimer</a><a href="#" onclick="page('refund');return false">Refund Policy</a><a href="#" onclick="page('contact');return false">Contact Us</a></div><div><h3>Contact Us</h3><p>Phone: +91 XXXXX XXXXX</p><p>WhatsApp: Chat with us</p><p>Info: <a href="mailto:info@theindianskills.com">info@theindianskills.com</a></p><p>Support: <a href="mailto:support@theindianskills.com">support@theindianskills.com</a></p><p>India</p><p>For course, account, payment or technical questions, contact us through email or WhatsApp. Never send your password, OTP or full card number.</p><div class="socialLinks"><a class="socialBtn" href="#" onclick="showToast('Add your Instagram URL here.');return false">Instagram</a><a class="socialBtn" href="#" onclick="showToast('Add your WhatsApp URL here.');return false">WhatsApp</a></div><a class="channelBtn" href="https://whatsapp.com/channel/0029Vb7spdDDTkJvfJZkg10W" target="_blank" rel="noopener noreferrer"><span>Access Community Channel</span><span>→</span></a></div><div><h3>Our Policies</h3><a href="#" onclick="page('privacy');return false">Privacy Policy</a><a href="#" onclick="page('terms');return false">Terms & Conditions</a></div></div><div class="made">
+  <div class="made-top">© 2026 The Indian Skills</div>
+  <div class="made-links">
+    <a href="#" onclick="page('privacy');return false">Privacy Policy</a><span>|</span>
+    <a href="#" onclick="page('terms');return false">Terms &amp; Conditions</a><span>|</span>
+    <a href="#" onclick="page('refund');return false">Refund Policy</a><span>|</span>
+    <a href="#" onclick="page('contact');return false">Contact Us</a>
+  </div>
+  <div class="made-credit">Made with ❤️ by Rishuu</div>
+</div></div></footer>
 </div>
 
 <div class="drawer" id="drawer" onclick="if(event.target.id==='drawer')openMenu()"><div class="menu"><button class="close" onclick="openMenu()">×</button><h2>Menu</h2><a href="#courses" class="explore-courses-link">Explore Courses</a><a href="#" onclick="page('privacy');return false">Privacy Policy</a><a href="#" onclick="page('login');return false">Student Login</a></div></div>
 
 <div id="dashboard">
-<div class="wrap"><div class="dashTop"><div class="profileCard"><div class="profileStatus"><span class="statusDot"></span>Active</div><div class="profilePhoto"><span class="profileInitial"></span></div><button class="profileEditIcon" onclick="page('edit')" aria-label="Edit profile">✎</button><h1 class="profileName"></h1><span class="profileBadge" aria-label="Verified profile" hidden>◆</span><p class="userId">User ID: <strong class="userIdValue"></strong><button class="copyUserId" onclick="copyUserId()">Copy</button></p></div><div class="enrolled">No Course Enrolled</div></div>
+<button class="dashboard-floating-menu" id="dashboardFloatingMenuBtn" onclick="openFeatures()" aria-label="Open student menu">☰</button>
+<div class="wrap"><div class="dashTop"><div class="profileCard"><div class="profileStatus"><span class="statusDot"></span>Active</div><div class="profilePhoto"><span class="profileInitial"></span></div><h1 class="profileName"></h1><span class="profileBadge" aria-label="Verified profile" hidden>◆</span><p class="userId">User ID: <strong class="userIdValue"></strong><button class="copyUserId" onclick="copyUserId()">Copy</button></p></div><div class="enrolled">No Course Enrolled</div></div>
 <div class="earnings"><div class="earning"><span class="earningIcon">◆</span><span>Today's Earning</span><strong>₹0</strong></div><div class="earning"><span class="earningIcon">🚀</span><span>Last 7 Days</span><strong>₹0</strong></div><div class="earning"><span class="earningIcon">🏆</span><span>Last 30 Days</span><strong>₹0</strong></div><div class="earning"><span class="earningIcon">◷</span><span>All Time</span><strong>₹0</strong></div></div>
-<div class="chartBlock"><h2>Earnings Chart</h2><p>Showing earnings and referrals over time</p><div class="chartArea" aria-label="Earnings chart"></div></div>
-<div class="current"><h2>Current Course</h2><p style="color:var(--muted)">No Course Enrolled</p></div>
 <div class="profileEdit"><div><strong>Profile Settings</strong><p style="margin:6px 0 0;color:var(--muted);font-size:13px">Update your personal information</p></div><button class="editBtn" onclick="page('edit')">Edit Profile</button></div>
 <div id="featurePages"></div></div></div>
 
-<div class="featureOverlay" id="featureOverlay" onclick="if(event.target.id==='featureOverlay')openFeatures()"><div class="featureMenu"><div class="featureHeader"><svg class="inlineLogo" viewBox="0 0 112 48" role="img" aria-labelledby="sidebarLogoTitle sidebarLogoDesc"><title id="sidebarLogoTitle">Indian Skills</title><desc id="sidebarLogoDesc">IS monogram with blue wings and a star</desc><path class="wing" d="M35 18c-8-6-14-6-22-2 5 1 8 3 11 6-5-1-10 0-14 3 8 0 14 2 20 6M77 18c8-6 14-6 22-2-5 1-8 3-11 6 5-1 8 3 11 6-5-1-10 0-14 3 8 0 14 2 20 6"/><path class="star" d="m94 4 1.6 3.2 3.4.5-2.5 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4L89 7.7l3.4-.5L94 4Z"/><text class="mono" x="39" y="29">IS</text><text class="tag" x="28" y="41">INDIA'S FUTURE RISES</text></svg><button class="featureClose" onclick="openFeatures()">×</button></div>
+<div class="featureOverlay" id="featureOverlay" onclick="if(event.target.id==='featureOverlay')openFeatures()"><div class="featureMenu"><div class="featureHeader"><div class="brand-lockup" aria-label="The Indian Skills brand" style="display:flex;align-items:center;gap:8px;"><img id="sidebar-brand-logo" class="logo-image sidebar-logo-image" src="logo.png.jpeg" alt="The Indian Skills Logo"><div class="brand-text"><div class="brand-row"><span class="brand-small">The</span><div class="brand-main"><span class="brand-word">Indian Skills</span><span class="brand-tagline" style="font-family: Arial, sans-serif !important; letter-spacing: 1.5px !important; font-weight: 500 !important; color: #D4AF37 !important;">INDIA'S FUTURE RISES</span></div></div></div></div><button class="featureClose" onclick="openFeatures()">×</button></div>
 <div class="featureList">
 <button class="feature active" data-tab="dashboard" onclick="dashboardHome(this)"><span class="featureIcon">⌂</span><span>DASHBOARD</span></button>
 <button class="feature" data-tab="team" onclick="featurePage('team',this)"><span class="featureIcon">♟</span><span>MY TEAM</span></button>
 <button class="feature" data-tab="courses" onclick="featurePage('courses',this)"><span class="featureIcon">▣</span><span>MY COURSES</span></button>
 <button class="feature" data-tab="upgrade" onclick="featurePage('upgrade',this)"><span class="featureIcon">ϟ</span><span>UPGRADE COURSES</span></button>
 <button class="feature" data-tab="referral" onclick="featurePage('referral',this)"><span class="featureIcon">↗</span><span>REFERRAL LINKS</span></button>
+<button class="feature" data-tab="rewards" onclick="featurePage('rewards',this)"><span class="featureIcon">◈</span><span>REWARDS</span></button>
 <button class="feature" data-tab="leaderboard" onclick="featurePage('leaderboard',this)"><span class="featureIcon">★</span><span>LEADERBOARD</span></button>
 <button class="feature" data-tab="elite" onclick="featurePage('elite',this)"><span class="featureIcon" style="background:#fff2b8;color:#8a6500">♛</span><span style="color:#b88900">ELITE DASHBOARD</span></button>
 <button class="feature" data-tab="community" onclick="featurePage('community',this)"><span class="featureIcon">☁</span><span>COMMUNITY</span></button>
@@ -237,6 +295,7 @@ body{overflow:auto}
 const SUPABASE_URL='https://rhcddqqoajcejtuzaquc.supabase.co';
 const SUPABASE_ANON_KEY='sb_publishable_MNpVU2BSZSGykvo9crfVxw_Dv7KTzwu';
 const PROFILE_TABLE='profiles';
+const GOOGLE_APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxfDe8rnM2G8rr-2nIg5fzHCZ1WAQ6mQBHOdfusS6Fl-_NhZICBEUPIu88jQFUAw_2McQ/exec';
 
 const NORMALIZED_SUPABASE_URL=(SUPABASE_URL||'').trim().replace(/\/+$/,'');
 const VALID_SUPABASE_URL=/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(NORMALIZED_SUPABASE_URL);
@@ -274,6 +333,13 @@ function setHomeBottomBarLogoVisible(visible){
 }
 if(localStorage.getItem('tisDark')==='true')document.body.classList.add('dark');
 
+function setDashboardLayoutMode(active){
+  document.body.classList.toggle('dashboard-mode', !!active);
+  const dashboardMenu=document.getElementById('dashboardMenuBtn');
+  if(dashboardMenu){
+    dashboardMenu.classList.toggle('show', !!active);
+  }
+}
 function openMenu(){
   document.getElementById('drawer')?.classList.toggle('open');
 }
@@ -286,6 +352,125 @@ function copyUserId(){
   else showToast('User ID: '+id);
 }
 
+function getProfileAvatarKey(user=currentUser){
+  const userId=(user?.id || 'guest').toString();
+  return 'tisProfileImage_'+userId;
+}
+
+function getProfileAvatar(user=currentUser){
+  const userAvatar=(user?.user_metadata && (user.user_metadata.avatar || user.user_metadata.profile_picture)) || '';
+  if(userAvatar) return String(userAvatar);
+  const key=getProfileAvatarKey(user);
+  return localStorage.getItem(key) || '';
+}
+
+function getDefaultProfileInitial(user=currentUser){
+  const name=userFullName(user) || 'User';
+  return String(name.trim().charAt(0) || 'U').toUpperCase();
+}
+
+function renderProfilePhoto(imageData, user=currentUser){
+  const photo=document.querySelector('#dashboard .profilePhoto');
+  if(!photo) return;
+  const effectiveImage=imageData || getProfileAvatar(user);
+  if(effectiveImage){
+    photo.innerHTML='<img src="'+effectiveImage+'" alt="Profile picture">';
+    return;
+  }
+  photo.innerHTML='<span class="profileInitial">'+getDefaultProfileInitial(user)+'</span>';
+}
+
+function previewProfileImage(input){
+  const file=input?.files?.[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    const imageData=String(reader.result || '');
+    if(!imageData) return;
+    const key=getProfileAvatarKey(currentUser);
+    localStorage.setItem(key, imageData);
+    if(currentUser){
+      currentUser.user_metadata = currentUser.user_metadata || {};
+      currentUser.user_metadata.avatar = imageData;
+    }
+    renderProfilePhoto(imageData, currentUser);
+    const preview=document.getElementById('editAvatarPreview');
+    if(preview){
+      preview.innerHTML='<img src="'+imageData+'" alt="Selected profile preview">';
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function goBackToPreviousView(){
+  const pageArea=document.getElementById('pageArea');
+  const currentState=window.history.state || {};
+  const hasDetailState=currentState && currentState.tisDetailView;
+
+  if(hasDetailState && typeof window.history.back === 'function'){
+    window.history.back();
+    return;
+  }
+
+  if(pageArea && pageArea.innerHTML.trim()){
+    pageArea.innerHTML='';
+    const dashboard=document.getElementById('dashboard');
+    const home=document.getElementById('home');
+    const previousView=window.__tisPreviousView || 'home';
+    if(previousView==='dashboard' && dashboard){
+      showDashboard();
+    }else{
+      goHomePublic();
+    }
+    return;
+  }
+
+  if(document.getElementById('featureOverlay')?.classList.contains('open')){
+    openFeatures();
+    return;
+  }
+
+  if(document.getElementById('drawer')?.classList.contains('open')){
+    openMenu();
+    return;
+  }
+
+  if(document.getElementById('authModal')?.classList.contains('open')){
+    closeAuthModal();
+    return;
+  }
+
+  if(document.getElementById('paymentModal')?.classList.contains('open')){
+    closePaymentModal(true);
+    return;
+  }
+
+  goHomePublic();
+}
+
+function rememberPageEntryState(viewName){
+  const dashboard=document.getElementById('dashboard');
+  const home=document.getElementById('home');
+  window.__tisPreviousView = (dashboard && dashboard.style.display === 'block') ? 'dashboard' : 'home';
+  const state={tisDetailView:viewName, previousView:window.__tisPreviousView};
+  window.history.pushState(state, '', window.location.href);
+}
+
+window.addEventListener('popstate',()=>{
+  const pageArea=document.getElementById('pageArea');
+  const state=window.history.state || {};
+  if(!state.tisDetailView){
+    if(pageArea && pageArea.innerHTML.trim()){
+      pageArea.innerHTML='';
+      if(window.__tisPreviousView === 'dashboard'){
+        showDashboard();
+      }else{
+        goHomePublic();
+      }
+    }
+  }
+});
+
 function page(type){
   const drawer=document.getElementById('drawer');
   const home=document.getElementById('home');
@@ -293,6 +478,7 @@ function page(type){
   const area=document.getElementById('pageArea');
   if(!home||!dash||!area){goHomePublic();return}
   drawer?.classList.remove('open');
+  rememberPageEntryState(type);
 
   home.style.display='none';
   dash.style.display='none';
@@ -309,21 +495,31 @@ function page(type){
     area.innerHTML=`<div class="page"><div class="pageBox">
       <h1>Edit Profile</h1>
       <form class="form" onsubmit="event.preventDefault();saveProfile()">
+        <div style="margin-bottom:16px;">
+          <label style="display:block;margin-bottom:10px;font-weight:700;">Profile Picture</label>
+          <div id="editAvatarPreview" style="width:90px;height:90px;border-radius:50%;overflow:hidden;border:1px solid var(--line);background:var(--soft);display:grid;place-items:center;margin-bottom:10px;">
+            <span style="font-size:28px;font-weight:900;color:var(--navy);">${getDefaultProfileInitial(currentUser)}</span>
+          </div>
+          <input id="editAvatar" type="file" accept="image/*" onchange="previewProfileImage(this)" style="margin-top:8px;">
+        </div>
         <input id="editName" value="${profileName}" placeholder="Full name" required>
         <input id="editEmail" type="email" value="${profileEmail}" placeholder="Email">
-        <input id="editPhone" placeholder="Phone">
         <button type="submit">Save Changes</button>
         <button type="button" onclick="showDashboard()" style="background:transparent!important;color:var(--text)!important;border:1px solid var(--line)">Cancel</button>
       </form>
     </div></div>`;
   } else {
     const pages={
-      about:['About Us','<h3>Mission</h3><p>The Indian Skills provides high-impact, practical skill education to help individuals excel in finance, marketing, branding, and management.</p><h3>Skill-First Learning</h3><p>Courses focus on real-world application, enabling students to gain industry-relevant capabilities.</p><h3>Digital Convenience</h3><p>Entirely online learning models allow students to access top-tier training from anywhere.</p><h3>Professional Growth</h3><p>Designed to help learners scale their careers, freelance businesses, or entrepreneurial projects.</p>'],
-      privacy:['Privacy Policy','<h3>Information Collection</h3><p>We collect essential user information, including full name, email address, and authentication details during account creation.</p><h3>Data Security</h3><p>User data is encrypted and securely processed using industry-standard protocols; we never store plain-text credentials.</p><h3>Data Usage</h3><p>Information collected is strictly used to provide platform access, deliver course content, manage user accounts, and communicate with learners.</p><h3>Third-Party Confidentiality</h3><p>Student personal information is strictly confidential and will never be sold, rented, or traded to external third parties.</p><div class="policyNotice"><h3>Cancellation & Refund Policy</h3><p>All digital course purchases, registrations, and payments made on The Indian Skills are final, non-refundable, and non-cancellable under any circumstances once access is granted.</p></div>'],
-      terms:['Terms & Conditions','<div class="policyNotice"><h3>No Refund Policy</h3><p>All purchases of courses, packages, or services on The Indian Skills are final and strictly non-refundable under any circumstances once payment is processed.</p><h3>No Cancellation Policy</h3><p>Orders and course enrollments cannot be canceled, exchanged, or transferred to another user once confirmed.</p></div><h3>Non-Transferable Access</h3><p>Course access and user accounts are non-transferable; credentials cannot be shared, reassigned, or resold to any third party.</p><h3>Intellectual Property Rights</h3><p>All content, course materials, videos, and branding are the exclusive property of The Indian Skills and protected under applicable copyright laws.</p><h3>Account Termination</h3><p>Any unauthorized distribution of course content, misuse of platform access, or fraudulent activity will result in immediate account termination without prior notice.</p><h3>No Job or Income Guarantee</h3><p>The Indian Skills provides educational and skill-development courses only. We do not guarantee job placements, employment, or specific income results. All earning outcomes depend entirely on individual effort, market conditions, and personal implementation.</p>']
+      about:['About Us','<div class="policyNotice"><h3>DISCLAIMER</h3><p>THE INDIAN SKILLS is an independent educational platform and is not affiliated with or connected to any government campaign, organization, company, or other brand. Our content and materials are independently created.</p></div><h3>Who We Are</h3><p>Welcome to The Indian Skills.</p><p>We started with a simple belief: learning should help people grow in real life, not just in theory. Many students and learners spend countless hours studying, yet often struggle to find practical knowledge that can be applied outside the classroom. That\'s where we aim to make a difference.</p><p>The Indian Skills is an online learning platform created to help students, beginners, and professionals develop valuable skills that support their personal and professional growth. Our goal is to make learning simple, practical, and accessible for everyone.</p><h3>Our Mission</h3><p>Our mission is to provide high-quality learning opportunities that help people build confidence, gain useful knowledge, and stay prepared for an ever-changing world.</p><p>We believe that education should be clear, affordable, and focused on real outcomes. Whether you\'re learning a new skill, exploring a new career path, or simply investing in yourself, we\'re here to support your journey.</p><h3>What Makes Us Different</h3><h3>Practical Learning</h3><p>We focus on knowledge and skills that can be applied in real-life situations, helping learners move beyond theory and take meaningful action.</p><h3>Continuous Growth</h3><p>The world is constantly evolving, and learning should evolve with it. We strive to provide relevant and up-to-date learning experiences that support long-term growth.</p><h3>Honest and Transparent Approach</h3><p>We believe in building trust through clear communication, transparency, and a learner-first mindset.</p><h3>A Supportive Learning Environment</h3><p>Every learner\'s journey is unique. Our aim is to create an environment where people feel encouraged, motivated, and confident as they continue learning and improving.</p><h3>Join Us</h3><p>No matter where you are in your journey, there is always something new to learn. Whether you\'re a student preparing for the future, a professional looking to expand your skills, or someone exploring new opportunities, The Indian Skills is here to help you move forward.</p><p>Let\'s learn,, grow, and build a better future—together.</p>'],
+      privacy:['Privacy Policy','<h3>Privacy Policy</h3><p><strong>Last Updated:</strong> September 5, 2026</p><p>At The Indian Skills, we respect your privacy and are committed to handling your information responsibly. This Privacy Policy explains what information we collect, why we collect it, how it may be used, and the choices available to you when using our website and services.</p><p>By accessing or using The Indian Skills website, you acknowledge that you have read and understood this Privacy Policy.</p><h3>1. Information We Collect</h3><p>Depending on how you interact with our platform, we may collect:</p><p><strong>Information You Provide</strong></p><ul><li>Name</li><li>Email address</li><li>Phone number (if provided)</li><li>Information submitted through forms, support requests, or communications</li><li>Account-related information provided during registration</li></ul><p><strong>Automatically Collected Information</strong></p><p>When you visit our website, certain technical information may be collected automatically, such as:</p><ul><li>IP address</li><li>Browser type</li><li>Device information</li><li>Pages visited</li><li>Date and time of access</li></ul><h3>2. Why We Collect Information</h3><p>We collect information for purposes such as:</p><ul><li>Providing access to our platform and services</li><li>Managing user accounts</li><li>Processing purchases and enrollments</li><li>Responding to inquiries and support requests</li><li>Improving website functionality and user experience</li><li>Maintaining the security and operation of the platform</li><li>Complying with applicable legal requirements</li></ul><h3>3. How Payments Are Handled</h3><p>Payments made through our platform may be processed by third-party payment service providers.</p><p>The Indian Skills does not intentionally store complete payment card details on its own systems unless specifically required for a service. Payment information is generally processed according to the policies and security practices of the applicable payment provider.</p><p>Users are encouraged to review the privacy policies and terms of any payment service used during a transaction.</p><h3>4. Cookies and Analytics</h3><p>Our website may use cookies or similar technologies to support website functionality, remember preferences, improve performance, and better understand how visitors use the platform.</p><p>If analytics tools are used, they may collect aggregated or technical information regarding website usage. Such information is generally used to evaluate and improve the user experience.</p><p>Users may be able to manage certain cookie preferences through their browser settings.</p><h3>5. Third-Party Service Providers</h3><p>We may use third-party service providers to support the operation of our platform. These providers may assist with services such as:</p><ul><li>Website hosting</li><li>Payment processing</li><li>User authentication</li><li>Analytics</li><li>Communication and support services</li></ul><p>These providers may access information only as necessary to perform services related to the operation of the platform. Their handling of information is governed by their own policies and practices.</p><h3>6. How Information Is Protected</h3><p>We take reasonable administrative, technical, and organizational measures intended to help protect information from unauthorized access, misuse, alteration, or disclosure.</p><p>However, no method of electronic transmission or storage can be guaranteed to be completely secure. Users should also take reasonable steps to protect their own account credentials and devices.</p><h3>7. Information Retention</h3><p>Information may be retained for as long as reasonably necessary to provide services, maintain records, comply with legal obligations, resolve disputes, enforce policies, or support legitimate business operations.</p><p>Retention periods may vary depending on the nature of the information and the purpose for which it was collected.</p><h3>8. Your Rights and Choices</h3><p>Subject to applicable laws, users may request to:</p><ul><li>Access information associated with their account</li><li>Correct inaccurate information</li><li>Request deletion of certain information</li><li>Contact us regarding privacy-related concerns</li></ul><p>Requests will be reviewed and handled in accordance with applicable legal and operational requirements.</p><h3>9. Changes to This Privacy Policy</h3><p>We may update this Privacy Policy from time to time to reflect changes in our services, operational practices, legal requirements, or other business needs.</p><p>Any updated version will be posted on this page with a revised "Last Updated" date. Continued use of the platform after changes are posted may constitute acceptance of the updated Privacy Policy.</p><h3>10. Contact Us</h3><p>If you have questions regarding this Privacy Policy or our privacy practices, you may contact us through the contact information provided on our website.</p><p>The Indian Skills<br>Email: support@theindianskills.com<br>Website: The Indian Skills</p>'],
+      terms:['Terms & Conditions','<h3>Terms and Conditions</h3><p><strong>Last Updated:</strong> September 5, 2026</p><p>Welcome to The Indian Skills. These Terms and Conditions govern your access to and use of our website, courses, content, and related services. By accessing or using our platform, you agree to comply with these Terms and Conditions. If you do not agree with any part of these Terms, please discontinue use of the website and services.</p><h3>1. About The Indian Skills</h3><p>The Indian Skills is an independent educational platform that provides learning resources, courses, and educational content. We are not affiliated with, endorsed by, authorized by, or associated with any government authority, government department, government scheme, or official government program unless expressly stated otherwise.</p><h3>2. Acceptance of Terms</h3><p>By using our website, creating an account, purchasing a course, or accessing any content provided through the platform, you acknowledge that you have read, understood, and agreed to these Terms and Conditions.</p><h3>3. Use of the Platform</h3><p>Users agree to use the platform only for lawful purposes and in a manner that does not interfere with the operation, security, or accessibility of the website.</p><p>You agree not to:</p><ul><li>Engage in fraudulent, unlawful, or harmful activities.</li><li>Attempt to gain unauthorized access to the website, accounts, or systems.</li><li>Distribute malicious software, viruses, or harmful code.</li><li>Misuse, disrupt, or interfere with the operation of the platform.</li></ul><h3>4. Course Access and User Responsibilities</h3><p>Courses, learning materials, videos, PDFs, downloads, and other content provided through The Indian Skills are intended solely for personal and non-commercial use.</p><p>Users may not:</p><ul><li>Share account access with others.</li><li>Reproduce, copy, distribute, resell, or commercially exploit course content.</li><li>Upload or distribute platform content on other websites, applications, or platforms without permission.</li></ul><h3>5. Payments and Purchases</h3><p>Course fees, pricing information, and payment details will be displayed before a purchase is completed.</p><p>Payments may be processed through third-party payment service providers. The Indian Skills is not responsible for the policies, practices, or operations of third-party payment providers.</p><p>(Note: All purchases of courses, packages, or services are final and strictly non-refundable under any circumstances once payment is processed. Orders and course enrollments cannot be canceled, exchanged, or transferred to another user once confirmed.)</p><h3>6. Intellectual Property</h3><p>All original content available on The Indian Skills, including but not limited to course materials, videos, documents, graphics, designs, branding elements, text, logos, and website content, is protected by applicable intellectual property laws.</p><p>No content may be copied, reproduced, modified, distributed, or used without prior authorization where required.</p><h3>7. No Guaranteed Results</h3><p>The Indian Skills provides educational and informational content only.</p><p>We do not guarantee:</p><ul><li>Employment opportunities</li><li>Job placement</li><li>Business success</li><li>Income generation</li><li>Client acquisition</li><li>Examination results</li><li>Any specific personal, professional, or financial outcome</li></ul><p>Individual results depend on numerous factors beyond our control.</p><h3>8. Third-Party Services</h3><p>Our platform may integrate or rely on third-party services such as payment processors, hosting providers, analytics tools, communication services, or authentication providers.</p><p>Use of such services may be subject to their own terms, policies, and practices. We are not responsible for third-party content, services, or actions.</p><h3>9. Account Suspension or Termination</h3><p>We reserve the right to suspend, restrict, or terminate access to the platform if a user violates these Terms, engages in misuse of the platform, or participates in activities that may harm the website, its users, or its operations.</p><h3>10. Privacy</h3><p>Your use of the platform is also governed by our Privacy Policy, which explains how information may be collected, used, stored, and protected.</p><h3>11. Limitation of Liability</h3><p>The Indian Skills provides its services and content on an "as available" basis. To the extent permitted by applicable law, we shall not be liable for any indirect, incidental, consequential, or special damages arising from the use of, or inability to use, the platform, services, or content.</p><h3>12. Changes to These Terms</h3><p>We reserve the right to modify, update, revise, or replace these Terms and Conditions at any time without prior notice.</p><p>Any revised version will become effective upon being posted on the website. Continued use of the platform after changes are posted constitutes acceptance of the updated Terms and Conditions.</p><h3>13. Contact Us</h3><p>If you have any questions, concerns, or requests regarding these Terms and Conditions, please contact us using the contact information provided on our website.</p><p>The Indian Skills<br>Email: info@theindianskills.com<br>Website: The Indian Skills</p>'],
+      disclaimer:['Disclaimer','<div class="policyNotice" style="background:#eaf5ff;border-color:#cfe6ff;border-left-color:#2d7ff9;"><h3>Disclaimer</h3><p>THE INDIAN SKILLS is an independent educational platform and is not affiliated with or connected to any government campaign, organization, company, or other brand. Our content and materials are independently created.</p></div>'],
+      refund:['Refund Policy','<div class="policyNotice" style="background:#eaf5ff;border-color:#cfe6ff;border-left-color:#2d7ff9;"><h3>Refund Policy</h3><p>Refunds or cancellations are only available for valid reasons if it is our site\'s fault. If you are eligible, you can place your cancellation or refund request through the Complaint Section below, and our team will assist you. Please note that all requests must be raised within 24 hours. Once approved, your problem will be resolved and the refund amount will be credited back to your account within 2 to 3 business days.</p></div>'],
+      contact:['Contact Us','<h3>Contact the Team</h3><p>Phone: +91 XXXXX XXXXX</p><p>WhatsApp: Chat with us</p><p>Email: <a href="mailto:info@theindianskills.com">info@theindianskills.com</a></p><p>For course, account, payment, or technical questions, contact us through email or WhatsApp. Never send your password, OTP, or full card number.</p><div class="socialLinks"><a class="socialBtn" href="#" onclick="showToast(\'Add your Instagram URL here.\');return false">Instagram</a><a class="socialBtn" href="#" onclick="showToast(\'Add your WhatsApp URL here.\');return false">WhatsApp</a></div><a class="channelBtn" href="#" onclick="showToast(\'Add your official community channel link here.\');return false"><span>Access Community Channel</span><span>→</span></a>']
     };
     const p=pages[type] || pages.about;
-    area.innerHTML=`<div class="page"><div class="pageBox">
+    area.innerHTML=`<div class="page"><div class="pageBox" style="position:relative;">
+      <button type="button" aria-label="Close" onclick="goBackToPreviousView()" style="position:absolute;top:12px;right:12px;border:0;background:transparent;color:var(--text);font-size:28px;line-height:1;cursor:pointer;padding:0;">×</button>
       <h1>${p[0]}</h1><div class="pageContent">${p[1]}</div>
       <button class="editBtn" onclick="goHome()">Back to Home</button>
     </div></div>`;
@@ -394,6 +590,7 @@ function goHomePublic(){
   const dashboard=document.getElementById('dashboard');
   const dashboardMenu=document.getElementById('dashboardMenuBtn');
   const home=document.getElementById('home');
+  document.body.classList.remove('dashboard-mode');
   setHomeBottomBarLogoVisible(true);
   if(pageArea)pageArea.innerHTML='';
   if(dashboard)dashboard.style.display='none';
@@ -428,19 +625,76 @@ function handleDocumentClick(event){
     showCoursesSection(event);
   }
 }
+function resolveCoursePdfCandidates(courseName){
+  const normalizedCourseName=(courseName||'').trim();
+  const exactNames=[COURSE_PDFS[normalizedCourseName],COURSE_PDFS[normalizedCourseName.toLowerCase()],COURSE_PDFS[normalizedCourseName.toUpperCase()]]
+    .filter(Boolean)
+    .map(value=>String(value).trim())
+    .filter((value,index,array)=>array.indexOf(value)===index);
+  const defaultNames={
+    'Marketing Management':['marketing-management.pdf.pdf','marketing-management.pdf','assets/marketing-management.pdf','public/marketing-management.pdf'],
+    'Branding Management':['branding-management.pdf.pdf','branding-management.pdf','assets/branding-management.pdf','public/branding-management.pdf'],
+    'Traffic Management':['traffic-management.pdf.pdf','traffic-management.pdf','assets/traffic-management.pdf','public/traffic-management.pdf'],
+    'Influence Management':['influence-management.pdf.pdf','influence-management.pdf','assets/influence-management.pdf','public/influence-management.pdf'],
+    'Finance Management':['finance-management.pdf.pdf','finance-management.Pdf.pdf','finance-management.pdf','assets/finance-management.pdf','public/finance-management.pdf']
+  };
+  const fallback=defaultNames[normalizedCourseName]||[];
+  return [...exactNames,...fallback].filter(Boolean);
+}
+function buildPublicCoursePdfUrl(fileRef){
+  if(!fileRef)return '';
+  if(/^https?:\/\//i.test(fileRef))return fileRef;
+  if(fileRef.startsWith('/'))return new URL(fileRef,window.location.href).href;
+  return new URL(fileRef,window.location.href).href;
+}
 async function openCoursePdf(courseName){
-  const pdfUrl=COURSE_PDFS[courseName];
-  if(!pdfUrl){showToast('Course PDF is unavailable.');return}
+  const normalizedCourseName=(courseName||'').trim();
+  const pdfCandidates=resolveCoursePdfCandidates(normalizedCourseName);
+  const directPdfUrl=pdfCandidates.map(buildPublicCoursePdfUrl).find(Boolean) || '';
+  if(!pdfCandidates.length){showToast('Course PDF is unavailable.');return}
   if(!await hasActiveEnrollment(courseName)){
     showToast('Please enroll in this course first to access the PDF.');
     return;
   }
   try{
-    const {data,error}=await window.supabase.storage.from('course-pdfs').createSignedUrl(pdfUrl,3600);
-    if(error||!data?.signedUrl)throw error||new Error('Signed URL unavailable');
-    window.open(data.signedUrl,'_blank','noopener');
+    let finalUrl=directPdfUrl;
+    if(window.supabase && COURSE_PDFS[normalizedCourseName]){
+      const {data,error}=await window.supabase.storage.from('course-pdfs').createSignedUrl(COURSE_PDFS[normalizedCourseName],3600);
+      if(!error&&data?.signedUrl){
+        finalUrl=data.signedUrl;
+      }else if(error){
+        console.warn('[Course PDF] Signed URL fallback failed:',error.message || error);
+      }
+    }
+    if(!finalUrl){throw new Error('PDF URL unavailable');}
+    const popup=window.open(finalUrl,'_blank','noopener,noreferrer');
+    if(!popup){
+      const anchor=document.createElement('a');
+      anchor.href=finalUrl;
+      anchor.target='_blank';
+      anchor.rel='noopener noreferrer';
+      anchor.download=String(pdfCandidates[0]).split('/').pop() || `${normalizedCourseName}.pdf`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+    }
   }catch(error){
     console.error('[App Error]:',error);
+    const fallbackUrl=directPdfUrl || (pdfCandidates[0] ? buildPublicCoursePdfUrl(pdfCandidates[0]) : '');
+    if(fallbackUrl){
+      const popup=window.open(fallbackUrl,'_blank','noopener,noreferrer');
+      if(!popup){
+        const anchor=document.createElement('a');
+        anchor.href=fallbackUrl;
+        anchor.target='_blank';
+        anchor.rel='noopener noreferrer';
+        anchor.download=String(pdfCandidates[0]).split('/').pop() || `${normalizedCourseName}.pdf`;
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+      }
+      return;
+    }
     showToast('The course PDF could not be opened. Please try again.');
   }
 }
@@ -497,6 +751,35 @@ async function fetchEnrollments(){
     console.error('[App Error]:',error);
     return [];
   }
+}
+const UPGRADE_COURSES=[
+  {name:'Marketing Management',price:999,description:'Modern marketing fundamentals.'},
+  {name:'Branding Management',price:2499,description:'Build strong brands.'},
+  {name:'Traffic Management',price:5000,description:'Audience and traffic growth.'},
+  {name:'Influence Management',price:10000,description:'Communication and leadership.'},
+  {name:'Finance management',price:15000,description:'Master the fundamentals of corporate and personal finance.'}
+];
+function courseCatalogPrice(courseName){
+  const normalizedName=String(courseName||'').trim().toLowerCase();
+  return UPGRADE_COURSES.find(course=>course.name.toLowerCase()===normalizedName)?.price||0;
+}
+function enrollmentPrice(enrollment){
+  const storedPrice=parseCoursePrice(enrollment?.amount??enrollment?.price??enrollment?.payment_amount);
+  return storedPrice>0?storedPrice:courseCatalogPrice(enrollment?.course_name);
+}
+async function renderUpgradeCourses(){
+  const enrollments=await fetchEnrollments();
+  const activeCourses=Array.isArray(enrollments)
+    ? enrollments.filter(course=>String(course?.status||'').trim().toLowerCase()==='approved')
+    : [];
+  const currentPrice=activeCourses.reduce((highest,course)=>Math.max(highest,enrollmentPrice(course)),0);
+  const availableCourses=UPGRADE_COURSES.filter(course=>course.price>currentPrice);
+
+  if(!availableCourses.length){
+    return '<div class="upgradeSuccess" role="status"><div class="upgradeSuccessContent"><h2>Congratulations!</h2><p>You already own the highest available course tier.</p></div><button class="editBtn backBtn upgradeBackBtn" type="button" onclick="dashboardHome()">Back to Dashboard</button></div>';
+  }
+
+  return `<div class="featureCardGrid">${availableCourses.map(course=>`<button class="featureCard upgrade-course-btn" data-course-name="${escapeHtml(course.name)}" data-course-price="${formatCoursePrice(course.price)}" type="button" onclick="openPaymentModal('${escapeHtml(course.name)}','${formatCoursePrice(course.price)}')"><h3>${escapeHtml(course.name)}</h3><p>${escapeHtml(course.description)}</p><strong>${formatCoursePrice(course.price)}</strong><small>Purchase course</small></button>`).join('')}</div>`;
 }
 async function updateDashboardEarnings(){
   const earningValues=document.querySelectorAll('#dashboard .earning strong');
@@ -567,7 +850,8 @@ function updateSignupPricing(){
   const packageName=document.getElementById('authPackage')?.value||'';
   const priceBox=document.getElementById('signupPrice');
   if(!priceBox)return;
-  const originalPrice=COURSE_PRICES[packageName];
+  const normalizedPackageName=String(packageName||'').trim().toLowerCase();
+  const originalPrice=Number(COURSE_PRICES[normalizedPackageName] ?? COURSE_PRICES[packageName] ?? 0);
   if(!originalPrice){priceBox.textContent='Select a course to see the price.';return}
   const hasReferral=isValidReferralLink(document.getElementById('authReferral')?.value||'');
   const finalPrice=hasReferral?originalPrice*.25:originalPrice;
@@ -736,19 +1020,41 @@ function openFeedback(){
 function closeFeedback(){const m=document.getElementById('feedbackModal');if(m)m.remove()}
 async function saveProfile(){
   const name=normalizeName(document.getElementById('editName').value);
-  const email=(document.getElementById('editEmail').value||'').trim();
-  const phone=normalizePhone(document.getElementById('editPhone').value||'');
+  const emailInput=document.getElementById('editEmail');
+  const email=(emailInput?.value||'').trim();
+  const avatarInput=document.getElementById('editAvatar');
+  const avatarFile=avatarInput?.files?.[0] || null;
   if(!name){showToast('Please enter your name.');return;}
-  if(email && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){
-    showToast('Please enter a valid email.');return;
+  if(email && !isValidEmail(email)){
+    showToast('Please enter a valid email.');
+    if(emailInput)emailInput.setCustomValidity('Please enter a valid email address.');
+    return;
   }
+  if(emailInput)emailInput.setCustomValidity('');
   if(!currentUser){showToast('Please sign in again to update your profile.');return;}
   try{
-    const {data,error}=await window.supabase.auth.updateUser({data:{full_name:name}});
+    let avatarData='';
+    if(avatarFile){
+      const reader=new FileReader();
+      avatarData=await new Promise((resolve,reject)=>{
+        reader.onload=()=>resolve(String(reader.result || ''));
+        reader.onerror=()=>reject(new Error('Could not read the selected image.'));
+        reader.readAsDataURL(avatarFile);
+      });
+      const key=getProfileAvatarKey(currentUser);
+      localStorage.setItem(key, avatarData);
+      if(!currentUser.user_metadata) currentUser.user_metadata={};
+      currentUser.user_metadata.avatar=avatarData;
+      renderProfilePhoto(avatarData, currentUser);
+    }
+    const {data,error}=await window.supabase.auth.updateUser({data:{full_name:name, avatar: avatarData || getProfileAvatar(currentUser) || ''}});
     if(error){showToast(error.message);return;}
     currentUser=data.user;
+    const currentKey=getProfileAvatarKey(currentUser);
+    if(currentUser.user_metadata?.avatar){
+      localStorage.setItem(currentKey, currentUser.user_metadata.avatar);
+    }
     localStorage.setItem('tisEmail',email);
-    localStorage.setItem('tisPhone',phone);
     updateDashboardIdentity();
     showToast('Profile updated successfully.');
     showDashboard();
@@ -764,6 +1070,7 @@ async function showDashboard(){
     const dashboard=document.getElementById('dashboard');
     const dashboardMenu=document.getElementById('dashboardMenuBtn');
     if(!home||!pageArea||!dashboard||!dashboardMenu)throw new Error('Dashboard elements are unavailable.');
+    setDashboardLayoutMode(true);
     home.style.display='none';
     pageArea.innerHTML='';
     dashboard.style.display='block';
@@ -771,8 +1078,17 @@ async function showDashboard(){
     const savedName=userFullName(currentUser);
     const title=document.querySelector('.dashTop h1');
     const profile=document.querySelector('.profileInitial');
+    const photo=document.querySelector('.profilePhoto');
+    const savedAvatar=getProfileAvatar(currentUser);
     if(title)title.textContent=savedName;
-    if(profile)profile.textContent=savedName.charAt(0).toUpperCase();
+    if(photo){
+      if(savedAvatar){
+        photo.innerHTML='<img src="'+savedAvatar+'" alt="Profile picture">';
+      }else{
+        photo.innerHTML='<span class="profileInitial">'+getDefaultProfileInitial(currentUser)+'</span>';
+      }
+    }
+    if(profile)profile.textContent=getDefaultProfileInitial(currentUser);
     const profileName=document.querySelector('.profileName');
     const userId=document.querySelector('.userIdValue');
     const profileBadge=document.querySelector('.profileBadge');
@@ -785,10 +1101,8 @@ async function showDashboard(){
     const enrollment=activeCourses[activeCourses.length-1];
     const savedCourse=enrollment?.course_name||'';
     const enrolled=document.querySelector('.enrolled');
-    const currentCourse=document.querySelector('.current p');
     if(profileBadge)profileBadge.hidden=!savedCourse;
     if(enrolled)enrolled.textContent=savedCourse||'No Course Enrolled';
-    if(currentCourse)currentCourse.textContent=savedCourse||'No Course Enrolled';
     await updateDashboardEarnings();
     window.scrollTo({top:0,behavior:'smooth'});
   }catch(error){
@@ -800,7 +1114,7 @@ async function showDashboard(){
 }
 async function goHome(){await returnToSessionView()}
 function setDashboardMainView(show){
-  ['.dashTop','.earnings','.chartBlock','.current','.profileEdit'].forEach(selector=>{
+  ['.dashTop','.earnings','.profileEdit'].forEach(selector=>{
     const element=document.querySelector(selector);
     if(element)element.style.display=show?'':'none';
   });
@@ -832,35 +1146,100 @@ async function loadLeaderboardData(period){
   return target;
 }
 function formatLeaderboardCurrency(value){return new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(value);}
-function leaderboardRows(period,loading=false){
-  if(loading)return '<div class="leaderboardSpinner" role="status" aria-label="Loading leaderboard"></div>';
+function leaderboardCards(period){
   const users=leaderboardData[period];
-  if(!users.length)return '<div class="leaderboardEmpty">No earnings recorded yet for this period</div>';
+  if(!users.length)return '<div class="leaderboardSectionEmpty">No earnings recorded yet for this period.</div>';
   return users.map((user,index)=>{
     const rank=index+1;
     const rankClass=rank===1?'rankGold':rank===2?'rankSilver':rank===3?'rankBronze':'';
-    const initials=user.avatar||user.name.split(' ').map(name=>name[0]).join('').slice(0,2);
-    return `<div class="leaderboardRow"><strong class="${rankClass}">#${rank}</strong><div class="leaderboardUser"><span class="leaderboardAvatar">${initials}</span><span class="leaderboardName">${escapeHtml(user.name)}</span></div><span class="leaderboardScore">${formatLeaderboardCurrency(user.earnings)}</span><span class="leaderboardBadge ${rankClass}">${escapeHtml(user.status)}</span></div>`;
+    const initials=user.name.split(' ').map(name=>name[0]).join('').slice(0,2).toUpperCase();
+    const avatar=String(user.avatar||'');
+    const avatarMarkup=/^(https?:\/\/|data:image\/)/i.test(avatar)
+      ? `<img src="${escapeHtml(avatar)}" alt="${escapeHtml(user.name)} avatar" loading="lazy">`
+      : escapeHtml(initials);
+    const rankLabel=rank<=3?['♛','♛','♛'][rank-1]:String(rank);
+    return `<div class="leaderboardCard"><div class="leaderboardBadge ${rankClass}">${rankLabel}</div><div class="leaderboardCardContent"><span class="leaderboardCardAvatar">${avatarMarkup}</span><span class="leaderboardCardName">${escapeHtml(user.name)}</span></div><div class="leaderboardCardAmount">${formatLeaderboardCurrency(user.earnings)}</div></div>`;
   }).join('');
 }
-function buildLeaderboardView(period='today'){
-  const tabs=[['today',"Today's Leaderboard"],['week','Last 7 Days'],['month','Last 30 Days'],['all','All Time']];
-  const tabMarkup=tabs.map(tab=>`<button class="leaderboardTab${tab[0]===period?' active':''}" type="button" onclick="renderLeaderboardTab('${tab[0]}',this)">${tab[1]}</button>`).join('');
-  return `<p>Track top performers by points across the platform.</p><div class="leaderboardTabs" role="tablist">${tabMarkup}</div><div class="leaderboardTable"><div class="leaderboardRow leaderboardHead"><span>#</span><span>User</span><span>Points</span><span>Status</span></div><div id="leaderboardRows">${leaderboardRows(period,true)}</div></div>`;
+function buildLeaderboardView(){
+  return `<p>Track top performers by points across the platform.</p><div id="leaderboardSections" class="leaderboardSections" aria-live="polite">
+    <div class="leaderboardSection">
+      <h3 class="leaderboardSectionTitle">Today's Leaderboard</h3>
+      <div class="leaderboardCardList" id="leaderboardToday"><div class="leaderboardSpinner" role="status" aria-label="Loading today's leaderboard"></div></div>
+    </div>
+    <div class="leaderboardSection">
+      <h3 class="leaderboardSectionTitle">Last 7 Days</h3>
+      <div class="leaderboardCardList" id="leaderboardWeek"><div class="leaderboardSpinner" role="status" aria-label="Loading week leaderboard"></div></div>
+    </div>
+    <div class="leaderboardSection">
+      <h3 class="leaderboardSectionTitle">Last 30 Days</h3>
+      <div class="leaderboardCardList" id="leaderboardMonth"><div class="leaderboardSpinner" role="status" aria-label="Loading month leaderboard"></div></div>
+    </div>
+    <div class="leaderboardSection">
+      <h3 class="leaderboardSectionTitle">All Time</h3>
+      <div class="leaderboardCardList" id="leaderboardAll"><div class="leaderboardSpinner" role="status" aria-label="Loading all time leaderboard"></div></div>
+    </div>
+  </div>`;
 }
-async function renderLeaderboardTab(period,button){
-  const view=document.querySelector('.featurePage');
-  if(!view)return;
-  view.querySelectorAll('.leaderboardTab').forEach(tab=>tab.classList.toggle('active',tab===button));
-  const rows=view.querySelector('#leaderboardRows');
-  rows.innerHTML='<div class="leaderboardSpinner" role="status" aria-label="Loading leaderboard"></div>';
-  await loadLeaderboardData(period);
-  rows.innerHTML=leaderboardRows(period);
+async function renderAllLeaderboardSections(){
+  const sections={today:'leaderboardToday',week:'leaderboardWeek',month:'leaderboardMonth',all:'leaderboardAll'};
+  await Promise.all([
+    loadLeaderboardData('today').then(()=>{const el=document.getElementById(sections.today);if(el)el.innerHTML=leaderboardCards('today')}),
+    loadLeaderboardData('week').then(()=>{const el=document.getElementById(sections.week);if(el)el.innerHTML=leaderboardCards('week')}),
+    loadLeaderboardData('month').then(()=>{const el=document.getElementById(sections.month);if(el)el.innerHTML=leaderboardCards('month')}),
+    loadLeaderboardData('all').then(()=>{const el=document.getElementById(sections.all);if(el)el.innerHTML=leaderboardCards('all')})
+  ]);
+}
+let teamMembersChannel=null;
+let teamMembers=[];
+function teamFirstValue(record,keys,fallback=''){
+  for(const key of keys){if(record?.[key]!==undefined&&record[key]!==null&&String(record[key]).trim()!=='')return record[key]}
+  return fallback;
+}
+function teamMemberDetails(profile,enrollment){
+  return {name:teamFirstValue(profile,['full_name','name'],teamFirstValue(enrollment,['full_name','name','student_name'],'Team member')),phone:teamFirstValue(profile,['phone','mobile','phone_number'],teamFirstValue(enrollment,['phone'],'Not provided')),email:teamFirstValue(profile,['email'],teamFirstValue(enrollment,['email','student_email'],'Email unavailable')),referralCode:teamFirstValue(profile,['referral_code'],teamFirstValue(enrollment,['referral_code'],'Not provided')),packageName:teamFirstValue(enrollment,['course_name','package_name','course','course_title'],teamFirstValue(profile,['package_name','package'],'Not assigned')),status:teamFirstValue(profile,['status'],teamFirstValue(enrollment,['status'],'Active')),registeredAt:teamFirstValue(profile,['created_at','registered_at'],teamFirstValue(enrollment,['created_at'],''))};
+}
+function teamMemberDate(value){const date=new Date(value);return value&&!Number.isNaN(date.getTime())?date.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'Not available'}
+function renderTeamMembers(){
+  const view=document.querySelector('.featurePage'),rows=view?.querySelector('#teamMemberRows');
+  if(!rows)return;
+  const query=(view.querySelector('#teamMemberSearch')?.value||'').trim().toLowerCase(),perPage=Number(view.querySelector('#teamMemberPerPage')?.value||10);
+  const filtered=teamMembers.filter(member=>`${member.name} ${member.email}`.toLowerCase().includes(query)).slice(0,perPage);
+  if(!filtered.length){rows.innerHTML='<tr><td colspan="7" class="teamMemberEmpty"><span class="teamMemberEmptyIcon"><svg viewBox="0 0 24 24"><path d="M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20m6-9a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm6.5-6.7a3.5 3.5 0 0 1 0 6.4M16 15h1.5a3.5 3.5 0 0 1 3.5 3.5V20"/></svg></span><strong>No team members found</strong><span>New members connected to your referral code will appear here.</span></td></tr>';return}
+  rows.innerHTML=filtered.map(member=>{const statusClass=String(member.status).toLowerCase().replace(/[^a-z0-9]+/g,'-');return `<tr><td><div class="teamMemberIdentity"><span class="teamMemberAvatar">${escapeHtml(initials(member.name))}</span><strong>${escapeHtml(member.name)}</strong></div></td><td>${escapeHtml(member.phone)}</td><td>${escapeHtml(member.email)}</td><td>${escapeHtml(member.referralCode)}</td><td>${escapeHtml(member.packageName)}</td><td><span class="teamMemberStatus ${escapeHtml(statusClass)}">${escapeHtml(member.status)}</span></td><td>${escapeHtml(teamMemberDate(member.registeredAt))}</td></tr>`}).join('');
+}
+async function loadTeamMembers(){
+  const view=document.querySelector('.featurePage'),rows=view?.querySelector('#teamMemberRows');
+  if(!rows||!currentUser||!window.supabase)return;
+  rows.innerHTML='<tr><td colspan="7" class="teamMemberLoading">Loading team members...</td></tr>';
+  try{
+    const [{data:profiles,error:profileError},{data:enrollments,error:enrollmentError}]=await Promise.all([window.supabase.from(PROFILE_TABLE).select('*').eq('referred_by',currentUser.id).order('created_at',{ascending:false}),window.supabase.from('Enrollments').select('*').order('created_at',{ascending:false})]);
+    if(profileError)throw profileError;if(enrollmentError)throw enrollmentError;
+    const latestByUser=new Map();(enrollments||[]).forEach(enrollment=>{if(enrollment.user_id&&!latestByUser.has(enrollment.user_id))latestByUser.set(enrollment.user_id,enrollment)});
+    teamMembers=(profiles||[]).map(profile=>teamMemberDetails(profile,latestByUser.get(profile.id)||{}));renderTeamMembers();
+  }catch(error){console.error('[Team Members Error]:',error);rows.innerHTML='<tr><td colspan="7" class="teamMemberLoading">Unable to load team members. Please try again.</td></tr>'}
+}
+function subscribeToTeamMembers(){if(teamMembersChannel||!window.supabase||!currentUser)return;teamMembersChannel=window.supabase.channel('team-members-live').on('postgres_changes',{event:'*',schema:'public',table:PROFILE_TABLE,filter:`referred_by=eq.${currentUser.id}`},loadTeamMembers).on('postgres_changes',{event:'*',schema:'public',table:'Enrollments'},loadTeamMembers).subscribe()}
+async function insertTeamMember({name,phone,email,referral_code,package:packageName,...safeFields}){
+  if(!window.supabase)throw new Error('Supabase is not configured.');
+  const {data:authData,error:authError}=await window.supabase.auth.getUser();
+  if(authError)throw authError;
+  const requestedUserId=safeFields.user_id||null;
+  if(authData.user&&requestedUserId&&authData.user.id!==requestedUserId)throw new Error('The team member user ID does not match the active session.');
+  const userId=authData.user?.id||requestedUserId;
+  if(!userId)throw new Error('Authentication is required to save a team member.');
+  const payload={...safeFields,user_id:userId,full_name:String(name||'').trim(),phone:String(phone||'').trim(),email:String(email||'').trim().toLowerCase(),referral_code:referral_code||null,course_name:String(packageName||safeFields.course_name||'').trim()||'Unspecified course'};
+  delete payload.password;
+  delete payload.password_hash;
+  delete payload.pending_password;
+  const {error}=await window.supabase.from('Enrollments').insert([payload]);
+  if(error)throw error;
+  return payload;
 }
 async function featurePage(type,button){
   const names={
     team:'My Team',courses:'My Courses',upgrade:'Upgrade Courses',
-    referral:'Referral Links',leaderboard:'Leaderboard',elite:'Elite Dashboard',community:'Community',support:'Support'
+    referral:'Referral Links',rewards:'Rewards',leaderboard:'Leaderboard',elite:'Elite Dashboard',community:'Community',support:'Support'
   };
   const area=document.getElementById('featurePages');
   const overlay=document.getElementById('featureOverlay');
@@ -873,12 +1252,7 @@ async function featurePage(type,button){
   if(type==='leaderboard') body=buildLeaderboardView();
   else if(type==='team') body=`
     <p>Manage your learning network and track team activity.</p>
-    <div class="featureCardGrid">
-      <div class="featureCard"><h3>Team Members</h3><p>View members connected through your referral activity.</p></div>
-      <div class="featureCard"><h3>Team Activity</h3><p>Monitor new joins and learning activity.</p></div>
-      <div class="featureCard"><h3>Team Earnings</h3><p>View eligible team earnings when a backend is connected.</p></div>
-      <div class="featureCard"><h3>Invite Members</h3><p>Share your referral link to invite learners.</p></div>
-    </div>`;
+    <div class="teamTableView"><div class="teamTableControls"><input id="teamMemberSearch" class="teamTableSearch" type="search" placeholder="Search by name, email..." autocomplete="off" aria-label="Search team members by name or email"><label class="teamTablePerPage" for="teamMemberPerPage">Per Page<select id="teamMemberPerPage" aria-label="Team members per page"><option value="10">10</option><option value="25">25</option><option value="50">50</option></select></label></div><div class="teamTableScroll"><table class="teamTable"><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Referral Code</th><th>Package</th><th>Status</th><th>Registered At</th></tr></thead><tbody id="teamMemberRows"><tr><td colspan="7" class="teamMemberLoading">Loading team members...</td></tr></tbody></table></div></div>`;
   else if(type==='courses'){
     const enrolledCourses=await fetchEnrollments();
     const activeCourses=Array.isArray(enrolledCourses)
@@ -891,16 +1265,9 @@ async function featurePage(type,button){
       <button class="featureCard course-library-btn" type="button"><h3>Course Library</h3><p>Use Explore Courses to preview other courses.</p></button>
     </div>`
       : '<p>No Enrolled Courses</p>';
-  } else if(type==='upgrade') body=`
-    <p>Explore available courses and upgrade your learning journey.</p>
-    <div class="featureCardGrid">
-      <button class="featureCard upgrade-course-btn" data-course-name="Traffic Management" data-course-price="₹999" type="button" onclick="openPaymentModal('Traffic Management','₹999')"><h3>Traffic Management</h3><p>Audience and traffic growth.</p><strong>₹999</strong><small>Purchase course</small></button>
-      <button class="featureCard upgrade-course-btn" data-course-name="Branding Management" data-course-price="₹2,499" type="button" onclick="openPaymentModal('Branding Management','₹2,499')"><h3>Branding Management</h3><p>Build strong brands.</p><strong>₹2,499</strong><small>Purchase course</small></button>
-      <button class="featureCard upgrade-course-btn" data-course-name="Marketing Management" data-course-price="₹5,000" type="button" onclick="openPaymentModal('Marketing Management','₹5,000')"><h3>Marketing Management</h3><p>Modern marketing fundamentals.</p><strong>₹5,000</strong><small>Purchase course</small></button>
-      <button class="featureCard upgrade-course-btn" data-course-name="Influence Management" data-course-price="₹10,000" type="button" onclick="openPaymentModal('Influence Management','₹10,000')"><h3>Influence Management</h3><p>Communication and leadership.</p><strong>₹10,000</strong><small>Purchase course</small></button>
-      <button class="featureCard upgrade-course-btn" data-course-name="Finance Management" data-course-price="₹15,000" type="button" onclick="openPaymentModal('Finance Management','₹15,000')"><h3>Finance Management</h3><p>Master the fundamentals of corporate and personal finance.</p><strong>₹15,000</strong><small>Purchase course</small></button>
-    </div><div class="comingSoonBanner">More Courses Coming Soon</div>`;
-  else if(type==='referral') body=`<p>Share your unique link with people interested in learning.</p><input id="referralLinkBox" class="refBox" type="text" readonly value="Loading your referral link..."><button id="copyReferralButton" class="editBtn" type="button" onclick="copyReferral()">Copy Link</button><div class="featureCardGrid"><div class="featureCard"><h3>Total Invited Users</h3><p id="refCount">Loading...</p></div><div class="featureCard"><h3>Total Referral Earnings</h3><p id="refEarnings">Loading...</p></div></div>`;
+  } else if(type==='upgrade') body='<p>Loading available upgrades...</p>';
+  else if(type==='referral') body=`<p>Share your unique link with people interested in learning.</p><input id="referralLinkBox" class="refBox" type="text" readonly value="Loading your referral link..."><div class="referralActions"><button id="copyReferralButton" class="editBtn" type="button" onclick="copyReferral()">Copy Link</button><button class="editBtn backBtn" type="button" onclick="dashboardHome()">Back to Dashboard</button></div>`;
+  else if(type==='rewards') body=`<div class="rewardGrid"><section class="rewardSection"><h3>Referral Cashback</h3><div class="rewardCard"><p class="rewardLabel">Cashback Amount</p><strong id="cashbackAmount">₹125</strong><small id="cashbackMeta">Ready to use with your next eligible purchase.</small></div></section><section class="rewardSection"><h3>Referral Reward</h3><div class="rewardNoticeCard"><p>Rewards will be added soon</p></div></section></div>`;
   else if(type==='community') body=`
     <p>Access The Indian Skills community and official social channels.</p>
     <div class="communityGrid">
@@ -910,20 +1277,206 @@ async function featurePage(type,button){
       <a class="communityBtn" href="https://www.whatsapp.com/" target="_blank" rel="noopener noreferrer">
         <span class="socialIcon whatsappIcon">◉</span><span><b>WhatsApp</b><small>Open WhatsApp community</small></span><span>→</span>
       </a>
-      <button class="communityBtn" onclick="openChannel()">
+      <a class="communityBtn" href="https://whatsapp.com/channel/0029Vb7spdDDTkJvfJZkg10W" target="_blank" rel="noopener noreferrer">
         <span class="socialIcon">☁</span><span><b>Community Channel</b><small>Access the official channel</small></span><span>→</span>
-      </button>
+      </a>
     </div>`;
-  else if(type==='elite') body=`<p>Elite Dashboard is ready for future membership and backend integration.</p>`;
-  else if(type==='support') body=`<p>For support, use the Contact Us page. Never share your password, OTP or full card number.</p>`;
+  else if(type==='elite') body=`<div class="eliteAccessLock"><div class="eliteAccessBackdrop"></div><div class="eliteAccessCard"><span class="eliteAccessEmoji" aria-hidden="true">🥺</span><h2 class="eliteAccessTitle">You are not an Elite Member</h2><p class="eliteAccessDesc">Sorry to say but this section is only for Elite Members, Please upgrade to an Elite Member to access this feature</p><div class="eliteAccessActions"><button class="eliteAccessBtn primary" type="button" onclick="featurePage('upgrade', document.querySelector('[data-tab=\'upgrade\']'))">Upgrade to Elite</button><button class="eliteAccessBtn secondary" type="button" onclick="dashboardHome()">Go Back</button></div></div></div>`;
+  else if(type==='support') body=`
+    <div class="supportLayout">
+      <section class="supportPanel">
+        <div class="sectionHeader">
+          <span class="sectionBadge">Help Center</span>
+        </div>
+        <h3>Help &amp; Support</h3>
+        <p>Need quick guidance on using the platform? Explore the common questions below and follow the safe usage tips to keep your account protected.</p>
 
-  area.innerHTML=`<div class="pageBox featurePage show"><h1>${names[type]}</h1>${body}<button class="editBtn backBtn" onclick="dashboardHome()">Back to Dashboard</button></div>`;
+        <div class="supportFaqList">
+          <details class="supportFaqItem" open>
+            <summary class="supportFaqQuestion">Question: Is this a government-approved website, or is it a government scheme/campaign?</summary>
+            <div class="supportFaqAnswer">
+              <p><strong>Solution:</strong> No, this is an independent, private educational platform. It is not a government-approved website, and it has no connection to any government scheme or campaign. We only provide practical skill-based learning and do not issue any certificates.</p>
+            </div>
+          </details>
+
+          <details class="supportFaqItem">
+            <summary class="supportFaqQuestion">Question: Technical Issue: My course is not opening or loading. What should I do?</summary>
+            <div class="supportFaqAnswer">
+              <p><strong>Solution:</strong> Facing issues while opening your course? Don't worry! Please take a screenshot of the error and share it in the complaint section below along with your details. Our support team will review it and resolve your issue within 2 to 3 business days.</p>
+            </div>
+          </details>
+
+          <details class="supportFaqItem">
+            <summary class="supportFaqQuestion">Question: Payment Issue: I made a payment, but my course or package is still showing as locked. What should I do?</summary>
+            <div class="supportFaqAnswer">
+              <p><strong>Solution:</strong> Sometimes payment updates take a little while to reflect. If your amount has been deducted but your course isn't unlocked, please share a screenshot of your payment receipt or transaction slip in the complaint section below. Our support team will check it and fix the issue within 2 to 3 business days.</p>
+            </div>
+          </details>
+
+          <details class="supportFaqItem">
+            <summary class="supportFaqQuestion">Question: Will I receive a certificate after completing the course?</summary>
+            <div class="supportFaqAnswer">
+              <p><strong>Solution:</strong> No, we do not provide any certificates upon course completion. Our platform focuses entirely on practical skill-building and learning rather than issuing certificates.</p>
+            </div>
+          </details>
+
+          <details class="supportFaqItem">
+            <summary class="supportFaqQuestion">Question: What is your refund or cancellation policy?</summary>
+            <div class="supportFaqAnswer">
+              <p><strong>Solution:</strong> Refunds or cancellations are only available for valid reasons if it is our site's fault. If you are eligible, you can place your cancellation or refund request through the Complaint Section below, and our team will assist you. Please note that all requests must be raised within 24 hours. Once approved, your problem will be resolved and the refund amount will be credited back to your account within 2 to 3 business days.</p>
+            </div>
+          </details>
+
+          <details class="supportFaqItem">
+            <summary class="supportFaqQuestion">Question: What should I do if I am facing any other problem?</summary>
+            <div class="supportFaqAnswer">
+              <p><strong>Solution:</strong> If you are dealing with any other issue, please submit your problem in the support section given below. Provide your full name, phone number, screenshots, and a detailed description of your problem so our team can contact you and fix it quickly.</p>
+            </div>
+          </details>
+        </div>
+
+        <div class="securityTips">
+          <h4>Secure usage guidelines</h4>
+          <ul>
+            <li>Never share your password, OTP, or login credentials with anyone.</li>
+            <li>Do not share payment details or account screenshots publicly.</li>
+            <li>Use a strong, unique password and log out after using shared devices.</li>
+            <li>If you get a suspicious message, contact support before responding.</li>
+          </ul>
+        </div>
+      </section>
+      <section class="supportPanel complaintPanel">
+        <div class="sectionHeader">
+          <span class="sectionBadge accent">Complaint Desk</span>
+        </div>
+        <h3>Register a Complaint</h3>
+        <p>Share the issue you are facing and our team will review it for follow-up support.</p>
+        <form id="supportComplaintForm" class="supportComplaintForm">
+          <label>
+            Full Name
+            <input type="text" name="fullName" placeholder="Enter your full name" required>
+          </label>
+          <label>
+            Phone Number
+            <input type="tel" name="phoneNumber" placeholder="+91 98765 43210" required>
+          </label>
+          <label>
+            Issue/Complaint Category
+            <select name="issueCategory" required>
+              <option value="">Select issue type</option>
+              <option value="Account issue">Account issue</option>
+              <option value="Payment issue">Payment issue</option>
+              <option value="Course access issue">Course access issue</option>
+              <option value="Technical issue">Technical issue</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+          <label>
+            Describe your problem in detail
+            <textarea name="problemDetails" placeholder="Describe the issue in detail..." required></textarea>
+          </label>
+          <label>
+            Add some screenshot of what kind of problem you are facing
+            <input type="file" name="screenshot" accept="image/*,.png,.jpg,.jpeg,.webp,.pdf">
+          </label>
+          <button type="submit">Send</button>
+        </form>
+      </section>
+    </div>`;
+
+  const pageClass=type==='team'?'pageBox teamPageBox featurePage show':'pageBox featurePage show';
+  const footerButton=type==='referral'||type==='upgrade'?'':`<button class="editBtn backBtn" onclick="dashboardHome()">Back to Dashboard</button>`;
+  area.innerHTML=`<div class="${pageClass}"><h1>${names[type]}</h1>${body}${footerButton}</div>`;
   if(type==='leaderboard'){
-    await loadLeaderboardData('today');
-    document.getElementById('leaderboardRows').innerHTML=leaderboardRows('today');
+    await renderAllLeaderboardSections();
+  }
+  if(type==='upgrade'){
+    const upgradeView=document.querySelector('.featurePage');
+    if(upgradeView)upgradeView.querySelector('p').insertAdjacentHTML('afterend',await renderUpgradeCourses());
   }
   if(type==='referral') await loadReferralDashboard();
+  if(type==='rewards') await loadRewardsDashboard();
+  if(type==='team'){const teamView=area.querySelector('.featurePage');teamView.querySelector('#teamMemberSearch').addEventListener('input',renderTeamMembers);teamView.querySelector('#teamMemberPerPage').addEventListener('change',renderTeamMembers);await loadTeamMembers();subscribeToTeamMembers()}
+  if(type==='support'){
+    const complaintForm=area.querySelector('#supportComplaintForm');
+    complaintForm?.addEventListener('submit',handleSupportComplaintSubmit);
+  }
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function fileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>{
+      const result=String(reader.result||'');
+      const base64=result.includes(',')?result.split(',')[1]:result;
+      resolve(base64);
+    };
+    reader.onerror=()=>reject(new Error('Could not read the screenshot file.'));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function handleSupportComplaintSubmit(event){
+  event.preventDefault();
+  const form=event.currentTarget;
+  const fullName=(form.fullName.value||'').trim();
+  const phoneNumber=(form.phoneNumber.value||'').trim();
+  const issueCategory=(form.issueCategory.value||'').trim();
+  const problemDetails=(form.problemDetails.value||'').trim();
+  const screenshotFile=form.screenshot?.files?.[0];
+
+  if(!fullName||!phoneNumber||!issueCategory||!problemDetails){
+    showToast('Please complete all complaint details before sending.');
+    return;
+  }
+
+  if(!GOOGLE_APPS_SCRIPT_URL){
+    showToast('The Google Apps Script endpoint is not configured yet. Add your deployed script URL to the site configuration.');
+    return;
+  }
+
+  const submitButton=form.querySelector('button[type="submit"]');
+  const originalButtonText=submitButton?.textContent||'Send';
+  if(submitButton){
+    submitButton.disabled=true;
+    submitButton.textContent='Sending...';
+  }
+
+  try{
+    const screenshotBase64=screenshotFile ? await fileToBase64(screenshotFile) : '';
+    const payload={
+      fullName,
+      phoneNumber,
+      issueCategory,
+      problemDetails,
+      screenshotName:screenshotFile ? screenshotFile.name : 'No screenshot uploaded',
+      screenshotBase64,
+      screenshotMime:screenshotFile ? (screenshotFile.type || 'image/png') : ''
+    };
+
+    const response=await fetch(GOOGLE_APPS_SCRIPT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+
+    const result=await response.json().catch(()=>({}));
+    if(!response.ok || result?.success===false){
+      throw new Error(result?.error || 'Complaint submission failed.');
+    }
+
+    form.reset();
+    showToast('Your complaint has been submitted successfully! Our team will contact you within 2-3 business days.');
+  }catch(error){
+    console.error('[Complaint Submission Error]:',error);
+    showToast('We could not send your complaint right now. Please configure the Google Apps Script endpoint or try again in a moment.');
+  }finally{
+    if(submitButton){
+      submitButton.disabled=false;
+      submitButton.textContent=originalButtonText;
+    }
+  }
 }
 
 async function copyReferral(){
@@ -948,22 +1501,152 @@ async function buildReferralLink(){
   return `${baseUrl}/index.html?ref=${encodeURIComponent(code)}`;
 }
 async function loadReferralDashboard(){
-  let link='',invited=0,earnings=[];
+  let link='';
   try{
-    const result=await Promise.all([buildReferralLink(),window.supabase.from('referrals').select('*',{count:'exact',head:true}).eq('referrer_id',currentUser.id),window.supabase.from('user_earnings').select('amount,total_earnings').eq('user_id',currentUser.id)]);
-    link=result[0];invited=result[1].count||0;earnings=result[2].data||[];
+    link=await buildReferralLink();
   }catch(error){console.error('[App Error]:',error)}
   const linkBox=document.getElementById('referralLinkBox');
-  const count=document.getElementById('refCount');
-  const total=document.getElementById('refEarnings');
   if(linkBox)linkBox.value=link||'Referral link unavailable';
   const copyButton=document.getElementById('copyReferralButton');
   if(copyButton)copyButton.dataset.referralLink=link||'';
-  if(count)count.textContent=String(invited||0);
-  if(total)total.textContent=formatLeaderboardCurrency((earnings||[]).reduce((sum,row)=>sum+Number(row.total_earnings??row.amount??0),0));
+}
+function isValidUpiId(value){
+  return /^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+$/.test((value||'').trim());
+}
+const REFERRAL_CASHBACK_MIN_WITHDRAWAL=1000;
+async function ensureCashbackWallet(userId){
+  if(!userId||!window.supabase)return null;
+  const {data,error}=await window.supabase.from('referral_cashback_wallet').select('*').eq('user_id',userId).maybeSingle();
+  if(error&&error.code!=='PGRST116')throw error;
+  if(data)return data;
+  const {data:inserted,error:insertError}=await window.supabase.from('referral_cashback_wallet').insert([{user_id:userId,balance:0,minimum_withdrawal:REFERRAL_CASHBACK_MIN_WITHDRAWAL,updated_at:new Date().toISOString()}]).select().single();
+  if(insertError)throw insertError;
+  return inserted;
+}
+async function creditCashbackBalance(userId,amount,source,metadata={}){
+  if(!userId||!window.supabase||!Number(amount))return 0;
+  const wallet=await ensureCashbackWallet(userId);
+  const balance=Number(wallet?.balance||0);
+  const nextBalance=balance+Number(amount);
+  const {error:updateError}=await window.supabase.from('referral_cashback_wallet').update({balance:nextBalance,updated_at:new Date().toISOString()}).eq('user_id',userId);
+  if(updateError)throw updateError;
+  const {error:insertError}=await window.supabase.from('referral_cashback_transactions').insert([{user_id:userId,amount:Number(amount),type:'credit',source,balance_after:nextBalance,metadata:metadata||{},created_at:new Date().toISOString()}]);
+  if(insertError)throw insertError;
+  return nextBalance;
+}
+async function debitCashbackBalance(userId,amount,source,metadata={}){
+  if(!userId||!window.supabase||!Number(amount))return 0;
+  const wallet=await ensureCashbackWallet(userId);
+  const balance=Number(wallet?.balance||0);
+  const nextBalance=Math.max(0,balance-Number(amount));
+  const {error:updateError}=await window.supabase.from('referral_cashback_wallet').update({balance:nextBalance,updated_at:new Date().toISOString()}).eq('user_id',userId);
+  if(updateError)throw updateError;
+  const {error:insertError}=await window.supabase.from('referral_cashback_transactions').insert([{user_id:userId,amount:Number(amount),type:'debit',source,balance_after:nextBalance,metadata:metadata||{},created_at:new Date().toISOString()}]);
+  if(insertError)throw insertError;
+  return nextBalance;
+}
+function randomReferralCashbackAmount(){
+  return Math.floor(Math.random() * (500 - 125 + 1)) + 125;
+}
+async function processReferralRewardsForNewUser(newUserId,referralCode){
+  if(!newUserId||!window.supabase)return;
+  const safeCode=(referralCode||'').trim();
+  if(!safeCode)return;
+  const referrerId=await findReferrerId(safeCode);
+  if(!referrerId||referrerId===newUserId)return;
+  const directReward=randomReferralCashbackAmount();
+  await creditCashbackBalance(referrerId,directReward,'signup_referral_cashback',{new_user_id:newUserId,referral_code:safeCode,depth:1});
+  const {data:parent,error:parentError}=await window.supabase.from(PROFILE_TABLE).select('referred_by').eq('id',referrerId).maybeSingle();
+  const originalReferrerId=parent?.referred_by || null;
+  if(!parentError&&originalReferrerId&&originalReferrerId!==referrerId){
+    const bonus=Math.max(50,Math.round(directReward*0.5));
+    await creditCashbackBalance(originalReferrerId,bonus,'downline_referral_bonus',{new_user_id:newUserId,direct_referrer_id:referrerId,depth:2});
+  }
+}
+function syncCashbackWithdrawalUi(){
+  const balanceValue=document.getElementById('cashbackAmount');
+  const upiInput=document.getElementById('withdrawCashbackUpi');
+  const btn=document.getElementById('withdrawCashbackBtn');
+  const error=document.getElementById('withdrawCashbackError');
+  const status=document.getElementById('withdrawCashbackStatus');
+  const balance=Number.parseFloat(String(balanceValue?.textContent||'').replace(/[^0-9.]/g,''))||0;
+  const upi=(upiInput?.value||'').trim();
+  const validUpi=isValidUpiId(upi);
+  const canWithdraw=balance >= REFERRAL_CASHBACK_MIN_WITHDRAWAL && validUpi;
+  if(btn)btn.disabled=!canWithdraw;
+  if(error)error.textContent=balance >= REFERRAL_CASHBACK_MIN_WITHDRAWAL ? '' : 'Minimum ₹1000 required to withdraw';
+  if(status){
+    if(!upi && balance >= REFERRAL_CASHBACK_MIN_WITHDRAWAL)status.textContent='Add a valid UPI ID to enable withdrawal.';
+    else if(upi && !validUpi)status.textContent='Please enter a valid UPI ID.';
+    else if(validUpi && canWithdraw)status.textContent='Withdrawal ready.';
+    else status.textContent='';
+  }
+}
+async function withdrawReferralCashback(){
+  if(!currentUser||!window.supabase)return;
+  const input=document.getElementById('withdrawCashbackUpi');
+  const error=document.getElementById('withdrawCashbackError');
+  const status=document.getElementById('withdrawCashbackStatus');
+  const button=document.getElementById('withdrawCashbackBtn');
+  const upiId=(input?.value||'').trim();
+  if(!isValidUpiId(upiId)){
+    if(error)error.textContent='Please enter a valid UPI ID.';
+    if(status)status.textContent='';
+    return;
+  }
+  try{
+    const wallet=await ensureCashbackWallet(currentUser.id);
+    const balance=Number(wallet?.balance||0);
+    if(balance < REFERRAL_CASHBACK_MIN_WITHDRAWAL){
+      if(error)error.textContent='Minimum ₹1000 required to withdraw';
+      if(status)status.textContent='';
+      if(button)button.disabled=true;
+      return;
+    }
+    if(button)button.disabled=true;
+    if(error)error.textContent='';
+    const {error:withdrawError}=await window.supabase.from('cashback_withdrawals').insert([{user_id:currentUser.id,upi_id:upiId,amount:balance,status:'pending',created_at:new Date().toISOString()}]);
+    if(withdrawError)throw withdrawError;
+    const nextBalance=await debitCashbackBalance(currentUser.id,balance,'cashback_withdrawal',{upi_id:upiId,status:'pending'});
+    if(status)status.textContent=`Withdrawal request submitted for ${formatCoursePrice(balance)}. Remaining wallet: ${formatCoursePrice(nextBalance)}.`;
+    if(input)input.value='';
+    await loadRewardsDashboard();
+  }catch(error){
+    console.error('[Cashback Withdrawal Error]:',error);
+    if(error)error.textContent='Withdrawal could not be processed. Please try again.';
+    if(status)status.textContent='';
+    if(button)button.disabled=false;
+  }
+}
+async function loadRewardsDashboard(){
+  if(!currentUser||!window.supabase)return;
+  const cashbackAmountEl=document.getElementById('cashbackAmount');
+  const cashbackMetaEl=document.getElementById('cashbackMeta');
+  const btn=document.getElementById('withdrawCashbackBtn');
+  const error=document.getElementById('withdrawCashbackError');
+  const upiInput=document.getElementById('withdrawCashbackUpi');
+  try{
+    const wallet=await ensureCashbackWallet(currentUser.id);
+    const balance=Number(wallet?.balance||0);
+    if(cashbackAmountEl)cashbackAmountEl.textContent=formatCoursePrice(balance);
+    if(cashbackMetaEl)cashbackMetaEl.textContent=balance>0?'Available cashback wallet balance.':'No cashback has been credited yet.';
+    if(upiInput && !upiInput.dataset.bound){
+      upiInput.addEventListener('input',syncCashbackWithdrawalUi,{passive:true});
+      upiInput.dataset.bound='true';
+    }
+    if(error)error.textContent=balance >= REFERRAL_CASHBACK_MIN_WITHDRAWAL ? '' : 'Minimum ₹1000 required to withdraw';
+    if(btn)btn.disabled=!(balance >= REFERRAL_CASHBACK_MIN_WITHDRAWAL && isValidUpiId((upiInput?.value||'').trim()));
+    syncCashbackWithdrawalUi();
+  }catch(error){
+    console.error('[Rewards Error]:',error);
+    if(cashbackAmountEl)cashbackAmountEl.textContent='₹0';
+    if(cashbackMetaEl)cashbackMetaEl.textContent='Unable to load cashback details.';
+    if(btn)btn.disabled=true;
+    if(error)error.textContent='Minimum ₹1000 required to withdraw';
+  }
 }
 function openChannel(){
-  showToast('Add your official WhatsApp/Community channel link in openChannel().');
+  window.open('https://whatsapp.com/channel/0029Vb7spdDDTkJvfJZkg10W', '_blank', 'noopener,noreferrer');
 }
 
 async function logout(){
@@ -991,7 +1674,7 @@ function getPendingReferralCode(){
 const referralQueryCode=getPendingReferralCode();
 const urlParams=new URLSearchParams(window.location.search);
 const hasRef=urlParams.has('ref');
-const COURSE_PRICES={'Traffic Management':999,'Branding Management':2499,'Marketing Management':5000,'Influence Management':10000,'Finance Management':15000,'finance management':15000};
+const COURSE_PRICES={'marketing management':999,'branding management':2499,'traffic management':5000,'influence management':10000,'finance management':15000,'Marketing Management':999,'Branding Management':2499,'Traffic Management':5000,'Influence Management':10000,'Finance Management':15000};
 const COURSE_PDFS={'Finance Management':'finance-management.Pdf.pdf','Influence Management':'influence-management.pdf','Marketing Management':'marketing-management.pdf','Branding Management':'branding-management.pdf','Traffic Management':'traffic-management.pdf'};
 updateSignupPricing();
 async function findReferrerId(code=referralQueryCode){
@@ -1023,6 +1706,8 @@ function openAuthModal(mode='login'){
     const signUp=mode==='signup';
     const nameField=document.getElementById('authName');
     if(!modal||!nameField)throw new Error('Authentication elements are unavailable.');
+    document.getElementById('drawer')?.classList.remove('open');
+    document.getElementById('featureOverlay')?.classList.remove('open');
     document.getElementById('authTitle').textContent=signUp?'Create Your Account':'Welcome Back';
     document.getElementById('authSubtitle').textContent=signUp?'Join thousands of learners achieving mastery':'Sign in to access your courses and content';
     document.getElementById('authSubmit').textContent=signUp?'Create Account':'Sign In';
@@ -1040,6 +1725,7 @@ function openAuthModal(mode='login'){
     updateSignupPricing();
     document.getElementById('authError').textContent='';
     modal.classList.add('open');
+    document.body.classList.add('modal-open');
     document.getElementById('authEmail').focus();
   }catch(error){
     console.error('[App Error]:',error);
@@ -1047,11 +1733,12 @@ function openAuthModal(mode='login'){
   }
 }
 async function closeAuthModal(){
-  document.getElementById('authModal')?.classList.remove('open');
+  const modal=document.getElementById('authModal');
+  if(modal)modal.classList.remove('open');
+  document.body.classList.remove('modal-open');
   document.getElementById('loginForm')?.reset();
   const authError=document.getElementById('authError');
   if(authError)authError.textContent='';
-  if(currentUser)await returnToSessionView();
 }
 function toggleAuthMode(){openAuthModal(authMode==='login'?'signup':'login')}
 function toggleQrPayment(){
@@ -1256,6 +1943,14 @@ async function handleAuthSubmit(event){
         console.warn('[Signup Session Recovery Warning]:',sessionException);
       }
 
+      if(sessionUser?.id && referralCode){
+        try{
+          await processReferralRewardsForNewUser(sessionUser.id, referralCode);
+        }catch(referralRewardError){
+          console.error('[Referral Reward Error]:',referralRewardError);
+        }
+      }
+
       const utrNumber=(document.getElementById('authUtr')?.value||'').trim();
       const enrollmentPayload={
         user_id:sessionUser.id,
@@ -1271,9 +1966,9 @@ async function handleAuthSubmit(event){
         updated_at:new Date().toISOString()
       };
 
-      const {error:enrollmentError}=await window.supabase.from('Enrollments').insert([enrollmentPayload]);
-
-      if(enrollmentError){
+      try{
+        await insertTeamMember({name,phone,email,referral_code:referralCode,package:packageName,...enrollmentPayload});
+      }catch(enrollmentError){
         console.error('[Enrollments Insert Error]:',enrollmentError);
         submit.disabled=false;
         error.textContent='Account created, but we could not save your enrollment record.';
@@ -1427,6 +2122,12 @@ function showToast(message){
   window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2600);
 }
 
+function isValidEmail(value){
+  const normalized=(value||'').trim();
+  if(!normalized)return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized);
+}
+
 function normalizeName(value){
   return value.trim().replace(/\s+/g,' ').slice(0,60);
 }
@@ -1439,8 +2140,17 @@ function updateDashboardIdentity(){
   const name=userFullName(currentUser);
   const title=document.querySelector('.dashTop h1');
   const profile=document.querySelector('.profileInitial');
+  const photo=document.querySelector('.profilePhoto');
+  const savedAvatar=getProfileAvatar(currentUser);
   if(title) title.textContent=name;
-  if(profile) profile.textContent=name.charAt(0).toUpperCase();
+  if(profile) profile.textContent=getDefaultProfileInitial(currentUser);
+  if(photo){
+    if(savedAvatar){
+      photo.innerHTML='<img src="'+savedAvatar+'" alt="Profile picture">';
+    }else if(profile){
+      photo.innerHTML='<span class="profileInitial">'+getDefaultProfileInitial(currentUser)+'</span>';
+    }
+  }
   const profileName=document.querySelector('.profileName');
   const userId=document.querySelector('.userIdValue');
   if(profileName)profileName.textContent=name;
@@ -1457,7 +2167,7 @@ function resetDashboardMenu(){
 }
 
 document.querySelectorAll('.featureHeader .inlineLogo').forEach(logo=>{
-  logo.outerHTML='<img src="logo.jpg" alt="Indian Skills Logo" style="width: auto; height: 80px; object-fit: contain;">';
+  logo.outerHTML='<img class="logo-image sidebar-logo-image" src="logo.png.jpeg" alt="Indian Skills Logo">';
 });
 
 </script>
