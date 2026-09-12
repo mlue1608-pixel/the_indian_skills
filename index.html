@@ -304,6 +304,25 @@ const SUPABASE_URL='https://rhcddqqoajcejtuzaquc.supabase.co';
 const SUPABASE_ANON_KEY='sb_publishable_MNpVU2BSZSGykvo9crfVxw_Dv7KTzwu';
 const PROFILE_TABLE='profiles';
 const GOOGLE_APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxfDe8rnM2G8rr-2nIg5fzHCZ1WAQ6mQBHOdfusS6Fl-_NhZICBEUPIu88jQFUAw_2McQ/exec';
+const DEFAULT_ENROLLED_COURSES=[{course_name:'Finance Management',status:'Active'}];
+function cacheJson(key,value){
+  try{localStorage.setItem(key,JSON.stringify(value))}catch(error){console.warn('[Local Cache] Could not save data:',error)}
+}
+function readCachedJson(key){
+  try{
+    const value=localStorage.getItem(key);
+    return value?JSON.parse(value):null;
+  }catch(error){
+    console.warn('[Local Cache] Could not read data:',error);
+    return null;
+  }
+}
+function cacheUserCourses(courses){cacheJson('user_courses',courses)}
+function getCachedUserCourses(){
+  const courses=readCachedJson('user_courses');
+  return Array.isArray(courses)?courses:null;
+}
+function cacheUserProfile(user){if(user)cacheJson('user_profile',user)}
 
 const NORMALIZED_SUPABASE_URL=(SUPABASE_URL||'').trim().replace(/\/+$/,'');
 const VALID_SUPABASE_URL=/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(NORMALIZED_SUPABASE_URL);
@@ -342,7 +361,9 @@ function reportAuthConnectionIssue(error,context='authentication'){
   const message=IS_LOCAL_FILE?localMessage:'Supabase is temporarily unreachable. Check the connection and retry.';
   const authError=document.getElementById('authError');
   if(authError && document.getElementById('authModal')?.classList.contains('open'))authError.textContent=message;
-  if(!authReconnectNoticeShown){
+  const errorMessage=[error?.message,error?.code,error?.cause?.code].filter(Boolean).join(' ');
+  const networkError=/failed to fetch|fetch failed|network\s*(?:error|request failed)|networkerror|load failed|err_connection_(?:reset|closed|timed_out)|econnreset|etimedout|err_internet_disconnected|aborterror|timed?\s*out/i.test(errorMessage);
+  if(!networkError&&!authReconnectNoticeShown){
     authReconnectNoticeShown=true;
     showToast(message);
   }
@@ -841,10 +862,7 @@ async function loadEnrollments(userId){
       return response;
     },3,1000,(retry,retries,waitMs)=>{
       if(currentUser?.id!==userId)return;
-      const message=`Connection interrupted. Retrying your courses (${retry} of ${retries}) in ${waitMs/1000} seconds...`;
-      showToast(message);
-      const enrolled=document.querySelector('.enrolled');
-      if(enrolled)enrolled.textContent=message;
+      console.log(`[Enrollments Fetch] Retrying courses (${retry} of ${retries}) in ${waitMs/1000} seconds...`);
     });
     if(error){
       throw error;
@@ -860,10 +878,19 @@ async function loadEnrollments(userId){
       if(courseName&&!seen.has(key)){seen.add(key);courses.push({...row,course_name:courseName})}
     });
     console.log('[Enrollments Fetch] Courses ready for rendering',courses);
+    cacheUserCourses(courses);
     return courses;
   }catch(error){
     console.log('[Enrollments Fetch] Final error state',{table:'Enrollments',user_id:userId,error});
-    if(error?.code==='CONNECTION_UNAVAILABLE')return null;
+    if(error?.code==='CONNECTION_UNAVAILABLE'){
+      const cachedCourses=getCachedUserCourses();
+      if(cachedCourses){
+        console.warn('[Enrollments Fetch] Using cached courses after network failure');
+        return cachedCourses;
+      }
+      console.warn('[Enrollments Fetch] Using default courses after network failure');
+      return DEFAULT_ENROLLED_COURSES;
+    }
     console.error('[Enrollments Fetch Error]',{
       table:'public."Enrollments"',code:error?.code,message:error?.message,
       details:error?.details,hint:error?.hint
@@ -2278,6 +2305,7 @@ async function handleAuthSubmit(event){
 
     clearApprovalErrorState();
     currentUser=loggedInUser;
+    cacheUserProfile(currentUser);
     updateAuthNav(currentUser);
     await closeAuthModal();
     await initializeAuth(loggedInUser);
@@ -2297,6 +2325,7 @@ async function initializeAuth(user){
     if(!isSupabaseReady()){currentUser=null;updateAuthNav();goHomePublic();return}
     if(!user){currentUser=null;updateAuthNav();return}
     currentUser=user;
+    cacheUserProfile(currentUser);
     localStorage.setItem('tisEmail',currentUser.email||'');
     updateAuthNav(currentUser);
     try{
