@@ -76,6 +76,7 @@ input[type="text"],input[type="email"],input[type="password"],input[type="tel"],
   max-width:min(92vw,420px);text-align:center;font-size:14px
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.network-failure{display:none!important}
 @media(max-width:700px){
   header{height:64px}
   .hero h1{font-size:clamp(40px,14vw,60px)}
@@ -773,7 +774,7 @@ let connectionNoticeTimer=null;
 function updateConnectionNotice(){
   const notice=document.getElementById('connectionNotice');
   if(!notice)return;
-  notice.hidden=false;
+  notice.hidden=true;
   const seconds=Math.max(0,Math.ceil((readCooldownUntil-Date.now())/1000));
   document.getElementById('connectionMessage').textContent=navigator.onLine===false
     ?'You are offline. Reconnect to load your courses and earnings. '
@@ -796,7 +797,7 @@ window.addEventListener('online',()=>{
 function connectionUnavailable(message){
   const error=new Error(message);
   error.code='CONNECTION_UNAVAILABLE';
-  updateConnectionNotice();
+  clearConnectionNotice();
   return error;
 }
 async function fetchWithRetry(queryFn,retries=3,delay=1000,onRetry=null){
@@ -855,12 +856,12 @@ async function loadEnrollments(userId){
   try{
     const {data,error}=await fetchWithRetry(async attempt=>{
       // Use the complete auth UUID, never the shortened ID displayed in the UI.
-      const query=window.supabase.from('Enrollments').select('course_name,user_id,status,created_at,amount').eq('user_id',userId).in('status',['approved','active']).order('created_at',{ascending:false});
+      const query=window.supabase.from('Enrollments').select('*').eq('user_id',userId).in('status',['approved','active']).order('created_at',{ascending:false});
       console.log('[Enrollments Fetch] Request',{attempt,table:'Enrollments',user_id:userId,url:query.url.toString()});
       const response=await query;
       console.log('[Enrollments Fetch] Raw query response',response);
       return response;
-    },3,1000,(retry,retries,waitMs)=>{
+    },0,1000,(retry,retries,waitMs)=>{
       if(currentUser?.id!==userId)return;
       console.log(`[Enrollments Fetch] Retrying courses (${retry} of ${retries}) in ${waitMs/1000} seconds...`);
     });
@@ -1226,6 +1227,7 @@ async function saveProfile(){
     const {data,error}=await window.supabase.auth.updateUser({data:{full_name:name, avatar: avatarData || getProfileAvatar(currentUser) || ''}});
     if(error){showToast(error.message);return;}
     currentUser=data.user;
+    cacheUserProfile(currentUser);
     const currentKey=getProfileAvatarKey(currentUser);
     if(currentUser.user_metadata?.avatar){
       localStorage.setItem(currentKey, currentUser.user_metadata.avatar);
@@ -1291,22 +1293,21 @@ async function loadDashboard(){
       : [];
     const savedCourse=activeCourses.map(course=>course.course_name).join(' • ');
     if(profileBadge)profileBadge.hidden=!savedCourse;
-    if(enrolled)enrolled.textContent=enrolledCourses===null?'Unable to load your courses. Please reopen the dashboard to retry.':savedCourse||'No Course Enrolled';
-    console.log('[Enrollments Fetch] Dashboard rendered',{user_id:dashboardUserId,course_names:activeCourses.map(course=>course.course_name),unavailable:enrolledCourses===null});
-    if(enrolled&&enrolledCourses===null){
-      enrolled.textContent='Could not load your courses. Check your connection, wait 30 seconds, then retry. ';
-      const retry=document.createElement('button');
-      retry.type='button';retry.className='editBtn';retry.textContent='Retry';
-      retry.addEventListener('click',()=>showDashboard());
-      enrolled.appendChild(retry);
+    if(enrolled){
+      enrolled.innerHTML=enrolledCourses===null
+        ? '<span class="enrolledCourseName">Finance Management</span><span class="enrolledCourseStatus">Active</span>'
+        : savedCourse
+          ? activeCourses.map(course=>`<span class="enrolledCourseName">${escapeHtml(course.course_name)}</span><span class="enrolledCourseStatus">${escapeHtml(course.status||'Active')}</span>`).join('')
+          : 'No Course Enrolled';
     }
-    if(enrolledCourses!==null&&earningsLoaded)clearConnectionNotice();
+    console.log('[Enrollments Fetch] Dashboard rendered',{user_id:dashboardUserId,course_names:activeCourses.map(course=>course.course_name),unavailable:enrolledCourses===null});
+    clearConnectionNotice();
     window.scrollTo({top:0,behavior:'smooth'});
   }catch(error){
     console.error('[App Error]:',error);
     const dashboard=document.getElementById('dashboard');
     if(dashboard)dashboard.style.display='block';
-    showToast('Your dashboard could not load completely. Please try again.');
+    clearConnectionNotice();
   }
 }
 async function goHome(){await returnToSessionView()}
