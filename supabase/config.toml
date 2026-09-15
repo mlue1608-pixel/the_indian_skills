@@ -1,0 +1,6 @@
+# Functions verify the bearer token themselves with auth.getUser().
+[functions.approve-pending-user]
+verify_jwt = false
+
+[functions.send-complaint-email]
+verify_jwt = false

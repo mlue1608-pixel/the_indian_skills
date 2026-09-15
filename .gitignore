@@ -1,0 +1,9 @@
+.env
+.env.*
+.env.example
+.local/
+supabase/.temp/
+node_modules/
+.vscode/
+Downloads/
+Downloads - Copy/
