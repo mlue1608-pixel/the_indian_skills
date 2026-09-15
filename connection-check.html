@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Check connection | The Indian Skills</title>
+  <link rel="icon" href="favicon.svg">
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#f4f7fa;color:#172b40;font:16px/1.6 system-ui,sans-serif}
+    main{max-width:820px;margin:40px auto;padding:28px;background:white;border:1px solid #dce4eb;border-radius:16px}
+    h1{margin-top:0}a{color:#125599}button{padding:12px 20px;border:0;border-radius:8px;background:#173e60;color:white;font:inherit;cursor:pointer}button:disabled{opacity:.6;cursor:wait}
+    pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;background:#f0f4f8;border-radius:8px;font:14px/1.7 ui-monospace,monospace}
+    @media(max-width:600px){main{margin:16px;padding:20px}}
+  </style>
+  <script src="assets/supabase-config.js" defer></script>
+  <script src="assets/supabase-client.js" defer></script>
+  <script src="assets/connection-check.js" defer></script>
+</head>
+<body><main>
+  <a href="THE_INDIAN_SKILLS.html">Back to website</a>
+  <h1>Check your connection</h1>
+  <p>Test whether this browser can reach the services used for sign-in. Keep this page in the same browser as the website that is failing.</p>
+  <p>These checks use the website's public API key. They do not read your saved login, send your password, or change your account.</p>
+  <button id="runChecks" type="button">Run checks</button>
+  <p id="checkSummary" role="status" aria-live="polite">Ready. Checks may take up to 15 seconds.</p>
+  <pre id="checkResults" aria-label="Connection check results">No checks run yet.</pre>
+  <p>Copy the results above when asking for help. They contain no login tokens or passwords.</p>
+</main></body>
+</html>
