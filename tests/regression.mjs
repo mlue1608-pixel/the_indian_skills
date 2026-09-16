@@ -8,9 +8,9 @@ export async function runRegression(root = new URL('../', import.meta.url)) {
   const scripts = [...source.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)].map(match => match[1]);
   const nodes = new Map();
   const element = id => {
-    if (!nodes.has(id)) nodes.set(id, { id, value: '', textContent: '', innerHTML: '', style: {}, dataset: {}, parentElement: {},
+    if (!nodes.has(id)) nodes.set(id, { id, value: '', textContent: '', innerHTML: '', style: {}, dataset: {}, parentElement: { style: {} },
       classList: { add() {}, remove() {}, toggle() {}, contains() { return false; } },
-      addEventListener() {}, focus() {}, remove() {}, appendChild() {}, setCustomValidity() {}, reset() {},
+      addEventListener() {}, focus() { document.activeElement = this; }, remove() {}, appendChild() {}, setCustomValidity() {}, reset() {}, setAttribute() {},
       querySelector() { return null; }, querySelectorAll() { return []; } });
     return nodes.get(id);
   };
@@ -20,12 +20,16 @@ export async function runRegression(root = new URL('../', import.meta.url)) {
     auth: { onAuthStateChange() {}, signOut: async () => ({ error: null }) } };
   const location = { href: 'https://example.test/sub/THE_INDIAN_SKILLS.html', origin: 'https://example.test', protocol: 'https:', search: '', hash: '', assign(url) { calls.push({ navigation: url }); } };
   const earningNodes = [0, 1, 2, 3].map(i => element('earning' + i));
+  const windowEvents = new Map(), documentEvents = new Map();
+  const listen = (events, name, handler) => events.set(name, [...(events.get(name) || []), handler]);
+  const historyEntries = [null];
+  const history = { state: null, pushState(state) { this.state = state; historyEntries.push(state); } };
   const document = { body: element('body'), getElementById: element,
-    querySelector: selector => element(selector), querySelectorAll: selector => selector === '#dashboard .earning strong' ? earningNodes : [],
-    addEventListener() {}, createElement: () => element('created') };
+    querySelector: selector => element(selector), querySelectorAll: selector => selector === '#dashboard .earning strong' ? earningNodes : selector === '.loginOnly' ? [element('forgotPassword')] : [],
+    addEventListener(name, handler) { listen(documentEvents, name, handler); }, createElement: () => element('created') };
   const context = vm.createContext({ document, location, console, URL, URLSearchParams, Headers, setTimeout, clearTimeout, AbortController,
     localStorage: { getItem() { return null; }, setItem() {}, removeItem() {} }, navigator: {},
-    window: { location, fetch: async () => { throw Error('Unexpected network request'); }, supabase: { createClient: () => client }, addEventListener() {}, scrollTo() {} } });
+    window: { location, history, fetch: async () => { throw Error('Unexpected network request'); }, supabase: { createClient: () => client }, addEventListener(name, handler) { listen(windowEvents, name, handler); }, scrollTo() {} } });
   vm.runInContext(await fs.readFile(new URL('assets/supabase-config.js', root), 'utf8'), context);
   vm.runInContext(await fs.readFile(new URL('assets/supabase-client.js', root), 'utf8'), context);
   for (const script of scripts) vm.runInContext(script, context);
@@ -33,6 +37,53 @@ export async function runRegression(root = new URL('../', import.meta.url)) {
   const verifiedClaims = user => ({ data: { claims: { sub: user.id, email: user.email, user_metadata: user.user_metadata || {}, iss: context.window.TIS_CONFIG.supabaseUrl + '/auth/v1' } }, error: null });
   const passed = [];
   const check = async (name, fn) => { await fn(); passed.push(name); };
+  await check('Back and Forward restore detail pages without pushing history or restoring a session', async () => {
+    element('dashboard').style.display = 'none';
+    run("page('about')");
+    const aboutState = history.state;
+    run("page('contact')");
+    const contactState = history.state;
+    const entryCount = historyEntries.length;
+    history.state = aboutState;
+    for (const handler of windowEvents.get('popstate')) await handler();
+    assert.match(element('pageArea').innerHTML, /<h1>About/);
+    history.state = contactState;
+    for (const handler of windowEvents.get('popstate')) await handler();
+    assert.match(element('pageArea').innerHTML, /<h1>Contact Us/);
+    assert.equal(historyEntries.length, entryCount);
+    history.state = null;
+    for (const handler of windowEvents.get('popstate')) await handler();
+    assert.equal(element('home').style.display, 'block');
+    assert.equal(element('pageArea').innerHTML, '');
+  });
+  await check('Nested detail pages preserve the dashboard as their return view', async () => {
+    element('dashboard').style.display = 'block';
+    run("page('about'); page('contact')");
+    assert.equal(history.state.previousView, 'dashboard');
+    history.state = null;
+    run('goHomePublic()');
+  });
+  await check('Password recovery focuses the new password and hides login controls', async () => {
+    run("openAuthModal('recovery')");
+    assert.equal(document.activeElement.id, 'authPassword');
+    assert.equal(element('authPassword').autocomplete, 'new-password');
+    assert.equal(element('authEmail').required, false);
+    assert.equal(element('authEmail').parentElement.style.display, 'none');
+    assert.equal(element('forgotPassword').style.display, 'none');
+    assert.equal(element('.authSwitch').style.display, 'none');
+    run("openAuthModal('login')");
+    assert.equal(document.activeElement.id, 'authEmail');
+    assert.equal(element('authEmail').required, true);
+    assert.equal(element('authEmail').parentElement.style.display, '');
+    assert.equal(element('forgotPassword').style.display, 'block');
+    assert.equal(element('.authSwitch').style.display, '');
+  });
+  await check('Escape dismisses an open checkout', async () => {
+    let removed = false;
+    element('paymentModal').remove = () => { removed = true; };
+    for (const handler of documentEvents.get('keydown')) await handler({ key: 'Escape' });
+    assert.equal(removed, true);
+  });
   await check('All five course mappings point to existing PDF files, including Finance casing', async () => {
     for (const title of ['Marketing Management', 'Branding Management', 'Traffic Management', 'Influence Management', 'Finance management']) {
       const files = run(`resolveCoursePdfCandidates(${JSON.stringify(title)})`);
