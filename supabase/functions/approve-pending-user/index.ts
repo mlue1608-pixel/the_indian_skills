@@ -1,5 +1,5 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-const cors = {'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'authorization, x-client-info, apikey, content-type','Access-Control-Allow-Methods':'POST, OPTIONS'};
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.116.0';
+const cors = {'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'authorization, x-client-info, apikey, content-type, x-app-name','Access-Control-Allow-Methods':'POST, OPTIONS'};
 const json = (body: unknown,status=200) => new Response(JSON.stringify(body),{status,headers:{...cors,'Content-Type':'application/json'}});
 Deno.serve(async request => {
  if(request.method==='OPTIONS')return new Response('ok',{headers:cors});
@@ -11,24 +11,36 @@ Deno.serve(async request => {
   if(authError||!user)return json({error:'Authentication required.'},401);
   const {error:accessError}=await client.rpc('tis_admin_dashboard');
   if(accessError)return json({error:'Administrator access required.'},403);
-  const {pendingId}=await request.json();if(!pendingId)return json({error:'pendingId required.'},400);
+  const {pendingId}=await request.json();if(typeof pendingId!=='string'||!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(pendingId))return json({error:'Valid pendingId required.'},400);
   const admin=createClient(url,Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,{auth:{persistSession:false}});
   const {data:pending,error}=await admin.from('pending_users').select('*').eq('id',pendingId).single();
   if(error||!pending)return json({error:'Signup not found.'},404);
-  if(pending.status==='approved')return json({success:true});
-  if(pending.status!=='pending')return json({error:'Signup is not pending.'},409);
-  let userId: string | undefined;
-  for(let page=1;;page++){
-   const {data,error:listError}=await admin.auth.admin.listUsers({page,perPage:1000});if(listError)throw listError;
-   userId=data.users.find(account=>account.email?.toLowerCase()===pending.email.trim().toLowerCase())?.id;
-   if(userId||data.users.length<1000)break;
+  const finish=async(userId:string)=>{
+   const {error}=await client.rpc('tis_finish_admin_signup',{p_id:String(pendingId),p_user:userId});if(error)throw error;
+  };
+  if(pending.status==='approved'){
+   if(!pending.approved_user_id)throw Error('Approved signup has no linked account. Contact the administrator.');
+   await finish(pending.approved_user_id);return json({success:true});
   }
+  if(pending.status!=='pending')return json({error:'Signup is not pending.'},409);
+  const {data:capability,error:beginError}=await client.rpc('tis_begin_signup_approval',{p_id:pendingId});
+  if(beginError)throw beginError;
+  if(!capability)return json({success:true});
+  const account=async()=>{
+   const {data,error}=await admin.rpc('tis_signup_account',{p_id:pendingId});if(error)throw error;return data;
+  };
+  let userId=await account();
+  const {data:passwordHash,error:passwordError}=await admin.rpc('tis_signup_password',{p_kind:'pending',p_id:pendingId});
+  if(passwordError)throw passwordError;
   if(!userId){
-   const {data,error:inviteError}=await admin.auth.admin.inviteUserByEmail(pending.email,{redirectTo:Deno.env.get('SITE_URL'),data:{full_name:pending.full_name,phone:pending.phone}});
-   if(inviteError)throw inviteError;userId=data.user?.id;
+   if(!passwordHash)throw Error('This older request has no saved signup password. An administrator must arrange a password for this account before approval.');
+   const metadata={full_name:pending.full_name,phone:pending.phone,approved_signup_id:pendingId,approval_token:capability};
+   const {data,error:inviteError}=await admin.auth.admin.createUser({email:pending.email,password_hash:passwordHash,email_confirm:false,user_metadata:metadata});
+   if(inviteError){userId=await account();if(!userId)throw Error('Account creation failed. Retry Approve; no course or cashback has been granted.');}
+   else userId=data.user?.id;
   }
   if(!userId)throw Error('Unable to locate student Auth account.');
-  const {error:approvalError}=await client.rpc('tis_approve_legacy',{p_id:String(pendingId),p_user:userId});if(approvalError)throw approvalError;
+  await finish(userId);
   return json({success:true,userId});
- }catch(error){return json({error:error instanceof Error?error.message:'Approval failed.'},400);}
+ }catch(error){return json({error:error instanceof Error?error.message:(error as {message?:string})?.message||'Approval failed.'},400);}
 });

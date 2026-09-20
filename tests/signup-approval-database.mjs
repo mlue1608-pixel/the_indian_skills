@@ -1,0 +1,258 @@
+// Disposable PostgreSQL tests; never connects to Supabase or sends email.
+import {PGlite} from '../.local/pglite-test/package/dist/index.js';
+import {pgcrypto} from '../.local/pglite-test/package/dist/contrib/pgcrypto.js';
+import fs from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const db=new PGlite({extensions:{pgcrypto}});
+const ref='11111111-1111-4111-8111-111111111111',admin='22222222-2222-4222-8222-222222222222';
+const uid=()=>crypto.randomUUID();
+const claims=id=>db.query(`select set_config('request.jwt.claims',$1,false)`,[JSON.stringify({sub:id,role:'authenticated'})]);
+const one=async(sql,args=[]) => (await db.query(sql,args)).rows[0];
+const request=async(email,referral=ref,course='Marketing Management',ip='ip')=>{
+ await db.query(`select public.tis_request_signup($1,'Student','9999999999',$2,$3,$4)`,[email,course,referral,ip]);
+ return one('select * from public.pending_users where email=$1',[email]);
+};
+const begin=async id=>{await claims(admin);return (await one('select public.tis_begin_signup_approval($1) token',[id])).token;};
+const invite=(p,token,user=uid())=>db.query(`insert into auth.users(id,email,raw_user_meta_data) values($1,$2,$3) returning id`,[user,p.email,JSON.stringify({full_name:p.full_name,phone:p.phone,approved_signup_id:p.id,approval_token:token})]);
+const finish=async(p,user)=>{await claims(admin);await db.query('select public.tis_finish_admin_signup($1,$2)',[p.id,user]);};
+const balance=async()=>Number((await one('select coalesce((select balance from public.referral_cashback_wallet where user_id=$1),0) n',[ref])).n);
+try{
+ await db.exec(`create role anon; create role authenticated; create role service_role bypassrls;
+ create schema auth; create table auth.users(id uuid primary key,email text unique,raw_user_meta_data jsonb default '{}',email_confirmed_at timestamptz,updated_at timestamptz);
+ create table auth.identities(user_id uuid,provider text,identity_data jsonb,updated_at timestamptz);
+ create function auth.uid() returns uuid language sql as $$select (nullif(current_setting('request.jwt.claims',true),'')::jsonb->>'sub')::uuid$$;
+ create function auth.email() returns text language sql as $$select email from auth.users where id=auth.uid()$$;`);
+ for(const file of ['202609130001_tis_repair.sql','202609170001_referral_discount_70.sql'])await db.exec(await fs.readFile(new URL('../supabase/migrations/'+file,import.meta.url),'utf8'));
+ await db.query(`insert into auth.users(id,email,email_confirmed_at) values($1,'ref@example.test',now()),($2,'admin8controls@gmail.com',now())`,[ref,admin]);
+ for(const file of ['202609170002_razorpay_checkout.sql','202609190001_admin_signup_requests.sql'])await db.exec(await fs.readFile(new URL('../supabase/migrations/'+file,import.meta.url),'utf8'));
+
+ // Reproduce legacy live schemas: valid Auth referrers can lack a profile row.
+ await db.exec(`alter table public.pending_users add constraint pending_users_referrer_id_fkey foreign key(referrer_id) references public.profiles(id);
+ alter table public."Enrollments" alter column referrer_id type text using referrer_id::text;`);
+ await db.query('delete from public.profiles where id=$1',[ref]);
+ await assert.rejects(()=>request('legacy-fk@example.test'),/pending_users_referrer_id_fkey/);
+ const repair=await fs.readFile(new URL('../supabase/migrations/202609190002_referral_auth_foreign_keys.sql',import.meta.url),'utf8');
+ const legacyRow=(await one(`insert into public."Enrollments"(referrer_id,status) values('not-a-uuid','rejected') returning id`)).id;
+ await assert.rejects(()=>db.exec(repair),/invalid input syntax for type uuid/);
+ await db.exec('rollback');
+ assert.equal((await one('select referrer_id from public."Enrollments" where id=$1',[legacyRow])).referrer_id,'not-a-uuid','Invalid historical data must never be erased');
+ assert.equal((await one(`select confrelid::regclass::text target from pg_constraint where conname='pending_users_referrer_id_fkey'`)).target,'profiles','Failed repair must restore the original constraint');
+ await db.query('update public."Enrollments" set referrer_id=$1 where id=$2',[uid(),legacyRow]);
+ await assert.rejects(()=>db.exec(repair),/foreign key constraint/);
+ await db.exec('rollback');
+ await db.query('update public."Enrollments" set referrer_id=$1 where id=$2',[' '+ref+' ',legacyRow]);
+ const blankRow=(await one(`insert into public."Enrollments"(referrer_id,status) values('  ','rejected') returning id`)).id;
+ await db.exec(repair);await db.exec(repair);
+ assert.equal((await one(`select data_type from information_schema.columns where table_name='Enrollments' and column_name='referrer_id'`)).data_type,'uuid');
+ assert.equal((await one('select referrer_id from public."Enrollments" where id=$1',[legacyRow])).referrer_id,ref);
+ assert.equal((await one('select referrer_id from public."Enrollments" where id=$1',[blankRow])).referrer_id,null);
+ await db.exec(await fs.readFile(new URL('../supabase/migrations/202609190003_signup_passwords.sql',import.meta.url),'utf8'));
+ await db.exec(await fs.readFile(new URL('../supabase/migrations/202609200001_admin_confirmation.sql',import.meta.url),'utf8'));
+ await db.exec(await fs.readFile(new URL('../supabase/migrations/202609200002_student_savings.sql',import.meta.url),'utf8'));
+ await assert.rejects(()=>db.query(`insert into public.pending_users(referrer_id) values($1)`,[uid()]),/foreign key/);
+
+ const p=await request('student@example.test');
+ assert.equal(p.status,'pending');assert.equal(p.referrer_id,ref);assert.equal(Number(p.paid_price),0);
+ assert.equal((await one(`select count(*)::int n from auth.users`)).n,2,'Request must not create Auth account');
+ assert.equal(await balance(),0,'Request must not credit referrer');
+ await request(p.email,'','Finance Management');
+ assert.equal((await one(`select count(*)::int n from public.pending_users where email=$1`,[p.email])).n,1);
+ assert.equal((await one('select package_name from public.pending_users where id=$1',[p.id])).package_name,'Marketing Management','Retries cannot alter the original request');
+ await assert.rejects(()=>request('invalid@example.test','fake'),/Invalid referral/);
+ await assert.rejects(()=>request('ref@example.test',ref),/Invalid referral/);
+ await assert.rejects(()=>request('unknown@example.test','','Unknown'),/Unknown course/);
+ await assert.rejects(()=>request('invalid-email'),/valid name, email/);
+ await claims(ref);
+ await assert.rejects(()=>db.query('select public.tis_begin_signup_approval($1)',[p.id]),/Administrator access/);
+ await assert.rejects(()=>invite(p,uid()),/wait for administrator approval/);
+ await assert.rejects(()=>db.query(`insert into auth.users(id,email) values($1,'bypass@example.test')`,[uid()]),/wait for administrator approval/);
+ const token=await begin(p.id);
+ assert.equal(await begin(p.id),token,'Approval retry must reuse its capability');
+ await assert.rejects(()=>invite(p,uid()),/wait for administrator approval/);
+ await assert.rejects(()=>invite({...p,email:'wrong@example.test'},token),/wait for administrator approval/);
+ const student=(await invite(p,token)).rows[0].id;
+ const metadata=(await one('select raw_user_meta_data from auth.users where id=$1',[student])).raw_user_meta_data;
+ assert.equal(metadata.approval_token,undefined,'Private capability must not be exposed through Auth metadata');
+ assert.equal((await one('select public.tis_signup_account($1) id',[p.id])).id,student,'Retry recovers account after lost invitation response');
+ await finish(p,student);await finish(p,student);
+ assert.equal(await balance(),125);
+ assert.equal((await one(`select count(*)::int n from public.user_earnings where user_id=$1`,[ref])).n,1);
+ assert.equal((await one(`select count(*)::int n from public.tis_approval_credits`)).n,1);
+ assert.equal((await one(`select count(*)::int n from tis_private.signup_approvals`)).n,0);
+ await claims(ref);
+ const team=(await one('select public.tis_team() team')).team;
+ assert.equal(team.length,1);assert.equal(team[0].profile.id,student);assert.equal(team[0].enrollment.course_name,'Marketing Management');
+ await claims(student);
+ const course=await one('select * from public.tis_my_enrollments()');
+ assert.equal(course.status,'approved');assert.equal(course.course_name,'Marketing Management');assert.equal(Number(course.amount),0);
+ assert.equal((await one('select public.tis_approval_status() status')).status,'approved');
+ const savings=async id=>{await claims(id);return (await one('select public.tis_earnings_summary() summary')).summary;};
+ const expectedSaving=Number((await one("select round(tis_private.price('Marketing Management')*.70,2) n")).n);
+ assert.equal((await savings(student)).all,expectedSaving,'Student receives own referral saving, not cashback');
+ assert.equal((await savings(ref)).all,0,'Referrer cashback is not student savings');
+ assert.equal((await savings(student)).today,expectedSaving);
+
+ const noRef=await request('noref@example.test','');
+ const noRefId=(await invite(noRef,await begin(noRef.id))).rows[0].id;
+ await finish(noRef,noRefId);assert.equal(await balance(),125,'No referral means no cashback');
+ assert.equal((await savings(noRefId)).all,0,'No referral means no student saving');
+
+ // An unpaid request can later pay: payment wins and closes the matching request.
+ const paidRequest=await request('paid@example.test');
+ const session=await one(`select * from public.tis_checkout_create($1,'Paid Student','9999999999','Marketing Management',$2,null,'hash','paid-ip')`,[paidRequest.email,ref]);
+ await assert.rejects(()=>begin(paidRequest.id),/Payment is in progress/);
+ await db.query(`update public.tis_payment_sessions set status='paid',payment_id='pay_test' where id=$1`,[session.id]);
+ await assert.rejects(()=>begin(paidRequest.id),/Payment is in progress/);
+ const paidUser=uid();
+ await db.query(`insert into auth.users(id,email,raw_user_meta_data) values($1,$2,$3)`,[paidUser,paidRequest.email,JSON.stringify({paid_checkout_id:session.id})]);
+ await db.query('select public.tis_checkout_finish($1,$2)',[session.id,paidUser]);
+ await db.query('select public.tis_checkout_finish($1,$2)',[session.id,paidUser]);
+ await finish(paidRequest,paidUser);
+ assert.equal((await one('select status from public.pending_users where id=$1',[paidRequest.id])).status,'approved');
+ assert.equal(await balance(),250,'Payment + later approval cannot double-credit');
+ assert.equal((await savings(paidUser)).all,expectedSaving,'Paid checkout snapshots discount once, including guest checkout');
+ assert.equal((await one('select count(*)::int n from public."Enrollments" where user_id=$1',[paidUser])).n,1);
+
+ const approving=await request('approving@example.test');await begin(approving.id);
+ await assert.rejects(()=>db.query(`select * from public.tis_checkout_create($1,'Student','9999999999','Marketing Management','',null,'hash','another-ip')`,[approving.email]),/approval is in progress/);
+
+ // An expired checkout may settle while admin approval is underway.
+ const race=await request('race@example.test');
+ const raceSession=await one(`select * from public.tis_checkout_create($1,'Student','9999999999','Marketing Management',$2,null,'hash','race-ip')`,[race.email,ref]);
+ await db.query(`update public.tis_payment_sessions set expires_at=now()-interval '1 second' where id=$1`,[raceSession.id]);
+ const raceUser=(await invite(race,await begin(race.id))).rows[0].id;
+ await finish(race,raceUser);
+ await db.query(`update public.tis_payment_sessions set status='paid',payment_id='pay_race' where id=$1`,[raceSession.id]);
+ await db.query('select public.tis_checkout_finish($1,$2)',[raceSession.id,raceUser]);
+ assert.equal((await one('select status from public.tis_payment_sessions where id=$1',[raceSession.id])).status,'refund_required');
+ assert.equal(await balance(),375,'Late payment must not create a second referral credit');
+
+ const paidFirst=await request('paid-first@example.test');
+ const paidFirstSession=await one(`select * from public.tis_checkout_create($1,'Student','9999999999','Marketing Management',$2,null,'hash','paid-first-ip')`,[paidFirst.email,ref]);
+ await db.query(`update public.tis_payment_sessions set expires_at=now()-interval '1 second' where id=$1`,[paidFirstSession.id]);
+ const paidFirstUser=(await invite(paidFirst,await begin(paidFirst.id))).rows[0].id;
+ await db.query(`update public.tis_payment_sessions set status='paid',payment_id='pay_first' where id=$1`,[paidFirstSession.id]);
+ await db.query('select public.tis_checkout_finish($1,$2)',[paidFirstSession.id,paidFirstUser]);
+ await finish(paidFirst,paidFirstUser);
+ assert.equal(await balance(),500,'Payment before approval finalization must credit once');
+ assert.equal((await one('select count(*)::int n from tis_private.signup_approvals where pending_id=$1',[paidFirst.id])).n,0);
+ assert.equal((await one('select count(*)::int n from public."Enrollments" where user_id=$1',[paidFirstUser])).n,1);
+
+ // Password requests remain private and create no account before authorization.
+ const passwordRequest=async(email,password)=>db.query(`select public.tis_request_signup_with_password($1,'Password Student','9999999999','Marketing Management','','password-ip',$2)`,[email,password]);
+ await assert.rejects(()=>passwordRequest('short@example.test','short'),/Password must/);
+ assert.equal((await one(`select count(*)::int n from public.pending_users where email='short@example.test'`)).n,0,'Hash failure rolls back request');
+ await assert.rejects(()=>passwordRequest('long@example.test','x'.repeat(73)),/Password must/);
+ await passwordRequest('password@example.test','Chosen123!');
+ const pwPending=await one(`select * from public.pending_users where email='password@example.test'`);
+ assert.equal((await one(`select count(*)::int n from auth.users where email='password@example.test'`)).n,0);
+ const stored=(await one(`select password_hash from tis_private.signup_passwords where request_id=$1`,[pwPending.id])).password_hash;
+ assert.match(stored,/^\$2[aby]\$12\$/);assert.notEqual(stored,'Chosen123!');
+ await passwordRequest('password@example.test','Attacker123!');
+ assert.equal((await one(`select password_hash from tis_private.signup_passwords where request_id=$1`,[pwPending.id])).password_hash,stored,'Repeat request must not overwrite password');
+ assert.equal((await one(`select public.tis_signup_password('pending',$1) hash`,[pwPending.id])).hash,null,'Hash unavailable before admin authorization');
+ const pwToken=await begin(pwPending.id);
+ assert.equal((await one(`select public.tis_signup_password('pending',$1) hash`,[pwPending.id])).hash,stored);
+ const pwUser=(await invite(pwPending,pwToken)).rows[0].id;
+ assert.equal((await one('select email_confirmed_at from auth.users where id=$1',[pwUser])).email_confirmed_at,null,'Account cannot password-login before approval');
+ await db.exec(`create function auth.reject_confirmation() returns trigger language plpgsql as $$begin raise exception 'confirmation fixture failed'; end $$;
+ create trigger reject_confirmation before update on auth.users for each row execute function auth.reject_confirmation();`);
+ await assert.rejects(()=>finish(pwPending,pwUser),/confirmation fixture failed/);
+ assert.equal((await one('select status from public.pending_users where id=$1',[pwPending.id])).status,'pending');
+ assert.equal((await one('select count(*)::int n from public."Enrollments" where user_id=$1',[pwUser])).n,0,'Confirmation failure rolls back course approval');
+ assert.equal((await one('select count(*)::int n from tis_private.signup_passwords where request_id=$1',[pwPending.id])).n,1,'Failure preserves staged password for retry');
+ await db.exec('drop trigger reject_confirmation on auth.users');
+ assert.equal((await one(`select extensions.crypt('Chosen123!',$1)=$1 matches`,[stored])).matches,true);
+ assert.equal((await one(`select extensions.crypt('WrongPassword',$1)=$1 matches`,[stored])).matches,false);
+ await finish(pwPending,pwUser);
+ assert.ok((await one('select email_confirmed_at from auth.users where id=$1',[pwUser])).email_confirmed_at,'Admin approval confirms login without email');
+ assert.equal((await one(`select count(*)::int n from tis_private.signup_passwords where request_id=$1`,[pwPending.id])).n,0,'Staged hash removed after approval');
+ assert.doesNotMatch(JSON.stringify((await one('select public.tis_admin_dashboard() data')).data),/password_hash|Chosen123/);
+ const pwCheckout=await one(`select * from public.tis_checkout_create_with_password('pwpaid@example.test','Student','9999999999','Marketing Management','',null,'hash','pw-checkout-ip','Checkout123!')`);
+ assert.equal((await one(`select public.tis_signup_password('checkout',$1) hash`,[pwCheckout.id])).hash,null);
+ await db.query(`update public.tis_payment_sessions set status='paid',payment_id='pay_pw' where id=$1`,[pwCheckout.id]);
+ const checkoutHash=(await one(`select public.tis_signup_password('checkout',$1) hash`,[pwCheckout.id])).hash;
+ assert.equal((await one(`select extensions.crypt('Checkout123!',$1)=$1 matches`,[checkoutHash])).matches,true);
+ const pwPaidUser=uid();await db.query(`insert into auth.users(id,email,raw_user_meta_data) values($1,'pwpaid@example.test',$2)`,[pwPaidUser,JSON.stringify({paid_checkout_id:pwCheckout.id})]);
+ await db.query('select public.tis_checkout_finish($1,$2)',[pwCheckout.id,pwPaidUser]);
+ assert.equal((await one(`select count(*)::int n from tis_private.signup_passwords where request_id=$1`,[pwCheckout.id])).n,0);
+
+ // Period totals follow approval time, and stored savings survive price edits.
+ await db.query(`update public."Enrollments" set approved_at=now()-interval '10 days',payment_details='{"original_price":99999}' where user_id=$1`,[student]);
+ assert.deepEqual(await savings(student),{today:0,week:0,month:expectedSaving,all:expectedSaving});
+ await db.query(`update public."Enrollments" set status='rejected' where user_id=$1`,[student]);
+ assert.equal((await savings(student)).all,0,'Rejected courses are excluded');
+ await db.query(`update public."Enrollments" set status='approved' where user_id=$1`,[student]);
+ assert.equal((await savings(student)).all,expectedSaving,'Reapproval cannot inflate savings');
+ await db.query(`insert into public."Enrollments"(user_id,course_name,referrer_id,status,payment_details) values($1,'Branding Management',$2,'pending','{"original_price":2499}')`,[student,ref]);
+ assert.equal((await savings(student)).all,expectedSaving,'Pending purchase contributes nothing');
+ await db.query(`update public."Enrollments" set status='approved',approved_at=now() where user_id=$1 and course_name='Branding Management'`,[student]);
+ assert.equal((await savings(student)).all,expectedSaving+1749.3,'Approved course savings accumulate with exact paise');
+ assert.equal((await savings(student)).today,1749.3);
+
+ for(const role of ['anon','authenticated']){
+  await db.exec(`set role ${role}`);
+  await assert.rejects(()=>db.query('select * from tis_private.signup_approvals'),/permission denied/);
+  await assert.rejects(()=>db.query('select * from tis_private.signup_passwords'),/permission denied/);
+  await assert.rejects(()=>db.query(`select public.tis_signup_password('pending',$1)`,[p.id]),/permission denied/);
+  await assert.rejects(()=>passwordRequest('attack@example.test','Attacker123!'),/permission denied/);
+  await assert.rejects(()=>db.query("select public.tis_request_signup('attack@example.test','Student','9999999999','Marketing Management','','ip')"),/permission denied/);
+  await assert.rejects(()=>db.query('select public.tis_signup_account($1)',[p.id]),/permission denied/);
+  await assert.rejects(()=>db.query("insert into public.pending_users(email) values('attack@example.test')"),/permission denied/);
+  await db.exec('reset role');
+ }
+ const welcomeSql=await fs.readFile(new URL('../supabase/migrations/202609200005_welcome_cashback.sql',import.meta.url),'utf8');
+ const wallet=async id=>Number((await one('select coalesce((select balance from public.referral_cashback_wallet where user_id=$1),0) n',[id])).n);
+ const beforeStudent=await wallet(student),beforeNoRef=await wallet(noRefId);
+ const dashboardBefore=(await savings(student)).all;
+ await db.exec(welcomeSql);await db.exec(welcomeSql);
+ assert.equal(await wallet(student),beforeStudent+125,'Existing student receives welcome credit once');
+ assert.equal(await wallet(noRefId),beforeNoRef+125,'Existing no-referral student also receives credit');
+ assert.equal((await savings(student)).all,dashboardBefore,'Welcome credit does not alter 70% earnings');
+ assert.equal(await wallet(admin),0,'Admin is not a welcome-credit student');
+ const welcomeRequest=await request('welcome@example.test');
+ const welcomeUser=(await invite(welcomeRequest,await begin(welcomeRequest.id))).rows[0].id;
+ assert.equal(await wallet(welcomeUser),0,'Pending account has no welcome credit');
+ const beforeRef=await wallet(ref);
+ await db.exec(`create function public.reject_welcome() returns trigger language plpgsql as $$begin if new.source='welcome_cashback' then raise exception 'welcome transaction failed'; end if; return new; end $$;
+ create trigger reject_welcome before insert on public.referral_cashback_transactions for each row execute function public.reject_welcome();`);
+ await assert.rejects(()=>finish(welcomeRequest,welcomeUser),/welcome transaction failed/);
+ assert.equal(await wallet(welcomeUser),0,'Ledger failure rolls back wallet');
+ assert.equal((await one('select count(*)::int n from tis_private.welcome_cashback_credits where user_id=$1',[welcomeUser])).n,0);
+ await db.exec('drop trigger reject_welcome on public.referral_cashback_transactions');
+ await finish(welcomeRequest,welcomeUser);await finish(welcomeRequest,welcomeUser);
+ assert.equal(await wallet(welcomeUser),125,'New student credited once');
+ assert.equal(await wallet(ref),beforeRef+125,'Referrer still receives own referral cashback');
+ const welcomeNoRef=await request('welcome-noref@example.test','');
+ const welcomeNoRefUser=(await invite(welcomeNoRef,await begin(welcomeNoRef.id))).rows[0].id;
+ await finish(welcomeNoRef,welcomeNoRefUser);
+ assert.equal(await wallet(welcomeNoRefUser),125,'New no-referral student credited');
+ const welcomePaid=await one(`select * from public.tis_checkout_create('welcome-paid@example.test','Paid','9999999999','Marketing Management','',null,'hash','welcome-paid-ip')`);
+ await db.query(`update public.tis_payment_sessions set status='paid',payment_id='pay_welcome' where id=$1`,[welcomePaid.id]);
+ const welcomePaidUser=uid();await db.query(`insert into auth.users(id,email,raw_user_meta_data) values($1,'welcome-paid@example.test',$2)`,[welcomePaidUser,JSON.stringify({paid_checkout_id:welcomePaid.id})]);
+ await db.query('select public.tis_checkout_finish($1,$2)',[welcomePaid.id,welcomePaidUser]);
+ await db.query('select public.tis_checkout_finish($1,$2)',[welcomePaid.id,welcomePaidUser]);
+ assert.equal(await wallet(welcomePaidUser),125,'Paid checkout also credits exactly once');
+ await db.query(`insert into public."Enrollments"(user_id,course_name,status) values($1,'Finance Management','approved')`,[welcomeUser]);
+ assert.equal(await wallet(welcomeUser),125,'Additional course cannot grant second welcome credit');
+ for(const role of ['anon','authenticated','service_role']){
+  await db.exec(`set role ${role}`);
+  await assert.rejects(()=>db.query('select tis_private.credit_welcome_cashback($1)',[welcomeUser]),/permission denied/);
+  await assert.rejects(()=>db.query('select * from tis_private.welcome_cashback_credits'),/permission denied/);
+  await db.exec('reset role');
+ }
+ await db.exec(await fs.readFile(new URL('../supabase/migrations/202609200006_checkout_method_expiry.sql',import.meta.url),'utf8'));
+ const methodCheckout=async(method,email)=>one(`select * from public.tis_checkout_create_for_method($1,'Method Student','9999999999','Marketing Management',$2,null,'hash',$1,'test-password',$3)`,[email,ref,method]);
+ const qrSession=await methodCheckout('QR Code','qr-method@example.test');
+ const linkSession=await methodCheckout('Payment Link','link-method@example.test');
+ assert.equal(new Date(qrSession.expires_at)-new Date(qrSession.created_at),360000);
+ assert.equal(new Date(linkSession.expires_at)-new Date(linkSession.created_at),86400000);
+ assert.equal(qrSession.amount_paise,29970);assert.equal(linkSession.amount_paise,29970);
+ assert.equal(qrSession.checkout_method,'QR Code');assert.equal(linkSession.checkout_method,'Payment Link');
+ await assert.rejects(()=>methodCheckout('Other','invalid-method@example.test'),/Invalid checkout method/);
+ await assert.rejects(()=>methodCheckout('Payment Link','qr-method@example.test'),/already open/);
+ assert.equal((await one(`select count(*)::int n from auth.users where email in ('qr-method@example.test','link-method@example.test')`)).n,0);
+ for(const role of ['anon','authenticated']){await db.exec(`set role ${role}`);await assert.rejects(()=>methodCheckout('QR Code','forbidden@example.test'),/permission denied/);await db.exec('reset role');}
+ console.log('Checkout method checks passed: QR six minutes, link 24 hours, server pricing, duplicate prevention, no unpaid account, service-only RPC.');
+ console.log('Signup approval and welcome cashback checks passed: existing/new, paid/admin, referral/no-referral, retries, rollback, private ledger and unchanged dashboard earnings.');
+}finally{await db.close();}

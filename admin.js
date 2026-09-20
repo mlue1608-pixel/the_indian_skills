@@ -137,7 +137,12 @@ async function approvePendingSignup(button){
  if(button.disabled)return;button.disabled=true;button.textContent='Approving...';
  try{
  const result=button.dataset.source==='legacy'?await supabaseClient.functions.invoke('approve-pending-user',{body:{pendingId:button.dataset.pendingId}}):await supabaseClient.rpc('tis_approve_enrollment',{p_id:button.dataset.pendingId});
- if(result.error||result.data?.error)throw result.error||Error(result.data.error);
+ if(result.error){
+  let message=result.error.message;
+  if(result.error.context?.json){try{const detail=await result.error.context.json();message=detail.error||message;}catch{}}
+  throw Error(message||'Unable to approve signup.');
+ }
+ if(result.data?.error)throw Error(result.data.error);
  await fetchDashboardData();
  }catch(error){button.disabled=false;button.textContent='Approve';alert(error.message||'Unable to approve signup.');}
 }

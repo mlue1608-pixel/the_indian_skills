@@ -7,6 +7,9 @@
 <script src="assets/vendor/supabase-2.116.0.js"></script>
 <script src="assets/supabase-config.js"></script>
 <script src="assets/supabase-client.js"></script>
+<script src="assets/vendor/qrcode-1.4.4.js"></script>
+<script src="assets/payment-client.js"></script>
+<style>.paymentModal [hidden]{display:none!important}</style>
 <style>
 :root{--bg:#f7fbff;--card:#fff;--text:#071d3b;--muted:#63758a;--navy:#071d3b;--blue:#72c8f5;--line:#dce8f1;--soft:#e9f7ff}
 *{box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;overflow-x:hidden;max-width:100%;overflow-wrap:break-word}button{font-family:inherit;cursor:pointer}.wrap{width:min(1120px,92%);margin:auto;max-width:100%;box-sizing:border-box}
@@ -229,9 +232,9 @@ body{overflow:auto}
       <div class="paymentSection signupOnly">
       <label class="authField">Package Selection<select id="authPackage" onchange="updateSignupPricing()"><option value="">Select a package</option><option value="marketing management">Marketing Management</option><option value="branding management">Branding Management</option><option value="traffic management">Traffic Management</option><option value="influence management">Influence Management</option><option value="finance management">Finance management</option></select></label>
       <div class="signupPrice" id="signupPrice" aria-live="polite">Select a course to see the price.</div>
-      <label class="authField">Payment Method<select id="authPayment" onchange="toggleQrPayment()"><option value="QR Code" selected>QR Code</option><option value="UPI ID">UPI ID</option></select></label>
-      <div id="qrPaymentFields"><div id="qrPaymentDetails"><img src="qr-code.png.jpeg" alt="Payment QR" style="max-width: 200px; display: block; margin: 12px auto; border-radius: 8px;"><p style="text-align:center;margin:0 0 12px">Scan to pay with any UPI app</p></div><div id="upiPaymentDetails" hidden><p style="text-align:center;margin:0 0 12px">UPI ID: <strong>learner0zon@oksbi</strong></p></div><label class="authField">Transaction ID / UTR Number<input id="authUtr" type="text" placeholder="Enter Transaction ID / UTR Number" autocomplete="off" maxlength="100"></label></div>
+      <label class="authField">Enrollment Option<select id="authPayment" onchange="toggleQrPayment()"><option value="Payment Link" selected>Pay now — Payment Link</option><option value="QR Code">Pay now — QR Code</option><option value="Admin Approval">Sign up without payment — Request admin approval</option></select></label>
       </div>
+      <p id="authNotice" role="status" style="color:#166534;font-size:14px;line-height:1.5"></p>
       <p class="authError" id="authError" role="alert"></p>
       <button type="submit" id="authSubmit">Sign In</button>
     </form>
@@ -684,8 +687,9 @@ async function enrollCourse(name,price='₹15,999'){
     const {data,error}=await withTimeout(window.TISBackend.getVerifiedUser(window.supabase.auth));
     if(error||!data.user){
       currentUser=null;
-      showToast('Please sign in or sign up before enrolling.');
-      openAuthModal('login');
+      openAuthModal('signup');
+      document.getElementById('authPackage').value=String(name).trim().toLowerCase();
+      updateSignupPricing();
       return;
     }
     currentUser=data.user;
@@ -745,7 +749,7 @@ async function renderUpgradeCourses(){
 async function updateDashboardEarnings(){
  const values=document.querySelectorAll('#dashboard .earning strong');if(!currentUser||values.length<4)return;
  try{const {data,error}=await withTimeout(window.supabase.rpc('tis_earnings_summary'));if(error)throw error;
- [data.today,data.week,data.month,data.all].forEach((amount,index)=>values[index].textContent=formatCoursePrice(amount));
+ [data.today,data.week,data.month,data.all].forEach((amount,index)=>values[index].textContent=formatEarningAmount(amount));
  }catch(error){values.forEach(value=>value.textContent='Unable to load');console.error('[Earnings]',error);}
 }
 function parseCoursePrice(value){
@@ -768,7 +772,7 @@ async function updateSignupPricing(){
  const price=courseCatalogPrice(packageName),code=input?.value.trim()||'';if(!price){box.textContent='Select a course to see the price.';return}
  box.textContent='Payable Price: '+formatCoursePrice(price);if(!code)return;
  try{const referral=await findReferralProfile(code);if(input.value.trim()!==code||document.getElementById('authPackage').value!==packageName)return;
- box.textContent=referral?'Original Price: '+formatCoursePrice(price)+' | Payable Price (75% OFF): '+formatCoursePrice(price*.25):'Invalid Referral Link | Payable Price: '+formatCoursePrice(price);
+ box.textContent=referral?'Original Price: '+formatCoursePrice(price)+' | Payable Price (70% OFF): '+formatCoursePrice(price*.30):'Invalid Referral Link | Payable Price: '+formatCoursePrice(price);
  }catch(error){box.textContent='Unable to validate referral. Please try again.';}
 }
 function updateCheckoutPricing(){
@@ -776,14 +780,14 @@ function updateCheckoutPricing(){
   if(!modal)return;
   const originalPrice=Number(modal.dataset.originalPrice)||0;
   const referralCode=modal.dataset.referralApplied==='true'?(modal.dataset.referralCode||'').trim():'';
-  const discount=referralCode?originalPrice*.75:0;
-  const finalPrice=originalPrice-discount;
+  const discount=referralCode?originalPrice*.70:0;
+  const finalPrice=Math.round((originalPrice-discount)*100)/100;
   modal.dataset.referralCode=referralCode;
   modal.dataset.finalPrice=String(finalPrice);
   const discountRow=document.getElementById('referralDiscountRow');
   const badge=document.getElementById('referralAppliedBadge');
   const removeButton=document.getElementById('removeReferralButton');
-  if(discountRow)discountRow.textContent='Referral Discount (75% OFF): -'+formatCoursePrice(discount);
+  if(discountRow)discountRow.textContent='Referral Discount (70% OFF): -'+formatCoursePrice(discount);
   if(discountRow)discountRow.hidden=!referralCode;
   if(badge)badge.hidden=!referralCode;
   if(removeButton)removeButton.hidden=!referralCode;
@@ -834,21 +838,22 @@ function openPaymentModal(name,price){
   modal.dataset.referralApplied='false';
   modal.innerHTML=`<div class="paymentDialog" role="dialog" aria-modal="true" aria-labelledby="paymentTitle" aria-describedby="paymentDescription">
     <div class="authHeader"><div><h2 id="paymentTitle">Complete Enrollment</h2><p id="paymentDescription">Choose a payment method to continue.</p></div><button class="authClose" onclick="closePaymentModal(true)" aria-label="Close">×</button></div>
-    <div class="paymentSummary"><strong>${escapeHtml(name)}</strong><del>Original Course Price: ${formatCoursePrice(originalPrice)}</del><span id="referralDiscountRow">Referral Discount (75% OFF): -${formatCoursePrice(originalPrice*.75)}</span><strong id="finalPayableAmount">Final Payable Amount: ${formatCoursePrice(originalPrice*.25)}</strong><span id="referralAppliedBadge" class="referralBadge">Referral Link Applied!</span></div>
+    <div class="paymentSummary"><strong>${escapeHtml(name)}</strong><del>Original Course Price: ${formatCoursePrice(originalPrice)}</del><span id="referralDiscountRow">Referral Discount (70% OFF): -${formatCoursePrice(originalPrice*.70)}</span><strong id="finalPayableAmount">Final Payable Amount: ${formatCoursePrice(originalPrice*.30)}</strong><span id="referralAppliedBadge" class="referralBadge">Referral Link Applied!</span></div>
     <div class="referralControls"><label class="authField">Referral Link<input id="checkoutReferralCode" type="text" value="${escapeHtml(referralCode)}" placeholder="Enter referral link" autocomplete="off" maxlength="2048"><span id="referralLinkError" hidden style="display:block;margin-top:6px;color:#c44;font-size:13px">Invalid Referral Link</span></label><div class="referralActions"><button type="button" class="paymentCancel" id="applyReferralButton" onclick="applyCheckoutReferral()">Apply Link</button><button type="button" class="paymentCancel" id="removeReferralButton" onclick="removeCheckoutReferral()">Remove Link</button></div></div>
+    <label class="authField">Contact phone<input id="checkoutPhone" type="tel" autocomplete="tel" maxlength="20" value="${escapeHtml(currentUser?.user_metadata?.phone||'')}" placeholder="Your phone number"></label>
     <p style="margin:0;font-weight:700">Payment method</p>
     <div class="paymentOptions" role="group" aria-label="Payment method">
-      <button class="paymentOption selected" data-method="UPI" onclick="selectPaymentMethod(this)">UPI ID</button>
+      <button class="paymentOption selected" data-method="Payment Link" onclick="selectPaymentMethod(this)">Payment Link</button>
       <button class="paymentOption" data-method="QR Code" onclick="selectPaymentMethod(this)">QR Code</button>
     </div>
     <div id="paymentMethodDetails" class="paymentMethodDetails"></div>
     <p class="paymentStatus" id="paymentStatus" role="status"></p>
-    <div class="paymentActions"><button class="paymentCancel" onclick="closePaymentModal(true)">Cancel</button><button class="paymentPay" id="payNowButton" onclick="processPayment(this)">Pay ${formatCoursePrice(originalPrice*.25)}</button></div>
+    <div class="paymentActions"><button class="paymentCancel" onclick="closePaymentModal(true)">Cancel</button><button class="paymentPay" id="payNowButton" onclick="processPayment(this)">Pay ${formatCoursePrice(originalPrice*.30)}</button></div>
   </div>`;
   modal.addEventListener('click',event=>{if(event.target===modal)closePaymentModal(true)});
   document.body.appendChild(modal);
   updateCheckoutPricing();
-  renderPaymentMethodDetails('UPI');
+  renderPaymentMethodDetails('Payment Link');
 }
 function selectPaymentMethod(button){
   document.querySelectorAll('.paymentOption').forEach(option=>option.classList.toggle('selected',option===button));
@@ -857,21 +862,7 @@ function selectPaymentMethod(button){
 function renderPaymentMethodDetails(method){
   const details=document.getElementById('paymentMethodDetails');
   if(!details)return;
-  if(method==='UPI'){
-    details.innerHTML='<div class="upiPaymentSection"><div class="upiReceivingBox"><span class="upiReceivingId">learner0zon@oksbi</span><button type="button" class="copyUpiButton" onclick="copyReceivingUpi()">Copy</button></div><label class="authField transactionField">Payment Transaction ID / UTR<input id="paymentTransactionId" type="text" placeholder="Enter Payment Transaction ID / UTR" autocomplete="off" maxlength="100" required></label></div>';
-    return;
-  }
-  if(method==='QR Code'){
-    details.innerHTML='<div class="qrPaymentSection"><div class="qrPaymentView"><img src="qr-code.png.jpeg" alt="Payment QR code"><p>Scan this QR code with your UPI app to pay.</p></div><label class="authField transactionField">Payment Transaction ID / UTR<input id="paymentTransactionId" type="text" placeholder="Enter Payment Transaction ID / UTR" autocomplete="off" maxlength="100" required></label></div>';
-    return;
-  }
-  details.innerHTML='';
-}
-function copyReceivingUpi(){
-  const upiId='learner0zon@oksbi';
-  if(navigator.clipboard){
-    navigator.clipboard.writeText(upiId).then(()=>showToast('UPI ID copied to clipboard.'));
-  }else showToast('UPI ID: '+upiId);
+  details.textContent=method==='QR Code'?'Continue to generate a QR code valid for six minutes. Scan with your phone camera to open secure checkout.':'Continue to open secure checkout and choose an available UPI app, card or another payment method.';
 }
 async function closePaymentModal(restoreSession=false){
   const modal=document.getElementById('paymentModal');
@@ -881,10 +872,12 @@ async function closePaymentModal(restoreSession=false){
 }
 async function processPayment(button){
  const modal=document.getElementById('paymentModal'),status=document.getElementById('paymentStatus');if(!modal||!currentUser||button.disabled)return;button.disabled=true;
- try{const transactionId=document.getElementById('paymentTransactionId')?.value.trim()||'';if(!transactionId)throw Error('Please enter your Payment Transaction ID / UTR.');
- const {error}=await window.supabase.rpc('tis_submit_enrollment',{p_course:modal.dataset.courseName,p_method:document.querySelector('#paymentModal .paymentOption.selected')?.dataset.method||'UPI',p_transaction:transactionId,p_referral:modal.dataset.referralApplied==='true'?modal.dataset.referralCode:''});if(error)throw error;
- await closePaymentModal();showToast('Payment details submitted. Awaiting admin approval.');await showDashboard();
- }catch(error){status.textContent=error.message||'Unable to submit payment.';}finally{button.disabled=false;}
+ try{
+ const {data,error}=await window.supabase.auth.getSession();if(error||!data.session)throw Error('Please sign in again.');
+ await window.TISPayments.start({course:modal.dataset.courseName,referral:modal.dataset.referralApplied==='true'?modal.dataset.referralCode:'',email:currentUser.email,
+ name:currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||'Student',phone:document.getElementById('checkoutPhone')?.value.trim()||currentUser.user_metadata?.phone||'',accessToken:data.session.access_token},document.querySelector('#paymentModal .paymentOption.selected')?.dataset.method||'Payment Link');
+ await closePaymentModal();
+ }catch(error){status.textContent=error.message||'Unable to start payment.';}finally{button.disabled=false;}
 }
 function openFeedback(){
   if(document.getElementById('feedbackModal')) return;
@@ -965,6 +958,9 @@ async function showDashboard(){
     pageArea.innerHTML='';
     dashboard.style.display='block';
     dashboardMenu.classList.add('show');
+    // Feature views hide the main cards. Restore them on every dashboard entry,
+    // including signing back in after logging out from My Team or Rewards.
+    dashboardHome();
     const savedName=userFullName(currentUser);
     const title=document.querySelector('.dashTop h1');
     const profile=document.querySelector('.profileInitial');
@@ -1036,7 +1032,8 @@ async function loadLeaderboardData(period){
   }catch(error){leaderboardErrors[period]=true;console.error('[App Error]:',error)}
   return target;
 }
-function formatLeaderboardCurrency(value){return new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(value);}
+function formatEarningAmount(value){return new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(value);}
+function formatLeaderboardCurrency(value){return formatEarningAmount(value);}
 function leaderboardCards(period){
   if(leaderboardErrors[period])return '<div class="leaderboardSectionEmpty">Unable to load leaderboard. Please try again.</div>';
   const users=leaderboardData[period];
@@ -1140,7 +1137,7 @@ async function featurePage(type,button){
       : '<p>No Enrolled Courses</p>';
   } else if(type==='upgrade') body='<p>Loading available upgrades...</p>';
   else if(type==='referral') body=`<p>Share your unique link with people interested in learning.</p><input id="referralLinkBox" class="refBox" type="text" readonly value="Loading your referral link..."><div class="referralActions"><button id="copyReferralButton" class="editBtn" type="button" onclick="copyReferral()">Copy Link</button><button class="editBtn backBtn" type="button" onclick="dashboardHome()">Back to Dashboard</button></div>`;
-  else if(type==='rewards') body=`<div class="rewardGrid"><section class="rewardSection"><h3>Referral Cashback</h3><div class="rewardCard"><p class="rewardLabel">Cashback Amount</p><strong id="cashbackAmount">Loading...</strong><small id="cashbackMeta">Loading cashback details...</small><label class="authField">Withdrawal UPI ID<input id="withdrawCashbackUpi" type="text" placeholder="name@upi"></label><button class="editBtn" id="withdrawCashbackBtn" type="button" onclick="withdrawReferralCashback()" disabled>Withdraw Cashback</button><small id="withdrawCashbackError">Minimum ₹1000 required to withdraw</small><small id="withdrawCashbackStatus" role="status"></small></div></section><section class="rewardSection"><h3>Referral Reward</h3><div class="rewardNoticeCard"><p>REWARDS WILL BE ADDED SOON</p></div></section></div>`;
+  else if(type==='rewards') body=`<div class="rewardGrid"><section class="rewardSection"><h3>Wallet</h3><div class="rewardCard"><p class="rewardLabel">Cashback Amount</p><strong id="cashbackAmount">Loading...</strong><small id="cashbackMeta">Loading cashback details...</small><label class="authField">Withdrawal UPI ID<input id="withdrawCashbackUpi" type="text" placeholder="name@upi"></label><button class="editBtn" id="withdrawCashbackBtn" type="button" onclick="withdrawReferralCashback()" disabled>Withdraw Cashback</button><small id="withdrawCashbackError">Minimum ₹1000 required to withdraw</small><small id="withdrawCashbackStatus" role="status"></small></div></section><section class="rewardSection"><h3>Referral Reward</h3><div class="rewardNoticeCard"><p>REWARDS WILL BE ADDED SOON</p></div></section></div>`;
   else if(type==='community') body=`
     <p>Access The Indian Skills community and official social channels.</p>
     <div class="communityGrid">
@@ -1485,10 +1482,12 @@ function openAuthModal(mode='login'){
     if(!modal||!nameField)throw new Error('Authentication elements are unavailable.');
     document.getElementById('drawer')?.classList.remove('open');
     document.getElementById('featureOverlay')?.classList.remove('open');
-    document.getElementById('authTitle').textContent=signUp?'Create Your Account':'Welcome Back';
-    document.getElementById('authSubtitle').textContent=signUp?'Join thousands of learners achieving mastery':'Sign in to access your courses and content';
-    document.getElementById('authSubmit').textContent=signUp?'Create Account':'Sign In';
+    document.getElementById('authTitle').textContent=signUp?'Enroll in Your Course':'Welcome Back';
+    document.getElementById('authSubtitle').textContent=signUp?'Pay now for automatic activation, or request administrator approval.':'Sign in to access your courses and content';
+    document.getElementById('authSubmit').textContent=signUp?'Continue to Payment':'Sign In';
     document.getElementById('authPassword').autocomplete=signUp||recovery?'new-password':'current-password';
+    document.getElementById('authPassword').required=true;
+    document.getElementById('authPassword').closest('.authField').style.display='';
     document.querySelectorAll('.signupOnly').forEach(field=>{field.style.display=signUp?'block':'none'});
     document.querySelectorAll('.loginOnly').forEach(field=>{field.style.display=signUp||recovery?'none':'block'});
     document.querySelector('.authSwitch').style.display=recovery?'none':'';
@@ -1503,6 +1502,7 @@ function openAuthModal(mode='login'){
     toggleQrPayment();
     updateSignupPricing();
     document.getElementById('authError').textContent='';
+    document.getElementById('authNotice').textContent='';
     modal.classList.add('open');
     document.body.classList.add('modal-open');
     document.getElementById(recovery?'authPassword':'authEmail').focus();
@@ -1518,17 +1518,13 @@ async function closeAuthModal(){
   document.getElementById('loginForm')?.reset();
   const authError=document.getElementById('authError');
   if(authError)authError.textContent='';
+  document.getElementById('authNotice').textContent='';
 }
 function toggleAuthMode(){openAuthModal(authMode==='login'?'signup':'login')}
 function toggleQrPayment(){
   const payment=document.getElementById('authPayment');
-  const qrDetails=document.getElementById('qrPaymentDetails');
-  const upiDetails=document.getElementById('upiPaymentDetails');
-  const utr=document.getElementById('authUtr');
-  const showQr=payment?.value!=='UPI ID';
-  if(qrDetails)qrDetails.hidden=!showQr;
-  if(upiDetails)upiDetails.hidden=showQr;
-  if(utr)utr.required=authMode==='signup'&&Boolean(payment?.value);
+  const approval=payment?.value==='Admin Approval';
+  if(authMode==='signup')document.getElementById('authSubmit').textContent=approval?'Request Admin Approval':payment?.value==='QR Code'?'Generate QR Code':'Open Payment Page';
 }
 async function handleForgotPassword(event){
   try{
@@ -1557,6 +1553,7 @@ function clearApprovalErrorState(){
 async function handleAuthSubmit(event){
   try{
     event.preventDefault();
+    document.getElementById('authNotice').textContent='';
     if(backendSetupError)throw backendSetupError;
     if(authMode==='recovery'){
       const password=document.getElementById('authPassword').value;
@@ -1580,28 +1577,26 @@ async function handleAuthSubmit(event){
     if(authMode==='signup' && !packageName){error.textContent='Please select a package.';return}
     if(authMode==='signup' && !paymentMethod){error.textContent='Please select a payment method.';return}
     if(password.length<6){error.textContent='Password must be at least 6 characters.';return}
+    if(authMode==='signup'&&new TextEncoder().encode(password).length>72){error.textContent='Password must be at most 72 UTF-8 bytes.';return}
 
     const submit=document.getElementById('authSubmit');
     submit.disabled=true;
     error.textContent='';
 
     if(authMode==='signup'){
-      const utr=(document.getElementById('authUtr')?.value||'').trim();
-      if(!utr)throw new Error('Please enter your payment Transaction ID / UTR.');
       const referral=referralCode?await findReferralProfile(referralCode):null;
       if(referralCode&&!referral)throw new Error('Invalid Referral Link');
-      const result=await window.supabase.auth.signUp({email,password,options:{data:{
-        full_name:name,phone,package_name:packageName,payment_method:paymentMethod,
-        tis_signup:{course:packageName,method:paymentMethod,transaction:utr,referral:referral?.referral_code||referral?.id||''}
-      }}});
-      if(result.error)throw result.error;
-      if(!result.data?.user||result.data.user.identities?.length===0)throw new Error('This email is already registered. Please sign in or reset your password.');
-      await window.supabase.auth.signOut();
-      currentUser=null;
+      const details={email,name,phone,password,course:packageName,referral:referral?.referral_code||referral?.id||''};
+      if(paymentMethod==='Admin Approval'){
+        await window.TISPayments.requestApproval(details);
+        document.getElementById('authPassword').value='';
+        document.getElementById('authNotice').textContent='Request submitted for administrator approval. You can sign in only after approval, using the same password you chose at signup. No verification email is required for admin approval.';
+        submit.disabled=false;
+        return;
+      }
+      await window.TISPayments.start(details,paymentMethod);
       submit.disabled=false;
       await closeAuthModal();
-      goHomePublic();
-      showToast('Registration submitted for admin approval. Check your email to confirm your account.');
       return;
     }
 

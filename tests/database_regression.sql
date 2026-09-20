@@ -13,7 +13,7 @@ select public.tis_submit_enrollment('Marketing Management','UPI','TEST-UTR-001',
 update tis_test_ids set enrollment=(select id::text from public."Enrollments" where user_id=tis_test_ids.student limit 1);
 do $$ begin
  if public.tis_approval_status()<>'pending' then raise exception 'New signup must await approval'; end if;
- if (select amount from public."Enrollments" where id::text=(select enrollment from tis_test_ids))<>249.75 then raise exception '75%% discount is incorrect'; end if;
+ if (select amount from public."Enrollments" where id::text=(select enrollment from tis_test_ids))<>299.70 then raise exception '70%% discount is incorrect'; end if;
  begin
   perform public.tis_approve_enrollment((select enrollment from tis_test_ids));
   raise exception 'Student approval was allowed';

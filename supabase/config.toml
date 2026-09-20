@@ -4,3 +4,11 @@ verify_jwt = false
 
 [functions.send-complaint-email]
 verify_jwt = false
+
+# Guest checkout uses unguessable session tokens; webhook uses HMAC verification.
+[functions.razorpay-checkout]
+verify_jwt = false
+
+# Public contact/course requests only; Auth creation requires admin approval.
+[functions.request-signup]
+verify_jwt = false

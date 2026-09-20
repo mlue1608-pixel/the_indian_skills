@@ -1,0 +1,15 @@
+﻿import fs from 'node:fs/promises';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const source=await fs.readFile(new URL('../assets/payment-client.js',import.meta.url),'utf8');
+const nodes=new Map();let sent,redirect,saved,qrData,qrCount=0;
+const node=id=>{if(!nodes.has(id))nodes.set(id,{style:{},textContent:'',hidden:false,appendChild(){},focus(){},remove(){nodes.delete(id);},querySelector(){return {style:{},setAttribute(){}};}});return nodes.get(id);};
+const context=vm.createContext({window:{TIS_CONFIG:{supabaseUrl:'https://api.example.test',supabasePublishableKey:'public'},location:{assign:url=>redirect=url}},document:{getElementById:id=>id==='gatewaySession'?nodes.get(id):node(id),createElement:()=>({style:{},remove(){},set innerHTML(v){},set id(v){nodes.set(v,this);}}),body:{appendChild(){}},addEventListener(){}},sessionStorage:{setItem:(k,v)=>saved=v,removeItem(){}},AbortSignal,Date,setTimeout:()=>1,clearTimeout(){},setInterval:()=>1,clearInterval(){},qrcode:()=>({addData:v=>qrData=v,make(){qrCount++;},createSvgTag:()=>'<svg></svg>'}),fetch:async(url,options)=>{sent=JSON.parse(options.body);return Response.json({id:'session',token:'secret',checkoutUrl:'https://site.example.test/checkout.html#id=session&token=secret',course:'Marketing Management',originalPaise:99900,amountPaise:29970,method:sent.method,expiresAt:new Date(Date.now()+(sent.method==='QR Code'?360000:86400000)).toISOString(),serverNow:Date.now()});}});
+vm.runInContext(source,context);
+await context.window.TISPayments.start({email:'student@example.test',password:'private-password'},'Payment Link');
+assert.equal(sent.method,'Payment Link');assert.match(redirect,/checkout.html#/);assert.equal(qrCount,0);assert.doesNotMatch(saved,/private-password/);
+redirect=null;
+await context.window.TISPayments.start({email:'student@example.test',password:'private-password'},'QR Code');
+assert.equal(sent.method,'QR Code');assert.equal(redirect,null);assert.equal(qrCount,1);assert.match(qrData,/checkout.html#/);assert.match(node('gatewayCountdown').textContent,/QR expires in 6:00/);assert.match(node('gatewayDiscount').textContent,/70%/);assert.equal(JSON.parse(saved).method,'QR Code');
+context.qrcode=undefined;await assert.rejects(()=>context.window.TISPayments.start({},'QR Code'),/QR generator could not load/);
+console.log('Payment method UI checks passed: direct link navigation, visible QR, six-minute QR timer, referral price, saved method, no saved password and missing generator error.');

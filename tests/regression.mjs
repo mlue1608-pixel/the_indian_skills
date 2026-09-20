@@ -11,7 +11,7 @@ export async function runRegression(root = new URL('../', import.meta.url)) {
     if (!nodes.has(id)) nodes.set(id, { id, value: '', textContent: '', innerHTML: '', style: {}, dataset: {}, parentElement: { style: {} },
       classList: { add() {}, remove() {}, toggle() {}, contains() { return false; } },
       addEventListener() {}, focus() { document.activeElement = this; }, remove() {}, appendChild() {}, setCustomValidity() {}, reset() {}, setAttribute() {},
-      querySelector() { return null; }, querySelectorAll() { return []; } });
+      closest() { return this.parentElement; }, querySelector() { return null; }, querySelectorAll() { return []; } });
     return nodes.get(id);
   };
   const calls = [];
@@ -27,7 +27,7 @@ export async function runRegression(root = new URL('../', import.meta.url)) {
   const document = { body: element('body'), getElementById: element,
     querySelector: selector => element(selector), querySelectorAll: selector => selector === '#dashboard .earning strong' ? earningNodes : selector === '.loginOnly' ? [element('forgotPassword')] : [],
     addEventListener(name, handler) { listen(documentEvents, name, handler); }, createElement: () => element('created') };
-  const context = vm.createContext({ document, location, console, URL, URLSearchParams, Headers, setTimeout, clearTimeout, AbortController,
+  const context = vm.createContext({ document, location, console, URL, URLSearchParams, Headers, TextEncoder, setTimeout, clearTimeout, AbortController,
     localStorage: { getItem() { return null; }, setItem() {}, removeItem() {} }, navigator: {},
     window: { location, history, fetch: async () => { throw Error('Unexpected network request'); }, supabase: { createClient: () => client }, addEventListener(name, handler) { listen(windowEvents, name, handler); }, scrollTo() {} } });
   vm.runInContext(await fs.readFile(new URL('assets/supabase-config.js', root), 'utf8'), context);
@@ -126,10 +126,50 @@ export async function runRegression(root = new URL('../', import.meta.url)) {
     assert.equal(calls.at(-1).name, 'tis_resolve_referral');
     assert.equal(calls.at(-1).args.p_code, 'referrer');
   });
+  await check('Referral pricing gives 70% off and removal restores full price', async () => {
+    response = { data: [{ id: 'referrer', referral_code: 'referrer' }], error: null };
+    element('authPackage').value = 'Marketing Management';
+    element('authReferral').value = 'referrer';
+    await run('updateSignupPricing()');
+    assert.match(element('signupPrice').textContent, /70% OFF.*299\.70/);
+    for (const [price, payable] of [[999, 299.70], [2499, 749.70], [5000, 1500], [10000, 3000], [15000, 4500]]) {
+      element('paymentModal').dataset = { originalPrice: String(price), referralApplied: 'true', referralCode: 'referrer' };
+      run('updateCheckoutPricing()');
+      assert.equal(Number(element('paymentModal').dataset.finalPrice), payable);
+      assert.match(element('referralDiscountRow').textContent, /70% OFF/);
+      run('removeCheckoutReferral()');
+      assert.equal(Number(element('paymentModal').dataset.finalPrice), price);
+    }
+    response = { data: [], error: null };
+    await run('updateSignupPricing()');
+    assert.match(element('signupPrice').textContent, /Invalid Referral Link.*999/);
+  });
   await check('All four earnings periods are rendered', async () => {
     response = { data: { today: 125, week: 250, month: 500, all: 1000 }, error: null };
     await run('updateDashboardEarnings()');
     assert.deepEqual(earningNodes.map(node => node.textContent), ['₹125', '₹250', '₹500', '₹1,000']);
+  });
+  await check('Dashboard entry restores hidden cards before requests finish after feature logout', async () => {
+    run('setDashboardMainView(false)');
+    element('featurePages').innerHTML = '<div>Old Rewards page</div>';
+    element('featureOverlay').classList.add('open');
+    const originalRpc = client.rpc;
+    let release;
+    const waiting = new Promise(resolve => { release = resolve; });
+    client.rpc = async name => {
+      await waiting;
+      return { data: name === 'tis_earnings_summary' ? {today:0,week:0,month:0,all:0} : [], error:null };
+    };
+    try {
+      const loading = run('showDashboard()');
+      assert.equal(element('dashboard').style.display, 'block');
+      for (const selector of ['.dashTop','.earnings','.profileEdit']) assert.notEqual(element(selector).style.display,'none');
+      assert.equal(element('featurePages').innerHTML, '');
+      assert.equal(element('featureOverlay').classList.contains('open'), false);
+      release();
+      await loading;
+      assert.equal(element('.enrolled').textContent, 'No Course Enrolled');
+    } finally { release(); client.rpc = originalRpc; }
   });
   await check('Approval errors fail closed and approved users remain accepted', async () => {
     response = { data: null, error: { message: 'Unavailable' } };
@@ -149,33 +189,56 @@ export async function runRegression(root = new URL('../', import.meta.url)) {
     assert.equal(run("initials('Test Student')"), 'TS');
     assert.equal(run("escapeHtml('<script>')"), '&lt;script&gt;');
   });
-  await check('Checkout submits pending payment details without granting access or choosing price', async () => {
+  await check('Checkout starts a backend payment session without granting access or choosing price', async () => {
     response = { data: null, error: null };
     element('paymentModal').dataset = { courseName: 'Branding Management', referralApplied: 'false' };
-    element('paymentTransactionId').value = 'UTR123456';
+    client.auth.getSession = async () => ({ data: { session: { access_token: 'test-token' } }, error: null });
+    let payment;
+    context.window.TISPayments = { start: async payload => { payment = payload; } };
     run('showDashboard=async()=>{}');
     await run("processPayment(document.getElementById('testPayButton'))");
-    const payment = calls.findLast(call => call.name === 'tis_submit_enrollment');
-    assert.equal(payment.args.p_course, 'Branding Management');
-    assert.equal(payment.args.p_transaction, 'UTR123456');
-    assert.equal(payment.args.status, undefined);
-    assert.equal(payment.args.amount, undefined);
-    assert.match(context.window.lastToast, /Awaiting admin approval/);
+    assert.equal(payment.course, 'Branding Management');
+    assert.equal(payment.accessToken, 'test-token');
+    assert.equal(payment.status, undefined);
+    assert.equal(payment.amount, undefined);
+    assert.equal(calls.some(call => call.name === 'tis_submit_enrollment'), false);
   });
-  await check('Signup works when email confirmation returns no session and stores no password in metadata', async () => {
+  await check('Signup sends the chosen password to checkout without creating an Auth account in the browser', async () => {
     for (const [id, value] of Object.entries({ authName: 'New Student', authPhone: '9999999999', authReferral: '', authPackage: 'marketing management', authPayment: 'QR Code', authEmail: 'new@example.test', authPassword: 'test-password', authUtr: 'UTR1234567' })) element(id).value = value;
-    let signup;
-    client.auth.signUp = async payload => { signup = payload; return { data: { user: { id: 'new-user', identities: [{}] }, session: null }, error: null }; };
+    let payment;
+    client.auth.signUp = async () => { throw Error('Account must not be created before payment'); };
+    context.window.TISPayments = { start: async payload => { payment = payload; } };
     run("authMode='signup'");
     await run('handleAuthSubmit({preventDefault(){}})');
-    assert.equal(signup.options.data.tis_signup.course, 'marketing management');
-    assert.equal(signup.options.data.tis_signup.transaction, 'UTR1234567');
-    assert.equal(signup.options.data.password, undefined);
-    assert.equal(signup.options.data.pending_password, undefined);
-    assert.match(context.window.lastToast, /Registration submitted for admin approval/);
+    assert.equal(payment.course, 'marketing management');
+    assert.equal(payment.email, 'new@example.test');
+    assert.equal(payment.password, 'test-password');
+    assert.equal(payment.amount, undefined);
   });
   const adminSource = await fs.readFile(new URL('admin.js', root), 'utf8');
   new vm.Script(adminSource);
+  await check('Unpaid signup sends the chosen password for private hashing and clears it after submission', async () => {
+    for (const [id,value] of Object.entries({authName:'Pending Student',authPhone:'9999999999',authReferral:'',authPackage:'marketing management',authPayment:'Admin Approval',authEmail:'pending@example.test',authPassword:'unused-password'})) element(id).value=value;
+    let request;
+    context.window.TISPayments={start:async()=>{throw Error('Unexpected payment');},requestApproval:async details=>{request=details;return {message:'Submitted for administrator approval.'};}};
+    run("authMode='signup';toggleQrPayment()");
+    assert.equal(element('authSubmit').textContent,'Request Admin Approval');
+    await run('handleAuthSubmit({preventDefault(){}})');
+    assert.equal(request.email,'pending@example.test');assert.equal(request.course,'marketing management');
+    assert.equal(request.password,'unused-password');assert.equal(request.amount,undefined);
+    assert.equal(element('authPassword').value,'');
+    assert.match(element('authNotice').textContent,/Request submitted for administrator approval/);
+    assert.match(element('authNotice').textContent,/same password/);
+    assert.equal(element('authError').textContent,'');
+    assert.equal(element('authSubmit').disabled,false);
+    context.window.TISPayments.requestApproval=async()=>{throw Error('Signup unavailable');};
+    element('authPassword').value='unused-password';
+    await run('handleAuthSubmit({preventDefault(){}})');
+    assert.match(element('authError').textContent,/Signup unavailable/);
+    assert.equal(element('authSubmit').disabled,false);
+    element('authPayment').value='Payment Link';run('toggleQrPayment()');
+    assert.equal(element('authSubmit').textContent,'Open Payment Page');
+  });
   await check('Admin renders live totals and pending entries from both signup sources', async () => {
     const adminContext = vm.createContext({ document, console, alert() {}, window: { location, TISBackend: context.window.TISBackend },
       supabase: { createClient: () => client } });
@@ -190,6 +253,17 @@ export async function runRegression(root = new URL('../', import.meta.url)) {
     assert.equal(element('totalRevenue').textContent, 'INR 249.75');
     assert.match(element('pendingRows').innerHTML, /data-source="enrollment"/);
     assert.match(element('pendingRows').innerHTML, /data-source="legacy"/);
+  });
+  await check('Admin pending-request approval uses the protected function and displays retry reasons', async () => {
+    let message='',invocation;
+    const adminContext=vm.createContext({document,console,alert:value=>{message=value;},window:{location,TISBackend:context.window.TISBackend},supabase:{createClient:()=>client}});
+    vm.runInContext(adminSource.replace(/authorizeAndLoad\(\);\s*$/,''),adminContext);
+    vm.runInContext('supabaseClient=supabase.createClient()',adminContext);
+    const button=element('approvalTestButton');button.dataset={source:'legacy',pendingId:'pending-id'};button.disabled=false;
+    client.functions={invoke:async(name,args)=>{invocation={name,args};return {error:{message:'Function failed',context:{json:async()=>({error:'Payment is in progress'})}}};}};
+    await vm.runInContext("approvePendingSignup(document.getElementById('approvalTestButton'))",adminContext);
+    assert.equal(invocation.name,'approve-pending-user');assert.equal(invocation.args.body.pendingId,'pending-id');
+    assert.equal(message,'Payment is in progress');assert.equal(button.disabled,false);assert.equal(button.textContent,'Approve');
   });
   await check('Read requests recover from one dropped connection', async () => {
     let attempts = 0;

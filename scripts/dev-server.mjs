@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(fileURLToPath(new URL('../', import.meta.url)));
 const publicFiles = new Set([
-  'index.html', 'THE_INDIAN_SKILLS.html', 'admin.html', 'admin.js', 'favicon.svg', 'connection-check.html',
+  'index.html', 'THE_INDIAN_SKILLS.html', 'checkout.html', 'admin.html', 'admin.js', 'favicon.svg', 'connection-check.html',
   'logo.png.jpeg', 'qr-code.png.jpeg', 'marketing management.jpeg', 'branding management.jpeg',
   'traffic management.jpeg', 'influence management.jpeg', 'finance management.jpeg',
   'marketing-management.pdf', 'branding-management.pdf', 'traffic-management.pdf',

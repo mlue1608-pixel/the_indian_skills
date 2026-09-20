@@ -1,3 +1,25 @@
+## Admin approval without email (September 20)
+
+This supersedes the older email/invitation instructions below for manual approval. Apply `202609200001_admin_confirmation.sql`, deploy the current approve-pending-user and request-signup standalone files, and refresh the frontend. Signup passwords remain unchanged; account confirmation, course approval and referral credit commit together. Login is blocked before approval, and manual approval sends no email. Existing requests stalled by email failure can be retried. Paid checkout retains email verification. See [ADMIN_SIGNUP_SETUP.md](ADMIN_SIGNUP_SETUP.md). Local database, 19 function and 35 frontend checks passed; live deployment/sign-in remain unverified.
+
+## Signup password and admin connection follow-up
+
+The signup form now accepts a password. Apply `202609190003_signup_passwords.sql` after the referral foreign-key repair, redeploy the three current Edge Functions, then publish the frontend. New requests stage only a private bcrypt hash; after payment or approval the Auth admin API imports it and sends an email-verification link. Older pending requests without a password continue using invitation/password setup. Approval CORS now allows the `x-app-name` header sent by the admin client's shared fetch configuration. See [ADMIN_SIGNUP_SETUP.md](ADMIN_SIGNUP_SETUP.md) for the exact deployment order. Local database checks, 18 signup/approval function checks, 20 payment checks and 35 frontend regressions pass; live deployment/email/sign-in remain unverified.
+
+## Paid signup and admin approval (September 19)
+
+See [ADMIN_SIGNUP_SETUP.md](ADMIN_SIGNUP_SETUP.md) for deployment steps. Captured payment still creates the account automatically. The signup form also accepts an unpaid administrator-approval request; only approval permits account creation, course activation and the existing ₹125 referral reward/My Team link. Requests do not store passwords. Invitations let students set a password after payment or approval. Apply `202609190001_admin_signup_requests.sql` after the existing Razorpay migration, deploy `request-signup` and the updated `approve-pending-user`, then publish the changed frontend.
+
+Validation passed locally: disposable PostgreSQL signup/referral/payment-conflict checks, the existing payment database suite with the new migration, 13 signup/approval Edge Function checks, 17 payment gateway checks and 35 frontend regressions. No live database migration, Auth account creation or email delivery was performed. This section supersedes the payment-only signup restriction described in the historical notes below.
+
+## Razorpay payment integration (September 17)
+
+See [RAZORPAY_SETUP.md](RAZORPAY_SETUP.md) for the required database migration, Edge Function, keys, SMTP, webhook and publishing steps. The new flow replaces manual QR/UPI/UTR collection with Payment Link and expiring checkout QR sessions. New Auth accounts are created only after verified captured payment. The historical approval/deployment notes below describe the older flow and do not apply to new Razorpay purchases. No live deployment was performed for this change.
+
+## September 17 referral discount update
+
+Apply `supabase/migrations/202609170001_referral_discount_70.sql` in the Supabase SQL editor after the base repair migration and before publishing the updated frontend. New referral enrollments pay 30% of the catalog price (70% off); existing enrollment amounts remain unchanged. This migration has not been applied to the live database in this session. The legacy deploy-supabase.ps1 script only applies the base repair; apply this new migration afterward.
+
 # Run and deploy The Indian Skills
 
 Serve this directory using VS Code Live Server, opening index.html or THE_INDIAN_SKILLS.html. Keep the same host and port for student/admin sessions. Publish both entry HTML files, admin.html, admin.js, connection-check.html, the complete assets directory, the existing images, and all five root-level course PDFs. Use HTTPS in production.
@@ -77,7 +99,7 @@ New signup creates the Auth account and pending enrollment in one database trans
 
 Enrollment access recognizes approved/active records owned by the Auth UUID and legacy records with a null owner whose email matches the verified account. A conflicting non-null owner is not overridden. Such records need ownership review in Supabase. Accounts with approved courses can still sign in while an upgrade is pending. Legacy Auth accounts with no enrollment rows can sign in but receive no PDF entitlement. Orphan legacy enrollment rows without an Auth account require an administrator invitation/account link before approval.
 
-Catalog prices remain ₹999, ₹2,499, ₹5,000, ₹10,000, and ₹15,000. Valid referrals receive the existing 75% discount, calculated in the database to two decimal places. Referral links use the full Auth UUID and work in subdirectory hosting. Older unique profile referral codes are accepted. Duplicate legacy codes are rejected as ambiguous. Approval credits a fixed ₹125 referral cashback once per enrollment. Historical approvals are not retroactively credited, avoiding duplicate historical rewards. Withdrawals reserve the entire available balance atomically at a minimum of ₹1,000; an admin must still process the actual payout. Revenue counts approved/active enrollments only. Earnings periods use India time for Today and rolling 7/30-day windows.
+Catalog prices remain ₹999, ₹2,499, ₹5,000, ₹10,000, and ₹15,000. Valid referrals receive the 70% discount, calculated in the database to two decimal places. Referral links use the full Auth UUID and work in subdirectory hosting. Older unique profile referral codes are accepted. Duplicate legacy codes are rejected as ambiguous. Approval credits a fixed ₹125 referral cashback once per enrollment. Historical approvals are not retroactively credited, avoiding duplicate historical rewards. Withdrawals reserve the entire available balance atomically at a minimum of ₹1,000; an admin must still process the actual payout. Revenue counts approved/active enrollments only. Earnings periods use India time for Today and rolling 7/30-day windows.
 
 The existing public CSS, home content, policies, footer, course cards, and sidebar structure are preserved. Explore Courses opens the first course detail; all five View Course buttons retain their respective course detail pages. Withdrawal inputs are wired inside the existing cashback card. The non-elite view and community links remain intact.
 
